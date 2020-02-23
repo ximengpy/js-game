@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p{
+            text-align: center;
+        }
+        .wrap{
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+            border:1px solid #000;
+            background-color: pink;
+        }
+        .wrap div{
+            width: 60px;
+            height:60px;
+            
+            box-shadow: 0 0 3px #aaa;
+        }
+    </style>
+</head>
+<body>
+        <p>点灯小游戏,所有灯亮打开下一关</p>
+
+        <div class="wrap">
+        
+        </div>
+    <script>
+       
+        
+        function creat(num){
+            let  add = ""
+            for(let i = 0;i < num*num ;i++){
+                add += `<div></div>`
+            }
+            wrap.innerHTML = add
+            wrap.style.width = num*60+"px"
+            wrap.style.height = num*60+"px"
+        }
+        function turn(index){
+            if(div[index].style.background == "rgb(255, 255, 255)"){
+                div[index].style.background = "yellow"
+            }else  div[index].style.background = "#fff"
+        }
+        function changeColor(num){
+            turn(num)
+            if(num-n >= 0){
+                turn(num-n)
+            }
+           if(num%n != 0 && (num-1) >= 0){
+                turn(num-1)
+           }
+           if( num+n < n*n){
+                turn(num+n)
+           }
+            if(num+1 < n*n && num % n != n - 1){
+                turn(num+1)
+            }
+
+        }
+        function check() {
+                for (let i = 0; i < div.length; i++) {
+                    if (div[i].style.background != "yellow") {
+                        return false
+                    }
+                }
+                return true
+            }
+        
+        function initGame(mm) {
+            n = mm
+            creat(n)
+             div = document.querySelectorAll(".wrap div")
+            for (let i = 0, j = div.length; i < j; i++) {
+                div[i].style.background = "#fff"
+                div[i].onclick = () => {
+                    changeColor(i)
+                    if (check()) {
+                    initGame(++n)
+                    }
+                }
+            }
+        }
+        let wrap = document.querySelector(".wrap")
+           
+        let div = null 
+        initGame(3)
+        
+    </script>
+</body>
+</html>

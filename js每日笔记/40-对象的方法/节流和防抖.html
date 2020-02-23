@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      height: 3000px;
+    }
+  </style>
+</head>
+<body>
+<input type="button" value="按钮" class="btn">
+<input type="text" class="input">
+<p></p>
+
+<input type="button" value="刷新" class="f5">
+<p class="content"></p>
+
+<script>
+  // 节流
+  // 防止流量过大造成一些不必要的麻烦
+  // 防止大量高密度的事件触发冲击后台或者是的业务逻辑, 用户体验糟糕()
+
+  // 假设现在有一个按钮, 点击就可以下单 ...如果疯狂点击 向后台发起无数个请求, 让服务器压力过大
+
+  // 直到用户不点击了之后等1s或者等2s才最终会发送一个请求
+
+  // let btn = document.querySelector(".btn")
+
+  // 如果再次点击, 先将前一次点击的操作清除掉()
+
+
+  // btn.onclick = (function () {
+  //     let timer = 0 // 保存私有的timer, 做节流
+  //     return function(){
+  //         clearTimeout(timer)
+  //         timer = setTimeout(()=> {
+  //             console.log("发起请求")
+  //         }, 1000)
+  //     }
+  // })()
+
+
+  // 模糊查询的节流操作
+
+  let input = document.querySelector(".input")
+  let p = document.querySelector("p")
+  // 监听输入事件 oninput
+  // function 可以接受一个参数:
+  // 事件对象(当页面这个事件发生之后, 浏览器会内部生成一个和这个事件相关的对象)
+  // event.target指的是input框
+
+  // input.oninput = (function () {
+  //     let timer = 0
+  //     return function (event){
+  //         clearTimeout(timer)
+  //         timer = setTimeout(()=> {
+  //             p.innerHTML = "查询结果: "+event.target.value
+  //         }, 700) // 问你的产品经理或者是问后台
+  //     }
+  // })()
+
+  // 浏览器滚动事件:
+
+  // window.onscroll = (function(){
+  //     let timer = 0
+  //     return function(e){
+  //         clearTimeout(timer)
+  //         timer = setTimeout(()=>{
+  //             console.log("滚动结束")
+  //         }, 700)
+  //     }
+  // })()
+
+
+  // 防抖: 防止抖动的情况:
+  // 都是高密度的操作或者函数触发, 既要在操作触发的时候执行, 也要保证代码执行不会太密集
+  // 刷新页面: 更新日期信息
+
+  // let f5 = document.querySelector(".f5") // 刷新按钮
+  // let content = document.querySelector(".content")
+  // 不管你点击过快, 我都是1秒钟更新一次数据(至少间隔1s)
+
+  // 防抖
+  // f5.onclick = (function () {
+  //     let flag = true // 记录状态 允许点击更新数据的
+  //     return function(){
+  //         if(flag){
+  //             // 先更新数据, 但是为了保证不能更新, flag改成false
+  //             content.innerHTML = new Date().valueOf()
+  //             flag = false
+  //             setTimeout(()=> {
+  //                 flag = true
+  //             }, 1000)
+  //         }
+  //     }
+  // })()
+
+  // 闭包:
+
+
+
+
+
+  // 对象的拓展:
+  // 对象的get 和 set关键词 只适用于对象的属性
+  // 给一个es6写法的函数添加get
+  // 当我们访问这个属性的时候最终返回函数执行的结果
+
+  // set 方法 和get方法非常一致 但是是赋值操作
+
+  // set 方法中慎重赋值
+
+  // 在某种程度上保证了对象属性的安全性
+  let obj = {
+      _value: 0,
+      get value(){
+          return ++this._value
+          // 也可能写在外面.. 我们是不知道 obj.value他到底是什么, 修改也不一定生效
+      },
+      set value(val){
+          // 隐式的访问了一次this.value的值
+          this._value = this.value
+      }
+  }
+  console.log(obj.value) // 1
+  // obj._value 1
+  obj.value = 10
+  // obj._value 2
+  console.log(obj.value) // 3
+
+  // console.log(obj.value)
+  // console.log(obj.value)
+
+  // let a = new String("123") // 字符串是不可以修改只能覆盖的
+  // new 创建对象
+  // a.len = 3
+  // let t = a.len
+  // t
+
+</script>
+</body>
+</html>

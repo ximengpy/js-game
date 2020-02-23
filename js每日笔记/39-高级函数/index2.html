@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+
+    .box{
+      width: 300px;
+      height: 300px;
+      background-color: #ccc;
+    }
+  </style>
+  <script src=""></script>
+</head>
+<body>
+  <div class="box"></div>
+
+<script>
+  // 纯函数: 输入一定输出一定: 对数据加工,返回计算结果...
+  // 不会对外界做出任何改变.
+  // 推荐大家尽量保证代码不要污染外界,
+  // 多写纯函数
+  // 外部引入的函数
+
+  // function yinshi(){ //
+  //   // document.querySelector = function(){
+  //   //     return null
+  //   // }
+  // }
+  // 造轮子:
+
+
+  // 偏函数: 核心在于参数, 原本的函数接受多个参数, 现在我们可以先接受两个参数, 再等待接受最后一个参数.. 接受完再返回结果
+  // 做生成器:
+  // 做一个样式设置的工具, 接受三个参数: 页面节点, 样式名称, 样式值
+  let box = document.querySelector(".box")
+
+  function setObjectStyle(dom, styleName, value){
+      dom.style[styleName] = value
+  }
+  // setObjectStyle(box, "background", "red")
+
+  function createStyle(dom) {
+      return function (styleName) {
+          return function (value) {
+              dom.style[styleName] = value
+          }
+      }
+  }
+
+  let createStyle2 = dom => styleName => value => dom.style[styleName] = value
+
+  createStyle(box)("background")("blue")
+
+
+  // 表示对页面中box这个盒子设置样式的操作
+  // let boxStyleCreator = createStyle(box)
+  // // 表示对盒子边框设置的函数
+  // let boxBorderCreator = boxStyleCreator("border")
+  // // 将参数分解开来, 不一定要在都获取的时候才能运行
+  // boxBorderCreator("5px red dotted")
+
+  // console.log(boxStyleCreator);
+
+
+  // function Main(){
+  //     // ....
+  //     let b = Math.abs(-3)
+  //     yinshi() // 执行完成发现了一些bug
+  //     // ....
+  // }
+  // // 有一定功能
+  // Main()
+
+
+  // 一家工厂做蛋糕: 鸡蛋 牛奶 黄油
+  // 如果已经有现成的鸡蛋和牛奶: 先加工鸡蛋和牛奶, 返回一个等待黄油的函数,
+  // 只需要传入黄油, 蛋糕就出来了..
+
+  // 高级函数必须要掌握的知识
+  // 柯里化: 把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术
+
+  // 一般表现
+
+  // sum(1,2)(3,4)(5)(6,78,8,9)
+
+  // 闭包加法生成器的写法
+  // function createAdd(){ // 加法生成器
+  //     let result = 0
+  //     return function (val) {
+  //         result += val
+  //         return result
+  //     }
+  // }
+  //
+  // let add = createAdd()
+  //
+  // add(1)
+  // add(2)
+  // console.log(add(3))
+
+
+
+  // 求和的柯里化
+  // 写一个函数 sum 求和
+
+  // function sum(){
+  //
+  // }
+  //
+  //
+  // sum(2,3)
+  //
+  // sum(7)
+  //
+  // sum(8)(9)(10)
+  //
+  // sum() // 不传参数, 就返回最终的结果?
+
+  // sum不是单独写出来的函数, 生成出来, sum能记录状态, 是不是有用到闭包
+
+  function curryFunc(cb){
+      let list = [] // 用数组进行保存
+      return function () { // 参数个数不定
+          // 对传入的参数个数进行判断,如果没有穿传参数, 就计算结果
+          if(arguments.length === 0){
+              return list.reduce(cb)
+          }
+          list.push.apply(list, arguments)
+          return arguments.callee // 指的就是当前这个arguments所在的函数
+      }
+  }
+
+  let sum = curryFunc((a,b)=>a+b)
+  sum(1,2,3)
+  sum(4)(5)(6)
+  console.log(sum());
+
+
+  let times = curryFunc((a,b)=>a*b)
+  times(1,2,3)
+  times(4)(5)(6)
+  console.log(times());
+
+  // 高级运算 柯里化
+
+  function curry(fn){
+      let list = [] // 用数组进行保存
+      return function () { // 参数个数不定
+          // 对传入的参数个数进行判断,如果没有穿传参数, 就计算结果
+          if(arguments.length === 0){
+              return fn.apply(null, list) // 传完参数之后执行的代码
+          }
+          list.push.apply(list, arguments)
+          return arguments.callee // 指的就是当前这个arguments所在的函数
+      }
+  }
+  // 做蛋糕的故事
+  function createCake(egg, milk, butter){
+      if(arguments.length >= 3){
+          console.log("万事俱备, 开搞")
+      } else {
+          console.log("你这个操作需要加钱才能搞")
+      }
+  }
+  let curryCreateCake = curry(createCake)
+
+  curryCreateCake("鸭蛋")
+
+  curryCreateCake("奶粉")("奶酪")
+
+  curryCreateCake()
+
+  // 和他非常相似的东西, 链式调用 Jquery 写法非常典型的链式调用的规范
+
+  // $是jquery暴露出来的api方法, 用它操作dom
+  // 链式调用
+  // 核心: 调用的时候返回封装好的对象, 函数执行的时候返回this
+
+  function $(str){
+      let obj = { // Jquery对象
+          el: document.querySelector(str),
+          css: function (styleName, value) {
+              this.el.style[styleName] = value
+              return this // 每次执完成之后返回Jquery对象
+          },
+          click: function(cb){
+              this.el.onclick = cb
+              return this
+          }
+      }
+      return obj // 生成了一个对象Jquery对象
+  }
+
+
+  // $(".box").css("width", "300px").css("height", "400px")
+
+  // $(".box")万物之源, 生成了一个对象Jquery对象,对象有css的方法, 方法执行完返回这个jquery对象
+
+
+</script>
+</body>
+</html>

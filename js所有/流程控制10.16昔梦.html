@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap{
+            width:500px;
+            height:500px;
+            background-color: pink;
+            margin:auto;
+        }
+        input{
+            margin-left:100px;
+            height:23px;
+            line-height:23px;
+        }
+        .add{
+            display: inline-block;
+            width:45px;
+            height:30px;
+            background-color: #ccc;
+            line-height:30px;
+            text-align:center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <input type="text" value="" id="name">
+         <p class="add">添加</p>
+         <ul class="list">
+         </ul>
+    </div>
+    <script>
+    let add = document.querySelector(".add"),
+        box = document.querySelector("ul"),
+        inputtag = document.getElementById("name"),
+        i=0
+    function add1(inputtag){
+            box.innerHTML += `<li>${inputtag}</li>`
+        }
+        add.onclick=function(){
+            if(i++<5){
+                add1(inputtag.value)
+                inputtag.value=null
+             } 
+            else  alert("最多只能输入5次")
+
+    
+            
+        }
+       
+    
+     
+    
+        
+
+
+
+    </script>
+</body>
+</html>

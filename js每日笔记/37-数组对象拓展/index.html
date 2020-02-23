@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+
+  <script>
+
+    // let arr = [70,52,67,89,88]
+    // // 每一个都满足回调函数为true的情况, 最终就会返回true &&
+    // // 只要返回了false 整体结果就是false
+    // let result = arr.every(item => item > 60)
+    
+    // let str = "asdfg4fqwweq"
+    // //对字符串判断看看字符串中是否存在除了字母之外的内容, 如果存在返回false 如果不存在就返回true
+    // function check(str){
+    //   // let arr = str.split("")
+    //   // let arr = [...str]
+    //   return [].every.call(str, item => {
+    //     // item是每一个字母
+    //     return item.charCodeAt() >=97 && item.charCodeAt() <=122
+    //   })
+    // }
+
+    // some 和 every类似: 
+    // 只要有返回为true的情况, 就会返回true ||
+
+    let class17 = [
+      {
+        name: "zhangsan",
+        sex: "男",
+        money: 12
+      },
+      {
+        name: "zhangsan2",
+        sex: "男",
+        money: 22
+      },
+      {
+        name: "zhangsan3", // 
+        sex: "女",
+        money: 16
+      },
+      {
+        name: "zhangsan4",
+        sex: "男",
+        money: 32
+      },
+      {
+        name: "zhangsan5", // 
+        sex: "女",
+        money: 44
+      },
+      {
+        name: "zhangsan6", // 
+        sex: "女",
+        money: 50
+      },
+    ]
+
+    // 是否存在女生? some 
+    // some 接受一个参数: 回调函数 
+    // 回调函数接受三个参数: item index arr
+
+    
+    Array.prototype.mysome = function(cb){
+   for(let i = 0;i<this.length;i++){
+    if(cb(this)) {return true}
+    return false
+   }
+  }
+  let ans = class17.mysome(student => {
+      return student.sex === "女"
+    })
+    console.log(ans)
+
+    // filter 筛选 满足条件(true)的元素 创造一个新数组返回
+
+    // filter 接受一个参数: 回调函数 
+    // 回调函数接受三个参数: item index arr
+
+
+    // function getGirls(item, index, arr){
+    //   if(item.sex === "女") return true
+    // }
+
+    // let girls = class17.filter(getGirls)
+
+    // function getBoys(item){
+    //   return item.sex === "男"
+    // }
+
+    // let boys = class17.filter(getBoys)
+
+
+    // filter 封装 底层是怎么实现的?
+    // 功能?
+    // 接受两个参数
+    //  被筛选的数组: arr
+    //  回调函数:     cb 接受三个参数 并且返回一个布尔值得
+    // 返回 满足cb条件的数组
+    // function filter(arr, cb){
+    //   let resultArr = []
+    //   for(let i = 0;i < arr.length;i++){// 底层都是用for循环实现的
+    //     // 判断条件, 满足就push
+    //     if( cb(arr[i], i, arr) ){
+    //       resultArr.push(arr[i])
+    //     }
+    //   }
+    //   return resultArr
+    // }
+
+    // function getGirls(item, index, arr){
+    //   if(item.sex === "女") return true
+    // }
+
+
+    // let girls1 = class17.filter(getGirls)
+
+    // let girls2 = filter(class17, getGirls)
+
+    // console.log(girls1 === girls3) // 都是对象, 引用类型, 内存地址判断
+
+
+
+
+
+    // function bozhong(cb){
+    //   // todo sth
+    //   // 回头再去调用传进去的函数 => 回调函数
+    //   cb()
+    // }
+
+    // function shouhuo(){
+
+    // }
+
+    // bozhong(shouhuo)
+
+
+
+    // map方法 也是数组方法, 将数组的每一项进行操作返回, 由返回的内容形成一个新数组
+    // 返回一个新的数组
+
+    // let arr = [1, 2, 3, 4]
+
+    // // 根据数组生成 1^1 2^2 3^3 4^4 
+
+    // let newArr = arr.map( num => Math.pow(num, num))
+
+
+    // let strList = [
+    //   "123",
+    //   "asdfg",
+    //   "+-*/",
+    //   "zxcv"
+    // ]
+
+    // 将数组中每一项字符串反转?
+    // 也是一个数组
+
+    // 1. 字符串反转输出怎么操作?
+    //    
+    // let ans = strList.map( str => [...str].reverse().join(""))
+
+    // let ans 
+
+    // class17 圣诞节快来了, 男孩子纷纷换上了女装, 女孩子们纷纷穿上了男装
+
+    // 将所有人的性别转换过来 男 <=> 女
+
+    // let newClass1 = class17.map(item => {
+    //   item.sex = item.sex==="男"?"女":"男"
+    //   return item
+    // })
+
+    // // map的代码底层是怎么实现的?
+    // // 
+    // function map(arr, cb){
+    //   let resultArr = []
+    //   for(let i = 0; i < arr.length; i++){
+    //     resultArr.push(cb(arr[i], i, arr))
+    //   }
+    //   return resultArr
+    // }
+
+    // let newClass2 = map(class17, item => {
+    //   item.sex = item.sex==="男"?"女":"男"
+    //   return item
+    // })
+
+    // let liList = document.querySelectorAll("li")
+
+    // let newList = [].map.call(liList, (li, index) => {
+    //   li.innerHTML = index+1
+    //   return li
+    // })
+
+
+    // reduce 对数组进行合并(迭代)操作 , 返回迭代结果
+    /* 
+      reduce 接受两个参数
+        第一个参数 是 回调函数
+          回调函数接受 四个参数
+            第一个是 每次迭代的迭代体
+            第二个是 当前项
+            第三个是 下标
+            第四个是 原数组
+          函数会返回 这一次迭代的结果
+
+        第二个参数 是 初期迭代体(每次循环都要使用的那个东西)
+          可选参数, 如果有, 就以这个参数作为跌代替
+          如果没有就以第一项作为迭代体
+    */
+    // let exam = [1, 2, 3, 4, 5]
+
+    // let result = exam.reduce(function(sum, item, index, arr){
+    //   return sum * item 
+    // },-1)
+
+
+      // 求 class17班上所有人的钱的总和
+      // 
+      // let totalMoney = class17.reduce(function(total, person, index, arr){
+      //   return total + person.money
+      // }, 0)
+
+      let str = "aaaaabbasdasdasdasd"
+
+      // 一行代码实现字符串统计出现的字符个数的操作 reduce
+      // 请大家自己用代码实现: 
+      // , : 操作符
+      let arr = [...str].reduce(((x,y) =>((x[y]?x[y]++:x[y]=1),x)),{})
+      console.log(arr)
+      // reduce 的实现
+      // 
+      function reduce(arr, cb, count){
+        // 如果第三个参数存在, 那么 result就是第三个参数, 否者就是数组第一项
+        let result = arr[0]
+        let start = 1
+        if(arguments.length >= 3){
+          result = arguments[2]
+          start = 0
+        }
+        // 挨个遍历, 返回结果
+        // 对起始位置进行修正
+        for(let i = start;i < arr.length;i++){
+          result = cb(result, arr[i], i, arr)
+        }
+        return result
+      }
+      // 总结每一个方法 实现目的 => 接受什么参数, 返回什么内容
+
+
+
+      // arr.keys() 返回迭代体接口, 方便 遍历 for...of
+        // 下标
+        for(i of ["a","s","d"].keys()){
+          console.log(i)
+        }
+      // arr.values()
+        // 值
+        for(i of ["a","s","d"].values()){
+          console.log(i)
+        }
+      // arr.entries() 
+        // [下标, 值]
+        for(i of ["a","s","d"].entries()){
+          console.log(i)
+        }
+      // 作业: 实现 fill方法 find方法 
+      // 实现一个数组去重的方法 (实现以下)
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ 
+ <input type="text" name="" id="" value="">
+ <button>提交</button>
+ <script>
+  let input = document.querySelector("input")
+  let button = document.querySelector("button")
+  button.onclick = function(){
+   let num = input.value
+    console.log(aaa(num)) 
+  }
+  // 1+1+2+3+5+8
+  function aaa(num){
+   if(num == 1 || num == 2) {return 1}
+   
+   return aaa(num-2)+aaa(num-1)
+   
+   
+
+  }
+  
+
+ </script>
+</body>
+</html>

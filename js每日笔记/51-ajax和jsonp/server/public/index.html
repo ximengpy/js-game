@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<!--  引入jquery-->
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <!--  引入axios-->
+  <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+</head>
+<body>
+用户名: <input type="text" name="user">
+密码: <input type="text" name="password">
+<button class="getBtn">get提交</button> <button class="postBtn">post提交</button>
+<script>
+  const getBtn = document.querySelector(".getBtn")
+  const postBtn = document.querySelector(".postBtn")
+  const user = document.querySelector("input[name='user']")
+  const password = document.querySelector("input[name='password']")
+
+  getBtn.onclick = function () {
+    // 创建ajax对象
+    const xhr = new XMLHttpRequest()
+    // 做基础的配置, 请求方式, 请求地址
+    // 需要转换成为 ?属性名=属性值&属性名=属性值&属性名=属性值&属性名=属性值
+    // 处理我们的数据
+    xhr.open('get', `http://localhost:80/get?user=${user.value}&password=${password.value}`)
+    // 发送请求, get请求是不需要额外发送数据的
+    xhr.send(null)
+    // 这个代码可不可以写在外面
+    // 只要readystate发生了改变, 都会触发这个函数
+    xhr.onreadystatechange = function () {
+      // console.log(xhr.readyState)
+
+      if(xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300 || xhr.status === 304){
+        // 能够获取数据了
+        console.log(JSON.parse(xhr.responseText))
+      }
+    }
+  }
+
+  // POST 请求向后台请求数据
+  // 发送到 post 路由 中的
+  // post的不同之处:
+  // 数据携带不会写在url之中, 写到请求头之中
+
+  // 额外设置一步 请求头的文本类型
+
+  postBtn.onclick = function () {
+    //
+    const xhr = new XMLHttpRequest()
+    // 请求的基础配置
+    xhr.open('post', '/post')
+    // 规定一下请求格式, 设置请求的头部信息, post请求规定的请求头, 数据form表单的数据
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    // 发送请求, 将数据整理到这里发送
+    // 和之前的格式是一样的 属性名=属性值&属性名=属性值....
+    xhr.send(`user=${user.value}&password=${password.value}`)
+    // 获取数据呢? 和get方式是一致的
+    xhr.onreadystatechange = function () {
+      // console.log(xhr.readyState)
+
+      if(xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300 || xhr.status === 304){
+        // 能够获取数据了
+        console.log(JSON.parse(xhr.responseText))
+      }
+    }
+  }
+  // ajax 本质 1234
+  // 有可能向后台请求数据的
+
+
+  // 小小的封装: 数据是什么格式的?
+  // 对象格式的数据 => url格式的参数
+  // 数组转字符串的方法? join
+  function obj2url(obj){
+    let arr = []
+    for(let i in obj){
+      arr.push(`${i}=${obj[i]}`)
+    }
+    return arr.join("&")
+  }
+  // 规定开头不含?
+  function url2obj(str) {
+    // 判断开头是否含有?
+    let arr = str.split("&")
+    // item 格式 a=1中间含有等号
+    return arr.reduce(function (obj, item) {
+      obj[item.match(/.*(?==)/g)[0]] = item.match(/(?<==).*$/g)[0]
+      return obj
+    }, {})
+  }
+
+  let objUrlTools = {
+    obj2url,
+    url2obj
+  }
+
+
+  // 框架的ajax请求有哪些, 他们好不好用
+
+  // jquery axios fetch
+  // jquery 封装库, 使用 引入jquery
+  // 只生成了一个全局的 $
+  // $.get('/get?user=yinshi&password=123', res => {
+  //   console.log(res)
+  // })
+  // $.post(
+  //   '/post',
+  //   {user:'yinshi',password:'123'},
+  //   res => {
+  //   console.log("jquery",res)
+  // })
+  // // get/post 方法 接受的参数返回的参数都是一致的
+  // // function ajaxGet(){
+  // //
+  // // }
+  //
+  // // axios 框架也好各种非常火爆的数据请求的框架
+  //
+  // // axios 全局生成一个axios
+  // // 是不是 promise格式啊?
+  // // async function getData(){
+  // //   let result = await axios.get('/get?user=yinshi&password=123')
+  // //   return await result
+  // // }
+  //
+  // // 尝试封装一下简单的 axios
+  // axios.get('/get?user=yinshi&password=123')
+  //   .then(res => {
+  //     const {data} = res
+  //     console.log("axios",data)
+  //   })
+  //
+  // // fetch 浏览器自带的方法xhr封装(兼容性有点低的)
+  //
+  // fetch("/get?user=yinshi&password=123")
+  //   .then(response => response.json())
+  //   .then(response => {
+  //     console.log("fetch",response)
+  //   })
+
+
+  // 跨域: 什么叫做: 区域
+  // 设置出来了一个域的概念: 区分地址请求是否是自己客户端下面的请求
+  // 浏览器 在这个地方做出了限制, 不允许跨域(浏览器访问的时候如果访问到了别人的服务器中, 那就不安全了)
+  // 谁会不安全? 用户会不安全
+
+  // 浏览器设置了一个策略: 同源策略.
+  //    1. 协议相同(:前面的协议一定要一致 http:// https:// file://)
+  //       https://www.abc.com  http://www.abc.com 不同源
+  //    2. 域名相同(协议后面到端口前面中间的这一部分)
+  //       http://www.abc.com  http://abc.com 不同源
+  //    3. 端口相同(域名后面:跟着的数字)
+  //       http://www.abc.com:80 http://www.abc.com:8000
+  //
+  // 目前网页所在的地方 和你请求资源的地方太远了, 那就不行
+
+  // 解决跨域问题的方法: 找后端!除非后端设置了允许跨域!
+  // 1. 如果你会后台: 自己搭一个后台, 自己后台做代理
+  //      后台访问后台 可以直接访问的.
+  // 2. CORS 跨域: 找后台设置一行代码
+  // 3. JSONP: 绕过了浏览器跨域检测进行跨域访问
+  //    JSON(数据) with padding 将数据外面 包一层壳就可以了
+
+  // script标签: 可以跨域访问请求资源的, 借用script生成一个非常神奇的script标签代码
+  // 就可以跨域了
+
+  // 想象成一个袋子, 装东西的袋子
+
+  // 假设后台的数据是 {a:1,b:2}
+
+  // 引入一个script标签,返回一段JS代码并且执行, 这段代码是由后端生成的,
+  // 后端拿到了你的袋子, 前后端约定这个袋子是一个函数名
+
+  // 后端直接返回这段代码: myFunction({a:1,b:2})
+
+  // 定义一个接受数据的函数
+  // function myFunction(data){
+  //   console.log(data)
+  // }
+  // 封装 一下 JSONP 跨域操作
+
+  function JSONP(fn){
+
+    window[fn.name || "f"] = fn
+    // 1. 创建script标签: document.createElement("script") 通过代码的方式创建页面的元素
+    const script = document.createElement("script")
+    // 2. 添加src 等价于发送请求的操作
+    script.src = `http://localhost:80/jsonp?cb=${fn.name || "f"}`
+    // 3. 添加到页面中
+    // 在body标签结尾处添加刚才生成好的script标签
+    document.body.appendChild(script)
+    // 在恰当的时机删除掉, script标签加载完成之后删除
+    // 不想让这个标签被人看到, 很有可能被人利用
+    script.onload = function () {
+      // 叫自己的父亲元素删除掉自己
+      this.parentNode.removeChild(this)
+      // 删除掉这个函数
+      delete window[fn.name || "f"]
+    }
+  }
+
+  new Promise(next => next(JSONP()))
+    .then(res => {
+      console.log(res)
+    })
+
+
+  // JSONP 的 理解方法: 页面中添加一个带参数的script标签
+  // script请求到了执行函数并且携带请求所要的参数
+</script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      position: relative;
+      margin: 100px auto;
+      width: 300px;
+      height: 300px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+    .smallbox{
+      position: absolute;
+      width: 25px;
+      height: 25px; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: blue;
+      border-radius: 50%;
+    }
+    .ball{
+      position: absolute;
+      /* left: 295px;
+      top: 30px; */
+      width: 5px;
+      height: 5px;
+      background-color: red;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="smallbox"></div>
+  </div>
+
+
+  <script>
+    // Q7 300px * 300px 矩形区域内, 
+    // 每隔 0.1s 发射一个小球(宽高2px 红色 圆形) 击中矩形区域内的任意位置.. 
+    // 中间设置一个靶心... 15*15的矩形区域.. 击中靶心.. 弹个窗什么的.
+
+    // planA 方形靶子
+    // x 0-295   y  0-295 随机生成一个带这样坐标的小球
+    // let box = document.querySelector(".box")
+    // function createAndAddBall(){
+    //   // 生成一个字符串
+    //   let x = Math.random()*295
+    //   let y = Math.random()*295
+    //   let str = 
+    //   `<div 
+    //     class="ball" 
+    //     style="
+    //       left:${x}px;
+    //       top:${y}px"
+    //     ></div>`
+    //   box.innerHTML += str
+    //   return {
+    //     x,
+    //     y
+    //   }
+    // }
+
+    // setInterval(createAndAddBall, 1000/60)
+
+
+    // planB 圆形靶子
+    let box = document.querySelector(".box")
+
+    // 创建小球的第二种方式: 生成一个角度 和 半径
+    // r: 角度(0 - Math.PI*2)
+    // l: 半径(0 - 150)
+
+    function createAndAddBall(){
+      let r = Math.random() * Math.PI*2 // 随机 0 - Math.PI*2 的角度
+      let l = Math.random() * 145 // 0 - 150 范围
+      // 点的x轴坐标
+      let x = l * Math.cos(r)
+      let y = - l * Math.sin(r) // 保证方向的准确
+
+      // 基本操作,
+        let str = 
+          `<div 
+            class="ball" 
+            style="
+              left:${x + 150}px;
+              top:${y + 150}px"
+            ></div>`
+        box.innerHTML += str
+    }
+
+    // setInterval(createAndAddBall, 1000/60)
+  </script>
+</body>
+</html>

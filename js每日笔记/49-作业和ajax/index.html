@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+  // LazyMan 构造函数 实例 创建一个对象, 有自的方法 可以链式调用的
+  // 实例方法: say 传入文本 说一段话 立即说的
+  // sleep方法(传入毫秒数): 等待毫秒 传入一段时间:才会执行后面的代码
+  // sayFirst方法: 也是说话 无视顺序 最先打印
+  // sayLast ...
+  // 正常按书写顺序先后调用代码
+  // yinshi.say(1).sleep(1000).sleep(1000).sayFirst(3).sayFirst(4).say(2)
+  // 3 4 1 (等待1000ms) (等待1000ms) 2
+
+
+  /// LazyMan 构造函数
+
+
+  // 不是function声明不能变量提升的
+  // function LazyMan
+  // LazyMan.prototype....
+
+  class LazyMan{ // let 方式赋值 赋值语句
+    constructor(name){
+      this.name = name
+      this.todoList = [] // 正常逻辑代码
+      this.firstList = [] // 优先逻辑代码
+      this.timer = null // 表示开启事件的地方
+      this.promise = Promise.resolve() // 初始化了一个空的成功的promise对象
+      // this.run() // 虽然在这个地方是异步执行run代码的
+    }
+    say(str){
+      // 创建一个说话的待办事件
+      this.todoList.push({
+        type: "say",
+        msg: str,
+        delay: 0
+      })
+      this.run()
+      return this
+    }
+    sleep(time){
+      this.todoList.push({
+        type: "sleep",
+        msg: `zzZ~(休息了${time}ms)`,
+        delay: time
+      })
+      this.run()
+      return this
+    }
+    sayFirst(str){
+      this.firstList.push({ // 添加到头部
+        type: "say",
+        msg: str,
+        delay: 0
+      })
+      this.run()
+      return this
+    }
+    run(){ // 假如出现一次链式调用, 我们就只执行一次, 节流的操作
+      clearTimeout(this.timer)
+      this.timer = setTimeout(async () => {
+        // 先去 合并todoList和firstList
+        this.todoList.splice(0,0,...this.firstList)
+        // 请注意要清空
+        this.firstList = []
+        // 开始按顺序执行我们的代码
+        // console.log(this.todoList.length)
+        // promise实现:
+        // while(this.todoList.length > 0){ //只要todoList里面还有任务,我们就要执行后面的内容
+        //   let item = this.todoList.shift() // 抛出位于首位的事件描述
+        //   // 俄罗斯套娃一样的遍历添加then的内容
+        //   this.promise = this.promise.then(() => { // 添加的一次then
+        //     // 理论上要对事件类型进行判断
+        //     return new Promise(next => {
+        //       setTimeout(()=>{
+        //         console.log(item.msg)
+        //         next()
+        //       },item.delay)
+        //     })
+        //   })
+        // }
+
+        // async 和 await 可以实现吗?
+        while (this.todoList.length > 0){
+          let item = this.todoList.shift()
+          await new Promise(next => {
+            setTimeout(() => {
+              console.log(item.msg)
+              next()
+            }, item.delay)
+          })
+        }
+      }, 0)
+    }
+  }
+
+
+  let yinshi = new LazyMan("银时") // 只是创建了一个人
+
+
+  yinshi.say("你好,有点困")
+  yinshi.sleep(3000) //
+  yinshi.say("我醒了")
+  yinshi.sleep(3000)
+  yinshi.say("反应有点迟钝") // 真正接受到指令的时候
+  yinshi.sayFirst("first1")
+  yinshi.sayFirst("first2")
+
+  // 本质需要做一些有顺序的事情的 => 事件队列
+
+  // 事件队列: 本质就是一个数组 将事情按照他的顺序添加到数组中, 挨个执行, 前一个执行完成了再执行后一个
+
+  // 因为数组是有序的
+
+  // 先push进入数组的就会在前面, 后 ... 后面
+  // 按顺序输出: shift方法, 一旦执行完成了一个队列中的一个任务(头部), 从头部取出来, 接下来处理下一个任何
+  // 先取出来, 再执行
+  // todoList
+
+  // 添加标准格式的事件描述: 事件类型: say sleep 事件信息: 说的话 事件的延时:
+
+  // 在什么时候去执行? 用什么方式执行
+  // 一定要在所有的执行队列添加完成之后执行, 怎么样判断事件队列添加完成?
+
+  // 添加事件是同步代码 => 等待同步代码执行完成, 才去执行
+
+  // jquery ... 操作: 学习一下api使用方法
+
+  // jquery 是一个别人封装好的库(使用别人方法)
+  // 库   : 工具: 帮助我们简化代码逻辑
+  // 框架 : 搭起来一个简易模型, 在这个模型中丰富添加 定制化操作
+
+  // $(".box") // 选中我们的盒子
+  //   .css({width: "300px"}) // 假设这个操作需要消耗1s
+  //   .fadeOut() // 缓慢消失, 消耗1s
+  //   .fadeIn()  // 缓慢显示 消耗1s
+  //   .shake()   // 消耗1s
+  // $(".box")
+  //   .fadeOut()
+  // 动画的队列
+
+
+  // 自己实现动画队列的逻辑
+  // 上期49JS实现过Jquery的底层的
+  // 创建一个$函数 接受一个字符串(css选择器)选中满足条件的所有元素, 并且支持链式调用
+  // animation函数, 接受一个对象:
+  // 结合Jquery 文档: 看看怎么实现的
+  // let option1 = {
+  //   css: {
+  //     width: 100,
+  //     height: 100
+  //   },
+  //   delay: 1000
+  // }
+  // let option2 = {
+  //   css: {
+  //     width: 300,
+  //     height: 500
+  //   },
+  //   delay: 1000
+  // }
+  //
+  // function $(str) {
+  //
+  // }
+  //
+  // $(".box")
+  //   .animation(option1)
+  //   .animation(option2)
+
+
+  // function $(str){
+  //   function run(){
+  //
+  //   }
+  //   return {
+  //     el: document.querySelector(str),
+  //     todoList: [],
+  //     animation: function (option) {
+  //       this.todoList.push(option)
+  //       run()
+  //       return this
+  //     }
+  //   }
+  // }
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      解构赋值: 
+        使用值, 写法会非常复杂, 很难受. 解构赋值 分解
+        左右结构一定要相同
+        = 赋值 将右边的值传递给左边
+        左边是变量
+      数组: 
+        [a, b] = [1, 2]
+        左边依旧是声明变量, 变量存在在某种数据结构中
+
+      语法糖: 糖都很甜, 吃起来很香
+
+      对象的解构赋值
+        左右的解构一致, **属性值** 就会作为变量, 存在而传递赋值
+
+        {name: a, age: b} = { name: "yinshi", age: 19}
+
+      特殊的: 当属性名和存储的变量可以一致的时候, 就可以直接写属性名了
+
+    */
+    // function foo1([a, b]){
+    //   // 通过访问属性的方式写出来的
+
+    //   // let a = arr[0]
+    //   // let b = arr[1]
+
+    //   // let [b, a] = arr
+
+    //   console.log(a, b)
+    // }
+  
+    // foo1([1, 2])
+
+    // function foo2([a, b, c]){
+    //   console.log(c)
+    // }
+
+    // foo2([1, 2, [3, 4]])
+
+
+    // function foo3(obj){
+    //   // let name = obj.name
+    //   // let age = obj.age
+
+    //   let {name: age, age: name} = obj
+
+    //   // console.log()
+    //   console.log(name, age)
+    // }
+    // let oMsg = {
+    //   name: "yinshi",
+    //   age: 18
+    // }
+
+    // foo3(oMsg)
+
+    // function foo4(obj){
+    //   // 怎么去解构拿到文字内容
+    //   let {
+    //     pocket: {
+    //       aa: [arr] // 这是取数组的第一项
+    //     }
+    //   } = obj
+    //   // let {bb: str} = p
+    //   console.log(arr)
+    // }
+
+    // let oMsg = {
+    //   name: "yinshi",
+    //   age: 18,
+    //   pocket: {
+    //     aa: [1,2,3],
+    //     bb: "文字"
+    //   }
+    // }
+    // foo4(oMsg)
+
+
+    // 从现有对象当中拆分属性或者方法
+
+    // let arr = [1, 2, 3]
+
+    // // 
+    // let {length: len} = arr
+
+    // console.log(len)
+
+    // let arr = [1, 2, 3]
+    // let {forEach: fn} = arr
+    // console.log(fn)
+
+    // fn.call("123", item => {console.log(item)})
+
+
+    // let obj5 = {
+    //   props1: "value of props1",
+    //   props2: "value of props1",
+    //   props3: "value of props1",
+    // }
+
+
+    // let {props1: props1, props2: props2, props3: props3} = obj5
+    // 当属性名和存储的变量可以一致的时候, 就可以直接写属性名了
+    // let {props1, props2, props3} = obj5
+    // console.log(props1, props2, props3)
+
+
+    let {sort, forEach, join} = []
+
+    console.log(sort, forEach, join)
+
+    // let {toString} = {}
+
+
+    // document.getElementsByName
+
+    // let {getElementsByName, querySelector} = document
+
+
+
+    // 剩余参数: ... 本质和解构赋值是一样的
+    // function foo(){
+    //   // console.log(a, b)
+
+    //   let [a, ...b] = arguments // [1,2,3,4,5]
+    //   // console.log(a, b)
+    // }
+    // foo(1,2,3,4,5)
+    // // 在等号左边 (吸收传入的参数) 变成了一个数组
+    
+    // // 在等号右边 将数组释放出来, 拆分数组
+
+    // let arr = [1, ...[2, 3, 4]]
+
+    // console.log(arr)
+
+
+      // function foo5(){
+      //   console.log(arguments.length)
+      // }
+
+      // // foo5( [1,2,3,4,5] )
+      // // 怎么样让参数挨个传入 apply
+      // // foo5.apply(null, [1,2,3,4,5])
+
+      // // 可以使用...解构
+      // foo5(...[1,2,3,4,5])
+
+    // 对象的解构赋值
+    // 和数组几乎一模一样: 分等号左边和等号右边两种情况
+
+    // let obj = {
+    //   a: 1,
+    //   ...{
+    //     c: 2,
+    //     d: 3
+    //   }
+    // }
+    // // console.log(obj)
+    // let {...aa} = obj
+    // console.log(aa)
+
+    // let obj = {
+    //   a: 1,
+    //   ...{
+    //     a: 2,
+    //     d: 3
+    //   }
+    // }
+
+    // console.log(obj)
+
+    // 简化优雅我们的代码
+
+      // let data = {
+      //   "code": "0",
+      //   "msg": "成功",
+      //   "data": {
+      //     "dataList": [{
+      //       "id": 35,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 0.02,
+      //       "payMethod": "1009",
+      //       "settleAmount": 0.02,
+      //       "settlePercentage": 0.0001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-19 01:00:29",
+      //       "commission": 0
+      //     }, {
+      //       "id": 37,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 0.01,
+      //       "payMethod": "1009",
+      //       "settleAmount": 0.01,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-22 01:00:34",
+      //       "commission": 0
+      //     }, {
+      //       "id": 39,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 3300,
+      //       "payMethod": "1009",
+      //       "settleAmount": 3296.7,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-23 01:00:14",
+      //       "commission": 3.3
+      //     }, {
+      //       "id": 43,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 4,
+      //       "payMethod": "1009",
+      //       "settleAmount": 4,
+      //       "settlePercentage": 0,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-24 21:01:49",
+      //       "updateDate": "2019-10-25 21:03:55"
+      //     }, {
+      //       "id": 48,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 0.01,
+      //       "payMethod": "1009",
+      //       "settleAmount": 0.01,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-25 21:45:00",
+      //       "commission": 0
+      //     }, {
+      //       "id": 50,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 2,
+      //       "payMethod": "1009",
+      //       "settleAmount": 1.998,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-28 09:14:00",
+      //       "commission": 0.002
+      //     }, {
+      //       "id": 56,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 2,
+      //       "payMethod": "1009",
+      //       "settleAmount": 1.998,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-28 12:00:00",
+      //       "commission": 0.002
+      //     }, {
+      //       "id": 60,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 2,
+      //       "payMethod": "1009",
+      //       "settleAmount": 1.998,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-28 14:09:01",
+      //       "commission": 0.002
+      //     }, {
+      //       "id": 67,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 2,
+      //       "payMethod": "1009",
+      //       "settleAmount": 1.998,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-28 14:42:00",
+      //       "commission": 0.002
+      //     }, {
+      //       "id": 69,
+      //       "mchid": "13ff265b4b23704f",
+      //       "settleTotal": 2,
+      //       "payMethod": "1009",
+      //       "settleAmount": 1.998,
+      //       "settlePercentage": 0.001,
+      //       "settleStatus": 0,
+      //       "sortDate": "2019-10-28 14:46:00",
+      //       "commission": 0.002
+      //     }],
+      //     "pageNo": 1,
+      //     "pageSize": 10,
+      //     "pageStartRow": 0,
+      //     "pageEndRow": 10,
+      //     "total": 14,
+      //     "pages": 2
+      //   }
+      // }
+
+      // // console.log(data)
+
+      // let { 
+      //   data: { 
+      //     dataList, 
+      //     pages,
+      //     pageSize
+      //   }
+      // } = data
+      // // let dataList = data.data.dataList
+      // // let pages = data.data.pages
+      // console.log(dataList, pages,pageSize)
+
+
+
+
+      // let a = 3
+      // let b = 4;
+
+      // [b, a] = [a, b]
+      // console.log(a, b)
+
+      // let arr = [1,2,3,4,5];
+
+      // [arr[0], arr[3]] = [arr[3], arr[0]]
+
+  </script>
+</body>
+</html>

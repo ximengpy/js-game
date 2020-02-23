@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+</head>
+<body>
+<script>
+  // JSONP: 使用script标签实现的跨域操作
+
+  // 跨域: 当前的网页域名A 你想要访问B域名的东西,
+  // 同源策略: 协议相同/域名相同/端口相同
+
+  // script标签请求资源的方式
+  // script标签特殊: 无视同源策略向不同服务器请求资源, 加载外部资源的时候是可以直接执行的
+
+  // 如果说是访问一个地址 他会返回一段JS代码, script引入就可以执行了
+
+  // 后台向前端传的所有的代码都是字符串.
+  // function getData(data){
+  //   console.log("getData数据已经拿到了,是:",data)
+  // }
+  //
+  // function handleData(data){
+  //   console.log("handleData数据已经拿到了,是:",data)
+  // }
+
+  // 用JS代码动态生成:
+  // let str = 'a=1&b=2&cb=callback'
+  //
+  // let script = document.createElement("script")
+  // script.src = 'http://localhost/jsonp?'+str
+  // document.body.appendChild(script)
+  // script.onload = function () {
+  //   // 删除script标签
+  //   document.body.removeChild(script)
+  // }
+  //
+  // function callback(data) {
+  //   console.log(data)
+  // }
+
+
+</script>
+<!--<script src="http://localhost/jsonp?cb=handleData"></script>-->
+</body>
+</html>

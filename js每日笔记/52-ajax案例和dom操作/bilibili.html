@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .suggest_high_light{
+      color: red;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+<input type="text" class="search">
+<div class="list"></div>
+<script>
+
+  // url转码
+  // 我们如果往url里面填写任意内容 => & = 引起歧义
+  // 假设 data1的值是 value1&data2=value2
+  // 往后台传入的数据 变成了 data1=value1 data2=value2 引起歧义啊
+  // 非常危险: url转码 所有危险的字符转换成没有歧义的字符 encodeURI
+  // 将输入的一些可能存在编码错误的编码转义成为无歧义的编码
+
+  let input = document.querySelector(".search")
+  let listDiv = document.querySelector(".list")
+  input.oninput = (function () {
+    // 做一个节流的
+    let timer = null
+    return function(){
+      clearTimeout(timer)
+      timer = setTimeout(()=>{
+        searchData(input.value)
+      },700)
+    }
+  })()
+
+
+  function searchData(keyword){
+    const url = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==`
+    let script = document.createElement("script")
+    script.src = url
+    document.body.appendChild(script)
+    script.onload = function () {
+      document.body.removeChild(script)
+    }
+  }
+
+  function render(data){
+    const list = data.result && data.result.tag || []
+    // 另外的工作
+    console.log(list)
+    listDiv.innerHTML = ""
+    let str = ""
+    list.forEach(item => {
+       str += `<p>${item.name}</p>`
+    })
+    listDiv.innerHTML = str
+    p = document.querySelectorAll(".listDiv")
+    p.forEach(function(item){
+      item.onclick = function(){
+                    window.location.href =`http://www.baidu.com`
+                }
+    })
+    // 在页面中渲染list
+  }
+</script>
+</body>
+</html>

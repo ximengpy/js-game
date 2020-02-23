@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  // ajax async javascript and xml (异步的javascript和数据 (xml: 数据格式))
+  // 在代码中异步发送请求获取数据的过程
+
+
+  // 上古时期, 没有ajax, 如果页面要更新数据, 意味着全部都要刷新, 消耗很多的请求(带宽, 响应) 性能很糟糕
+
+  // 单独请求页面的一部分信息, 拿到了之后DOM 操作动态修改 => 跳过了刷新页面的操作
+
+  // ajax 不整体刷新的页面的时候向后台发送请求拿到数据
+
+  // 什么叫ajax对象; 操作的核心的对象, 由一个特殊的构造函数构造出来
+  // XMLHttpRequest 构造函数创建一个可以发送给后台的ajax对象
+  let xhr = new XMLHttpRequest()
+
+  // 如果你有服务器的同学, 明天登录上去自己的服务器
+  // 本地也可以进行操作 nodeJS 搭建一个本地服务器 或者远程服务器
+  // 服务器: 一个电脑 + 一个固定ip地址 (响应服务)
+  // 用户(浏览器)发起请求(数据)
+  // 前端不需要深入了解服务器的操作的, 基本的概念需要掌握的
+
+  // url 端口 路由 .. 请求方式 ..
+  // 一次完整的请求都做了哪些事情
+  // 推荐大家: 了解一下http相关的 , 计算器底层 ...
+</script>
+</body>
+</html>

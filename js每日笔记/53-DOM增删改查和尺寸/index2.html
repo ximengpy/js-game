@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;padding: 0;
+    }
+    body{
+      height: 10000px;
+    }
+    .box{
+      width: 300px;
+      height: 300px;
+      margin: 50px;
+      border: 3px black solid;
+      background-color: red;
+      overflow: scroll;
+    }
+  </style>
+</head>
+<body>
+<!--  <div class="box">-->
+<!--    相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点相当于以字符串的方式添加属性节点-->
+<!--  </div>-->
+<script>
+  // let input = document.querySelector("input")
+  // // 添加了一个自定义属性 没有办法访问或者是修改的
+  //
+  // // setAttribute getAttribute 设置属性 获取属性
+  // // 相当于以字符串的方式添加属性节点
+  //
+  // // 今后但凡涉及到 标签节点属性的设置获取 都需要用到这样的方法
+  //
+  // // 属性的生成
+  // let attr = document.createAttribute("nice")
+  // console.log(attr.nodeType)
+  // // attr属性节点: setAttributeNode 属性节点的设置方法
+  // // data-attr1="123" 这种方式添加属性 , 最终属性添加到
+  // // 元素.dataset 中以 键值对的形式添加
+  // input.setAttributeNode(attr)
+
+
+  // DOM元素的 尺寸信息 元素的位置大小样式...各种内容在哪里呢?
+  // getBoundingClientRect 非常简单的获取元素所在页面位置以及大小的实际信息
+  let boxList = [...document.querySelectorAll(".box")]
+  // getBoundingClientRect 其中 x y left top等等 都是对于浏览器窗口可视区域的位置的
+  // 位置: 元素的宽高 窗口宽高 文档宽高
+  // client 元素本质的宽高 元素可视区域
+  // content宽高 + padding宽高 不包括 滚动条 外边距 边框的大小
+  // clientWidth / clientHeight
+  // 滚动条默认是17px
+  // 浏览器窗口可视大小: window.innerWidth window.innerHeight
+  // 浏览器大小: window.outerWidth window.outerHeight
+  // 包含滚动条实际大小
+  // 元素位置等等 相对谁: 页面 父元素 窗口 定位父级
+  // 滚动位置获取, 设置 做自己的平滑滚动
+  // 常见的事件 事件模型 事件监听
+
+
+</script>
+</body>
+</html>

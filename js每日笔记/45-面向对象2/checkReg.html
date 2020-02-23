@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<input class="input" type="text">
+<input type="button" class="check" value="检查">
+<p class="message"></p>
+<script>
+  let input = document.querySelector(".input")
+  let button = document.querySelector(".check")
+  let msg = document.querySelector(".message")
+
+  button.onclick = function () {
+    let val = input.value
+    let result = true
+    console.log("check")
+    try { // 尝试执行代码
+      new RegExp(val) // 执行正则的实例化, 如果实例化失败那就是会报错
+    }catch (e) { // 如果代码报错会指向catch的内容
+      result = false
+    }
+    msg.innerHTML = result
+  }
+
+</script>
+</body>
+</html>

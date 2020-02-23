@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<input type="text">
+<input type="submit">
+<script>
+  /*
+  * 正则表达式:
+  *   对字符串进行匹配操作, 找到满足条件的字符串
+  *   对象
+  *       new RegExp( 描述, 匹配模式 )
+  *
+  *    //
+  *
+  *   特殊符号:
+  *     []: 或者的条件匹配 单个 字符
+  *     可以使用 - 表示ascii码字符的范围
+  *
+  *     也可以: 取反 [^asd]  除了 a 除了 s 除了 d 之外的所有内容
+  *
+  *
+  *   正则对象的方法:
+  *     test 传入字符串 返回 true/false
+  *
+  *     exec 迭代匹配 返回匹配的详细信息
+  *        不存在返回 null
+  *        存在  返回 数组
+  *     但凡用到Symbol 都可以 用字符串来匹配
+  *     Symbol.match
+  *
+  *
+  *    量词: 描述公式出现了多少次
+  *     默认贪婪: 尽可能多的匹配
+  *       {} 传入一个数(精准) 或者2个数(两个的范围)
+  *    总结一个规律: 只有一个量词链接着一个匹配的时候, 并且量词最小的范围是 0 , 那么必然会在首位匹配0次
+  *     0次绝对会匹配得到, 结果是空字符串.
+  *     * 0次以上 {0,}
+  *
+  *     + 1次以上 {1,}
+  *
+  *     ? 0次或者是1次 {0,1}
+  *
+  *   ^ $ 匹配的是位置: 表示字符串开头或者是结束
+  *       结合使用: 限定字符串长度:
+  *
+  *
+  * */
+
+  // let reg = /a([as]c){0,2}/
+  //
+  // let word = "asascc"
+  //
+  // console.log(reg.exec(word))
+
+  // 长度为5-8位的纯数字,
+  // /[0-9]{5,8}/   中间是否有至少5位连续的数字, 最多获取8位连续的数字
+  // let reg = /^[0-9]{5,8}$/   // 全部的字符串都是数字 并且最少5位最多8位
+  //
+  // let password = "12345689"
+  //
+  // console.log(reg.exec(password))
+
+  // let input = document.querySelector("input[type='text']")
+  //
+  // let submit = document.querySelector("input[type='submit']")
+  //
+  // submit.onclick = function () {
+  //   let reg = /^\d{5,8}$/
+  //   if(!reg.exec(input.value)){
+  //     alert("请输入5-8位的数字")
+  //   }else{
+  //     console.log("提交数据")
+  //   }
+  // }
+
+
+  // 除了字母之外的所有内容 [^a-zA-Z]
+
+  /*
+  * 反斜杠: 转义后面挨着的符号
+  *
+  * 正则表达式中的各种简写: 分大小写的
+  *    . : 任何单个字符,除了换行符(\n)
+  *
+  *    \d: 匹配的是[0-9] 单个数字
+  *    \D: 匹配的除了[0-9]之外的内容 也就是 [^0-9]
+  *
+  *    \w: 匹配非特殊字符(数字, 大小写字母, 下划线): [0-9a-zA-Z_]
+  *    \W: 匹配特殊字符(或者汉字标点符号...) [^0-9a-zA-Z_]
+  *
+  *    \s: 所有的空格: 大的类目: 包含了 空格 制表符 换行符 缩进符
+  *    \S: 所有的非空格
+  *
+  *    \b: 匹配单词边界: 匹配的位置
+  *    \B: 匹配的非单词边界
+  *
+  * */
+
+  // 获取冒号前面的那个字
+  // let str = `a:"你好"., b:"你好"\n :"大家好"
+  // `
+  // let reg = /../g
+  //
+  // console.log(reg[Symbol.match](str)) //   str.match(reg)
+
+
+  // let reg1 = /[^a-z]/g // 匹配除了小写字母之外文档所有内容
+  // let reg2 = /^[a-z]/g // 以小写字母开头
+  //
+  // console.log(reg1[Symbol.match]("a123b"))
+  // console.log(reg2[Symbol.match]("a123b"))
+
+  // let str = "hello nice to meet you"
+  // let reg = /\b./g // 单词边界后面挨着的字符
+  // console.log(reg[Symbol.match](str))
+
+
+  // 匹配模式 断言 捕获组
+
+  /*
+  * 匹配模式: 第二个参数: 记住这三个就行
+  *     i: 无视 大小写
+  *     g: 全局匹配
+  *     m: 是否允许换行重新开始
+  *
+  * */
+
+  /*
+  * 正则断言: 断言: 就是一个提前说出来的内容
+  *   先写上括号: 需要断言的内容括起来
+  *   在括号里面?
+  *   后面还要在加上断言位置
+  *       在后面 ?=
+  *       在前面 <=
+  *   后面 不能满足条件: 才可以匹配得到 ?!
+  *
+  *   正则中, 断言其实就是一个约束条件, 需要查询约束条件, 最终匹配不要这个约束条件
+  *
+  *   分成了两个 位置
+  *
+  *   前置断言: 判断x前面是否有形容词y
+  *     有的: (?<=y)x
+  *     没有: (?<!y)x
+  *   后置断言: 判断x后面是否有形容词y
+  *     有的: x(?=y)
+  *     没有: x(?!y)
+  * */
+  // 匹配任意以.mp4结尾的影片的名称 不包含影片的后缀的
+  // let str = "银时.mp4\n阿飞.rmvb\n万章1.avi\n万章2.mp4"
+  //
+  // // let reg = /.+(?=\.mp4)/gm // 匹配的是 .mp4前面的内容 不包含.mp4 但是.mp4 作为了查询条件
+  // // 刚好是取反的操作  非.mp4前面的内容
+  //
+  // // 万章的影片 但是影片的后缀不是.mp4
+  // let reg = /万章.(?!\.mp4)/g
+  //
+  // let str = "银时.mp4\n阿飞.rmvb\n银时.avi\n万章.avi万\n万章.mp4万"
+  //
+  // // 看看万章老师的影片到底有几种格式
+  //
+  // let reg = /(?<=万章\.).+/gm // 万章只是一个定语: 但是不会在匹配结果中出现
+  //
+  // console.log(str.match(reg))
+
+
+  // 正则是有状态的: 正则是一个对象: 正则对象匹配的时候是会记录自己的匹配位置的
+  // exec 迭代: 会将以前匹配结束的位置保留下来
+
+  // let str = "asdf"
+  //
+  // let reg = /[asdf]/g
+
+  // lastIndex 指的是 上次匹配成功结束的位置
+  // 下次匹配的时候 就会从新的位置开始
+
+  // console.log(reg.exec(str))
+  // console.log(reg.exec(str))
+
+  // let result
+  // while(result = reg.exec(str)){
+  //   console.log(result)
+  // }
+
+
+  // 捕获: 将正则中的一些内容记录下来 在结果中输出
+  // 有的时候我们需要这个捕获的内容
+  // 直接写没有任何影响
+
+  // 数组 [0] 匹配最终结果
+  // [1] ... [n] 根据括号进行捕获
+
+  // let str = "The first rule of Fight Club is: You do not talk about Fight Club"
+  //
+  // let reg = /(the)\s(fi(rs)t)\s(rule)/gi
+  //
+  // let result = reg.exec(str)
+  // console.log(result) // groups index input 他们是可枚举的 所以 不要用for..in
+  // // 但是for..of就可以 但是也要注意第0项不是捕获内容
+  // for(let i of result){
+  //   console.log(i)
+  // }
+
+  // let str = 'abcd'
+  //
+  // let reg = /(a)(b)(c)(d)/
+  //
+  // // replace 替换
+  // // 接受两个参数的: 第一个 匹配内容 第二个是替换内容
+  // // 捕获的内容可以在替换内容中使用 $后面的内容就是捕获的位置
+  // console.log(str.replace(reg, "$4$3$2$1"))
+
+  // let date = "2019-12-9"
+  //
+  // // 改成 日-月-年的形式
+  //
+  // let reg = /(\d*)-(\d*)-(\d*)/
+  //
+  // console.log(date.replace(reg, "$3-$2-$1"))
+
+  // 捕获起名:
+
+  // let date = "2019-12-9"
+  //
+  // // 改成 日-月-年的形式
+  // // (?<name>) 最终会被添加到捕获组中命名保存
+  //
+  // let reg = /(?<年>\d*)-(?<月>\d*)-(?<日>\d*)/
+  //
+  // console.log(reg.exec(date))
+  // console.log(date.replace(reg, "$<日>-$<月>-$<年>"))
+  // reg.groups 把捕获内容获取下来
+
+  // replace 的第二个参数:
+  // 以前是支持 字符串的, 还是可以支持函数的: 函数的
+  // 返回新的字符串, 原来的不会修改...
+
+  // 请大家参考 数组 map方法学习
+  // split  也是支持正则裁切的
+
+  // 贪婪模式
+
+</script>
+</body>
+</html>

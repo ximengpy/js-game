@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<script>
+  /*
+  * JS 是基于原型的
+  *
+  * 构造函数: 创建实例=> 给基因(prototype)
+  *
+  * 实例: 对象, 自己的方法(构造函数this) 实例对象原型(访问 __proto__)来自构造函数的原型(prototype)
+  *
+  * 原型:
+  *     实例原型: __proto__ 参与访问属性的查询位置
+  *     构造函数的原型: prototype 赋值指向 传递给实例, 具有构造函数共有的特点
+  *
+  * function Foo(){}
+  *
+  * let obj = new Foo()
+  *
+  * obj.__proto__ === Foo.prototype // true
+  *
+  * 讨论了: 函数由来 prototype的由来 Object由来 Function由来
+  *
+  *
+  * 目的: 认识对象的属性是怎么访问的: 我们该如何设计对象的属性在原型链的位置
+  *
+  * 原型链:
+  *   功能非常强大
+  *
+  * 数组,字符串,...
+  * */
+  // let arr = new Array(1, 2, 3)
+
+  // 有什么样的方法? 任何一个数组对象都有这些方法length sort forEach reduce map filter shift*4 ....
+
+  // 这些方法来自哪里? Array.prototype, 这就是每个数组为什么都有那些方法的原因了
+
+  // let divList = document.getElementsByTagName("div")
+
+  // 为什么他们是类数组而不是数组. 他们根本就不是数组构造函数生成的
+
+  // 拓展了: 是不是我们可以自己添加数组的抽象方法 是的
+
+  // 以前我们自己封装过数组的方法api
+
+  // 几乎百分百的复现数组的方法
+  // function forEach(arr, cb){
+  //   for(let i =0;i < arr.length;i++){
+  //     cb(arr[i], i, arr)
+  //   }
+  // }
+  // 几乎(兼容性)百分之百的还原了forEach底层的实现
+  Array.prototype.myForEach = function (cb) {
+    // 我们的arr去哪里了? => this
+    for(let i = 0;i < this.length; i++){
+      cb(this[i], i, this)
+    }
+  }
+  
+  ;[1, 2, 3].myForEach(function (item) {
+    console.log(item)
+  })
+
+  // 自己将以前实过的 reduce filter map shift unshift push pop 都在原型的角度实现一下
+
+  // 将这些方法, 也可以添加到类数组的原型中
+
+  // [1,2,3].myForEach(function () {
+  //
+  // })
+
+
+  // 自己实现以下 call apply bind
+
+  // 原型链之前的实现方式
+  // function myCall(fn, obj, ...rest){
+  //   // 给obj对象添加了一个方法_fn
+  //   obj._fn = fn
+  //   // obj.fn(...rest)
+  //   obj._fn(...rest)
+  //   // 请记住删除这条属性
+  //   delete obj._fn
+  // }
+  //
+  // // call方法的示例:
+  let obj = {
+    name: "this is obj"
+  }
+  function foo(arg1, arg2){
+    console.log(this.name, arg1, arg2)
+    return "foo返回"
+  }
+
+  // 如果你要实现call 方法 所有的函数都有 Function
+
+  Function.prototype.myCall = function (obj, ...rest) {
+    obj._fn = this
+    let result = obj._fn(...rest)
+    delete obj._fn
+    return result
+  }
+
+  // apply bind ... 自己去研究 ..
+
+  // foo.call(obj, 1, 2)
+
+  // 任何对象任何方法对我们都一样, 因为我们都可以借用封装
+
+
+  // 继承..
+
+  // 数组的方法: 任何对象他都有toString的方法.
+
+  // 结论: 只能添加或者在不影响的情况下做加法, 不能做减法, 不能随意的删除某些东西
+
+  // 只能够进化和覆盖. 继承父母祖先的基因的时候我们也进化出来新的基因, 而且覆盖了之前的基因
+
+
+  // 怎么做原型的继承
+
+  // 1. Son构造函数 继承 Father的一些特性 (继承父亲的特性)
+  // 2. Son构造函数 表现 出了Father没有的特性 (多个特性)
+  // 3. Son构造函数 进化 改变了Father的特性表达 (表现子构造函数的特性)
+
+  // 共有的 私有的
+  // 将Son 继承 Father
+
+  // 需求 能访问 父亲的type 自己的 name 自己的privateSonProps
+
+  function Son() {
+    this.name = "this is son" // son可能和父亲相同的属性
+    this.privateSonProps = "this is son private props" // son独有的属性
+  }
+
+  Son.prototype = Object.assign(Son.prototype, {
+    say: function () {
+      console.log("Son", this.type, this.name, this.privateSonProps)
+    },
+    playGame: function () { // 父类没有 子类有 的方法
+      console.log("游戏真好玩")
+    }
+  })
+
+  function Father(){
+    this.type = "human"
+    this.name = "this is father"
+    this.privateFatherProps = "this is father private props"
+  }
+
+  Father.prototype = Object.assign(Father.prototype, {
+    playChess: function () { // 父类有 子类没有 的方法
+      console.log(this.name, "下棋")
+    },
+    say: function () { // 父类有 子类有 的方法
+      console.log("Father", this.type, this.name, this.privateFatherProps)
+    }
+  })
+
+
+
+  // 实现一个完美的继承: 对 Son进行实例化, 实例对象中能访问得到哪些东西?
+  // 自己有的绝对是自己的 自己没有的才会找到父亲的
+  // 属性: 自己的name 自己的privateSonProps 父类的type 父类的
+  // 方法: 自己的say方法 自己的playGame方法 继承父亲的下棋天赋
+
+  // 做到 构造函数的继承
+
+  // 可以实现但是不推荐的方法
+  // function inherit(son, father){ // 传构造函数,
+  //   let f = new father()
+  //   Object.assign(son.prototype, f) // assign 方法只能拷贝属性不能拷贝原型
+  //   son.prototype.__proto__ = father.prototype // 不合法的. 不能使用 __proto__
+  // }
+
+  function inherit(son, father){
+    // 用一个中间键连接: 用一个莫须有的构造函数
+    // 用实例去装载father的属性, 用实例原型去装载father的原型, 作为跳板实现了继承.
+    // father 被实例化过:
+    let f = function () {
+    }
+    f.prototype = father.prototype
+    // 暂时保存起来
+    let temp = son.prototype
+    // _uber 其实是可以跳过子类访问父类的一个跳板
+    let _uber = new father()
+    // 强行修改 son.prototype
+    son.prototype = new f()
+    console.log(son.prototype._proto_)
+    // 通过这个跳板 访问到父类的方法
+    // 实例中son 指的儿子 son._uber指的就是父类
+    son.prototype._uber = _uber
+    
+    Object.assign(son.prototype, _uber , temp) // 可以接受多个参数, 从前往后合并
+    // 原型指向改回来
+    son.prototype.constructor = son
+  }
+  inherit(Son, Father)
+  // 实例化代码
+  let son = new Son()
+
+
+
+
+
+
+
+  // // 补充知识 构造函数的使用方法:
+  // // 在同级实例中 将私有的方法 写在this中 公共方法写在 prototype里面
+  //
+  // function Son(name, age){
+  //   this.name = name
+  //   this.age = age
+  // }
+  // Son.prototype.say = function(){
+  //   //
+  //   console.log(this.name, this.age)
+  // }
+  //
+  // // 如果这两个对象有公共特性该如何实现
+  //
+  // let son1 = new Son("张三", 19)
+  // let son2 = new Son("李四", 20)
+
+
+
+  // 结论: JS去实现面向对象或者继承 难为他了
+
+  // ES6: 简单: 语法糖 class 类 => 构造函数一样
+
+  //
+
+  // function Son() {
+  //   this.name = "this is son" // son可能和父亲相同的属性
+  //   this.privateSonProps = "this is son private props" // son独有的属性
+  // }
+  //
+  // Son.prototype = Object.assign(Son.prototype, {
+  //   say: function () {
+  //     console.log("Son", this.type, this.name, this.privateSonProps)
+  //   },
+  //   playGame: function () { // 父类没有 子类有 的方法
+  //     console.log("游戏真好玩")
+  //   }
+  // })
+  class Parent {
+    constructor(){
+      this.type = "human"
+      this.name = "this is father"
+      this.privateSonProps = "this is son private props"
+    }
+    say() {
+      console.log("father", this.type, this.name, this.privateSonProps)
+    }
+    playChess() {
+      console.log(this.name,"下棋")
+    }
+  }
+
+  // 语法糖写法掌握
+  class Child extends Parent{
+    constructor(name){
+      // super 指的是Parent
+      super()
+
+      this.name = name
+      this.privateSonProps = "this is son private props"
+    }
+    say() {
+      // this也会指向构造函数的实例
+
+      console.log("Son", this.type, this.name, this.privateSonProps)
+    }
+    playGame() { // 父类没有 子类有 的方法
+      console.log("游戏真好玩")
+    }
+    getSuper(){
+      console.log(super.name)
+      console.log(this.name)
+    }
+  }
+
+  let child = new Child("银时")
+
+  // super 指父类构造函数, 但是 一旦遇到同名属性是会被直接覆盖的, 消失的
+
+  // 在大多数情况下继承是没有问题的, 父类的东西本来就该在历史的洪流中消失:
+
+  // class private static //
+</script>
+</body>
+</html>

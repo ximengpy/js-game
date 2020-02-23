@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+ canvas{
+  background-color:burlywood
+  
+ }
+ </style>
+</head>
+<body>
+ <canvas width = "500px" height="500px"></canvas>
+ <script>
+ let canvas = document.querySelector("canvas")
+ let ctx =canvas.getContext("2d")
+ ctx.beginPath()
+  let img = new Image()
+  img.src ="http://localhost:63342/58-canvas/1.jpg"
+  img.onload=function(){
+   ctx.drawImage(img,130,50,235,250,100,100,200,200,235,250)
+
+   let imgdata =ctx.getImageData(700,100,235,250)
+  }
+
+// ctx.beginPath()
+ // ctx.rect(100,150,200,250)
+ // ctx.stroke()
+ // ctx.strokeStyle= "#dcc"
+ // ctx.fillStyle = "#dbb"
+ // ctx.fill()
+ // ctx.beginPath()
+ // ctx.beginPath()
+ // ctx.arc(300,300,50,0,Math.PI)
+ // ctx.stroke()
+ // ctx.fillStyle= "#345"
+ // ctx.fill()
+
+</script>
+</body>
+</html>

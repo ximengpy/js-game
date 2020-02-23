@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .screen{
+      border: 1px black solid;
+      height: 30px;
+      line-height: 30px;
+    }
+    .numbers,.symbol{
+      width: 300px;
+    }
+    .numbers span,.symbol span{
+      display: inline-block;
+      margin: 20px;
+      width: 40px;
+      height: 50px;
+      background-color: #ccc;
+      text-align: center;
+      line-height: 50px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="screen"></div>
+  <div class="numbers">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>6</span>
+    <span>7</span>
+    <span>8</span>
+    <span>9</span>
+    <span>0</span>
+  </div>
+  
+  <div class="symbol">
+    <span class="">←</span>
+    <span>C</span>
+    <span class="plus">+</span>
+    <span class="minus">-</span>
+    <span class="times">*</span>
+    <span class="division">/</span>
+    <span class="remainder">%</span>
+    <span class="equal">=</span>
+  </div>
+  <script>
+    /*
+      计算器: 
+        1. 第一个运算数值(num1)
+
+        2. 运算符号(+ - * / %)
+
+        3. 第二个运算数值(num2)
+
+        4. 计算, 求运算值 ( = )
+    */
+
+    /*
+      获取 num1 和 num2 和 运算符
+
+      // 升级
+
+      不定个数运算
+      放到一个数组中
+
+      1. 从简单的项目出发
+      2. 提升需求
+      3. 慢慢完善
+
+      项目需求分析: 
+
+    */
+    // let num1 = ""// 为什么用字符串?
+    // let num2 = ""
+    // 用数组记录 输入值 和 运算法
+    let numAndSymbolArr = [""]
+    // 作为万物的开端
+    // 
+    let pointer = 0
+
+
+    let symbol = "" // (值 为 + - * /)
+    let steps = "num" // num / symbol
+    let screen = document.querySelector(".screen")
+    let plus = document.querySelector(".plus")
+    let minus = document.querySelector(".minus")
+    let times = document.querySelector(".times")
+    let division = document.querySelector(".division")
+    let remainder = document.querySelector(".remainder")
+    let numbersBtn = document.querySelectorAll(".numbers span")
+    let equal = document.querySelector(".equal");
+    // 给每个元素绑定一个点击事件
+    // 输入第一个数
+    [].forEach.call(numbersBtn, function(item){
+      // console.log(item)
+      // 给每一个按钮绑定点击事件
+      item.onclick = function(){
+        // 如何获取到当前的item?
+        const VAL = this.innerHTML
+        // 该怎么用? 尾部添加
+        // 
+        // if(steps === "num1"){
+        //   num1 += VAL
+        // }else{
+        //   num2 += VAL
+        // }
+        if(steps === "symbol") {
+          pointer++
+          steps = "num"
+          numAndSymbolArr[pointer] = ""
+        }
+        numAndSymbolArr[pointer] += VAL
+        render()
+      }
+    })
+    // 运算符 设置
+    plus.onclick = function(){
+      if(steps === "num"){
+        pointer++
+        // if(pointer === 1) return
+        steps = "symbol"
+      }
+      numAndSymbolArr[pointer] = "+"
+      render()
+    }
+    minus.onclick = function(){
+      if(steps === "num"){
+        pointer++
+        // if(pointer === 1) return
+        steps = "symbol"
+      }
+      numAndSymbolArr[pointer] = "-"
+      render()
+    }
+    times.onclick = function(){
+      
+      if(steps === "num"){
+        pointer++
+        // if(pointer === 1) return
+        steps = "symbol"
+      }
+      
+      numAndSymbolArr[pointer] = "*"
+      render()
+    }
+    division.onclick = function(){
+      if(steps === "num"){
+        pointer++
+      // if(pointer === 1) return
+        steps = "symbol"
+      }
+      
+      numAndSymbolArr[pointer] = "/"
+      render()
+    }
+    remainder.onclick = function(){
+      // if(pointer === 0) return
+      if(steps === "num"){
+        pointer++
+        steps = "symbol"
+      }
+      
+      numAndSymbolArr[pointer] = "%"
+      render()
+    }
+
+    function render(){
+      screen.innerHTML = ""
+      console.log(numAndSymbolArr)
+      numAndSymbolArr.forEach((item, index) => {
+        if(item !== "+" && item !== "-" &&item !== "*" &&item !== "/" &&item !== "%"){
+          item = Number(item)+""
+        }
+        screen.innerHTML += item
+        
+      })
+      // screen.innerHTML = num1 + symbol + num2
+    }
+
+
+    // 计算等号
+
+    // 算法基础: 
+
+    /*
+      3 + 2 * 5 - 3
+
+      考虑优先级的话 
+        需要建立一个二叉树
+
+        1. 写一个树的模型
+    
+    */
+
+    equal.onclick = function(){
+      // numAndSymbolArr
+
+      // 从左往右进行运算
+      // 3 + 2 - 5
+      // (3, +)  2 - 5
+      // 5 - 5
+
+      // 从数组中头部扔出两个值 数组现在头部的那个值运算
+      // 不定长度的运算
+      while (numAndSymbolArr.length > 1){
+        // 丢出去一个数
+        const firstNumber = numAndSymbolArr.shift()
+        // 丢出去那个运算符号
+        const symbol = numAndSymbolArr.shift()
+        // numAndSymbolArr[0] = firstNumber symbol numAndSymbolArr[0] 
+        numAndSymbolArr[0] = calc(firstNumber, symbol, numAndSymbolArr[0])
+        console.log(numAndSymbolArr)
+      }
+      render()
+      pointer = 0
+    }
+
+    function calc(first, symbol, second){
+      // switch case 解决方法
+      // 显示转换成为同类型运算
+      first = Number(first)
+      second = Number(second)
+      // hashmap方法 表格发
+      let map = {
+        "+": (first, second) => (first + second),
+        "-": (first, second) => (first - second),
+        "*": (first, second) => (first * second),
+        "/": (first, second) => (first / second),
+        "%": (first, second) => (first % second),
+      }
+      return map[symbol](first, second)
+    }
+
+
+    /*
+      键盘事件: 
+        当我们按下某个键, 做某件事 单独事件处理
+
+      添加非常糟糕
+
+      按键 对应的方法抽象出来 => 写了一个配置表
+
+      路由配置
+
+
+      加密: 
+
+        一串数字加密
+        1 -> 7
+        2 -> 3
+        3 -> 9
+        4 -> 3
+        ....
+      let map = {
+        1: 7,
+        2: 3,
+        3: 9,
+      }
+      let newStr = ""
+      [].forEach.call("16723571623567", (item)=>{
+        newStr += map[item]
+      })
+    */
+
+
+
+    /*
+      周四 周五 周六 研究 排序算法入门知识: 代码效率(时间复杂度, 空间复杂度)
+        冒泡, 插入, 选择, 快排(难), sort(cb)
+      
+      大学必修课: 
+        
+    
+    */
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  /*
+  * 柯里化: 接受参数让代码先去接受一部分, 返回一个可以接受其他部分的函数, 最终接受剩余参数然后可以执行.
+  *
+  * 反柯里化: 某种特殊情况下才能生效的代码, 变成适用范围更广的代码(针对不同的对象类型)
+  * 鸭子类型:
+  *   看上去像, 摸上去像, 具有相同的特点, 但是却不是这个物体, 我们就可以强行叫他那个物体
+  *
+  * */
+  // let arr = [1,2,3]
+  //
+  // // arr.forEach arr.reduce ...
+  //
+  // let str = "asd" // 没有办法使用数组的方法
+  //
+  // arr.forEach.call(str, item => {
+  //     console.log(item)
+  // })
+
+  // 反柯里化拆解代码
+
+  // function foo(){
+  // }
+  // foo.uncurrying = function () {
+  //     // ...
+  // }
+  // let newFoo0 = foo.uncurrying()
+  // newFoo()
+
+  // 此时newFoo就是功能和foo几乎一致, 但是适用范围更广
+
+  // 对他进行拆解变形 生成一个新的函数, 新的函数适用范围就会更广
+  // 可以适用于所有函数(任意一个函数) => 添加一个功能 => 反柯里化的操作
+
+  // 1. 给所有的函数添加一个uncurrying拆解方法
+  // 所有函数的母体 Function.prototype
+
+  // Function.prototype.uncurrying =
+
+  // function foo(){
+  //
+  // }
+
+  // 业务代码: 对字符串进行reduce操作,但是reduce是一个单独的函数
+
+  // 借助任意一个数组的reduce方法, 对他进行拆解
+  // 封装库: 尽量使用以前的方法
+  // 原型上封装方法: 也是这样的方法 => 使用非常简单
+  Function.prototype.uncurrying = function(){
+      // console.log(this) // 不会打印的
+      const self = this
+      // 返回拆解的结果
+      return function () {
+          // 接受的参数分成两个部分, 第一个是调用主体 obj
+          // 第二个以及后面的参数, 是原函数的参数 rest
+          let obj = [].shift.call(arguments)
+          let rest = arguments
+          console.log(rest)
+          // 被拆解的那个函数是谁: 是谁? 去哪了
+          // 谁调用 uncurrying 谁就是那个被调用的函数
+          // console.log(this) // window
+          // 用reduce的方法在obj上调用, 并且传入rest
+          return self.apply(obj, rest)
+      }
+  }
+
+  // forEach拆解
+
+  // let forEach = [].forEach.uncurrying()
+  //
+  // forEach("asd", function (item) {
+  //     console.log(item)
+  // })
+  // 独立方法可以独立添加, 控制
+  // 任意函数都生效
+  let reduce = [].reduce.uncurrying()
+  let result = reduce("123", (total, current) => {
+      return total*current
+  }, 1)
+
+
+  // 提取(加工)数组的reduce的方法, 进行反柯里化 得到一个可以作用在其他主体上的reduce
+  // let reduce = [].reduce.uncurrying()
+  // let filter = [].filter.uncurrying()
+  //
+  // // 演示作用在其他物体上的操作
+  // let ans = reduce("123", (a, b) => {
+  //     return a*1+b*1
+  // }, 0) // 6
+
+  // [1,2,3].reduce(...)
+
+
+
+
+</script>
+</body>
+</html>

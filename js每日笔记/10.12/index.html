@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="box"></div>
+  <div class="btn">按钮</div>
+  
+  <script>
+    /*
+      JS基本数据类型
+
+      数值: number 
+        用来进行量的计算或者是存储
+        提到进制: 拓展
+          二进制: 0b100
+          八进制: 04
+          十六进制: 0xff
+          十进制: 正常数值
+        NaN 非数值(数值表示或计算错误的情况)
+        Infinity 无穷 大于 1e308
+        科学计数法数值的第二种表示方式
+        10000 == 1e4
+        0.001 == 1e-3
+      字符串: string
+        推荐: "" 
+        '': 也是可以表示字符串
+        表示一段信息文字(字母), 不会被JS解析
+        不允许换行,
+        引号中 还需添加引号, 请注意配对问题:
+          需要添加 \ 或者 使用单引号 
+      字符串的拼接问题: 
+        使用 + 进行拼接
+
+      box = box + str
+      可以简写
+      box += str
+
+      第二种方式: 
+        ES6 模板字符串
+        反引号: 
+          ``
+          ''
+          ""
+          也是成对出现的
+        中间以 ${} 形式进行变量的插入
+        支持换行的
+    要求: 
+      
+
+    */
+    // let str1 = "你好!"
+    // let str2 = "银时!"
+
+    // let ans = str1 + str2 + '么么哒~'
+
+    // console.log(ans)
+
+    
+    /*
+      1. 获取以前的内容
+      2. 增加和以前的合并到一起
+      3. 最终合并之后的东西设置(覆盖)到盒子
+    */
+    /* 
+      相当于将盒子里面的文字抄写了一份给box, 
+      box只是一个字符串变量, 
+      和页面元素没有任何关系 */
+    // let box = document.querySelector(".box").innerHTML
+
+    // let btn = document.querySelector(".btn")
+
+    // btn.onclick = function () {
+    //   box = box + "么么哒~"
+    //   // 将box的内容添加到页面元素中
+    //   document.querySelector(".box").innerHTML = box
+    //   console.log(box)
+    // }
+
+    // let name = "银时"
+    // let age = "19"
+    // let mood = "不开心"
+
+    // let str = "大家好!我是" + name + ",今年我" + age + "岁!我今天非常" + mood + "!"
+
+//   let str = 
+// `<ul>
+//   <li>${name}</li>
+//   <li>${age}</li>
+//   <li>${mood}</li>
+// </ul>`
+
+  // 将str 覆盖掉 box盒子内容
+  document.querySelector(".box").innerHTML = str
+  // 将box内容 覆盖掉 str
+  str = document.querySelector(".box").innerHTML
+
+  /* 
+    布尔类型: boolean
+      状态: 只有两个值 真 / 假
+
+      true
+      false
+    作用: 判断  作为开关
+  
+    表达式计算 会用到 true/false
+
+    红凤凰,粉凤凰, 红粉凤凰, 粉红凤凰
+
+    
+  */
+
+
+  </script>
+</body>
+</html>

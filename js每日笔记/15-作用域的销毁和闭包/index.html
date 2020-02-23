@@ -1,0 +1,202 @@
+<script>
+
+  /*
+    var 函数作用域
+
+    let const 块级作用域
+      推荐
+  */
+
+  function foo(){
+    var a = 3
+    a++
+    function test(){}
+    const b = 2
+    let c = 4
+    console.log(a)
+  }
+  foo() 
+  foo()
+
+
+  /* 
+    foo的执行 
+      内部的变量才会生效
+    foo执行完成之后, foo内部的变量会消失
+
+      函数执行完成 => 变量消失 => 当前函数作用域 的消失
+    
+    作用域的本质是什么? 
+      运行环境 运行环境: 作用域对象
+        创建作用域: 
+        scope = {
+          a: 4,
+          b: 2,
+          test: function test(){},
+          c: 4
+        }
+        删除掉
+
+    垃圾回收机制:
+      防止内存溢出(泄露): 30M 
+      清除的核心时间: 离开作用域的时候
+    
+      怎么判断函数 作用域需要清除呢?
+        1. 标记清除: 
+          变量进入环境的时候标记为进入, 代码运行离开这个环境的时候: 标记环境离开. 垃圾回收机制启动
+          发现这个环境已经没人了, 就开始收拾, 释放环境(内存空间释放出来)
+          代码底层自动实现
+        2. 引用计数: 
+          对变量引用情况统计, 如果引用次数为0, 作用域的消失直接伴随着变量文档消失
+          每一个变量相当于一个灯塔, 如果外界有船还需要用到这个灯塔, 灯塔会继续存在, 直到所有船都回来了
+          这个灯塔就会消失
+
+        特殊情况: 
+          全局变量到底存在多久?  
+          全局作用域在页面关闭之后才会消失,
+          不然会一直存在
+  */
+
+  // function foo1(){
+  //   var a = 3
+  //   function foo2(){
+  //     console.log(a)
+  //   }
+  //   foo2()
+  //   foo2()
+  // }
+
+  // foo1()
+
+  // foo1()
+
+  // function foo2(){
+  //   console.log("foo2存在")
+  // }
+  // foo2()
+
+
+  /* 
+    假如某一个作用域在别的地方被引用了? 
+
+
+
+  */
+  // main结束 data 和 private 作用域 都会消失
+  // function main(){
+  //   var data = "data from main"
+  //   function private(){
+  //     console.log(data)
+  //   }
+  //   private()
+  // }
+
+  // main()
+
+    // function main(){
+    //   let data = "data from main"
+    //   function private(){
+    //     console.log(data)
+    //   }
+    //   return private
+    // }
+
+    // // main函数执行会返回来自内部的private的函数
+    // let privateFromMain = main()
+
+    // privateFromMain()
+    // 1. main函数的作用域消失没有? 
+    //  如果main函数的作用域会消失 => 导致data消失
+    // => 实际上private 传出去了privateFromMain 
+    // => main执行完成之后 => 作用域还被保存下来了
+
+    // function main(){
+    //   var tiaoli = "我们使用了童工"
+    //   function chejian1(){
+    //     // 使用童工(女)
+    //     console.log(tiaoli)
+    //   }
+    //   return chejian1
+    // }
+
+    // main()()
+
+    // let gonganju = main()
+    // gonganju()
+
+    // // 销毁
+    // gonganju = null
+
+    // 闭包: 通过函数拥有作用域链的方式保留了一段本来应该销毁的作用域
+    //
+
+    /*
+      作用: 保留作用域
+    */
+
+    function createAdd(){
+      var sum = 0
+      function add(){
+        return sum += 1
+      }
+      return add
+    }
+
+    // 简单的加法器
+    let add1 = createAdd()
+    let add2 = createAdd()
+    // 代码核心: add1 和 add2 都有
+    // 自己单独的作用域链 能够用保存私有变量
+    // add()
+
+
+    /*
+      创建一个对象 o 
+        o.getNumber() 一开始返回0
+        o.add() 执行之后 o.getNumber()会增加1
+        没有办法用其他方式修改 内部的值
+    */
+
+    /*闭包之前的版本*/
+
+    // var o = {
+    //   count: 0,
+    //   getNumber: function(){
+    //     return o.count
+    //   },
+    //   add: function(){
+    //     o.count++
+    //   }
+    // }
+
+    function createO(){
+      var count = 0
+      var o = {
+        add: function (){
+          count++
+        },
+        getNumber: function(){
+          return count
+        }
+      }
+      return o
+    }
+    let o = createO()
+
+    /*
+      好处: 
+        将全局变量变成一个私有变量 => function,
+        但是还单独保留了访问, 限制了修改
+
+      坏处:
+        内存溢出 => ... 
+
+    */
+
+
+    /*
+      循环绑定问题
+    */
+
+
+</script>

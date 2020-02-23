@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .list li{
+      
+    }
+  </style>
+</head>
+<body>
+  <div name="value"></div>
+  <ul class="list">
+    <li class="box"></li>
+    <li></li>
+  </ul>
+
+  <script>
+    /*
+      获取元素的方式: 
+        这些元素都是在html当中的: 也就是在文档当中都需要document出发找到元素
+
+      近现代的选择方式: ES6 兼容性
+        1. document.querySelector()
+          参数是css选择器来的
+          选中的是满足条件的第一个元素
+        2. document.querySelectorAll()
+          参数是css选择器来的
+          选择的是满足条件的所有的元素,
+          返回一个集合: 多个元素组成的物体 
+      上古时期的选择方式: ES5以前的内容: 兼容性很好
+        get系列
+        3. document.getElementById 通过id获取元素
+          传入参数是一个id名,不需要添加  # 
+        4. document.getElementsByClassName 通过类名获取元素
+          传入参数是class名 
+          返回的是一个集合(数组) 不管选中了多少个
+        5. document.getElementsByTagName 
+
+        6. document.getElementsByName 一般input会设置name属性咱们可以通过这个方式选择
+      程序员的世界中, 数数从0开始
+    */ 
+    var li1 = document.querySelector(".list li")
+    // console.log(li)
+    var li2 = document.querySelectorAll(".list li")
+    // console.log(li2)
+    var li3 = document.getElementById("box")
+
+    var li4 = document.getElementsByClassName("box2")
+
+    var li5 = document.getElementsByTagName("li")
+    
+    var li6 = document.getElementsByName("value")
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .list{
+      width: 600px;
+      height: 600px;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+<ul class="list">
+  <li data-type="red">1</li>
+  <li>2</li>
+  <li data-type="blue">3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li>10</li>
+</ul>
+
+<div class="box" data-abc="value"></div>
+<script>
+  // 数据
+  let arr = [
+    {
+      type: "li",
+      type: "red"
+    }
+  ]
+
+
+  /*
+  * 事件绑定: on事件绑定DOM0级事件
+  *   ex: box.onclick = function(){}
+  *   只能绑定一次, 可以覆盖的
+  * 事件监听: addEventListener DOM2级事件
+  *   ex: box.addEventListener(事件类型, 事件处理函数)
+  *   解绑 removeEventListener
+  * 事件对象形参形式传入 获取事件发生的一些状态
+  *
+  * 事件委托: 不是新的事件的写法, 而是另外的一个思想
+  *
+  *
+  * 点击li元素然后打印元素的innerHTML
+  * */
+  let liList = [...document.querySelectorAll(".list>li")]
+  // // 事件的循环绑定
+  // liList.forEach(li => {
+  //   li.onclick = function () {
+  //     console.log(this.innerHTML)
+  //   }
+  // })
+  // 事件绑定 进行10次传值 => 生成了10个函数
+
+  // 事件监听
+  // function handle(){
+  //   // 等待被调用函数都会保留作用域链
+  //   console.log(this.innerHTML)
+  // }
+  // liList.forEach(li => {
+  //   li.addEventListener("click", handle)
+  // })
+
+  // 事件委托: 思想 设计模式中讲
+  // 在一起的元素都可以交给他们的统一管理者处理:
+  // 用一个观察者观察点击操作 然后再考虑处理或者是不处理
+
+  // 所有li父亲 , 单个元素 事件对象帮我们记录了信息
+  // e.target 事件的目标 触发事件的主体对象
+  // 标签名:
+  // 写出来的第几个? 给li标签添加一个属性count
+  // 通过代码动态生成: 请手动添加一条属性
+  let ul = document.querySelector(".list")
+  // 委托给ul标签 当ul标签被点击的时候 , 再去里面找到到底点击了谁
+  ul.addEventListener("click", function (e) {
+    if(e.target.tagName.toLowerCase() === "li"){
+      const li = e.target
+      li.style.background = li.dataset.type || ""
+    }
+  })
+
+</script>
+</body>
+</html>

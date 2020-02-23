@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 300px;
+      height: 300px;
+      background-color: red;
+    }
+  
+  </style>
+</head>
+<body>
+  <script>  
+    /*
+      字符串: 
+        访问下标(序号): 和数组非常相似
+        重点: 字符串绝对不可以改变的, 除非是覆盖
+        let str = "asd"
+        str.charAt()
+        像对象一样访问: 包装对象
+        str.concat("asdasd", "asd", "asdas")
+        str + "asdasdasd"
+        length 字符个数, 长度
+        下标永远是从左往右
+        indexOf 一个是从左往右
+        lastIndexOf 一个是从右往左
+
+        slice 起点 终点 [) 左闭右开 => 开始位置选中 结束位置不选中
+        第二个值不写默认到结束
+        到...为止(不包含结束的情况)
+        可以写负数: -1 表示最后一个字符
+
+        substring 起始下标 结束下标 (标识下标截取)
+          完全等价于 slice
+        substr (截取长度)
+          起始下标 长度
+
+        ** 字符串切割 **
+
+        let str = "asdfgh"
+
+        split 字符串切分 最终会形成数组
+          第一个参数 以什么样的方法切, 传入一个字符串
+            以传入的字符串作为分隔 切分字符串
+            字符串当中但凡遇到 传入的字符串 就会左右分隔
+        str.split("")
+
+        后面: 爬虫 => python
+
+        后续对字符串模糊匹配 条件查询啊 范围约束啊 .... 正则表达式
+
+
+        replace 替换
+          传入两个参数 
+            第一个是查询的结果 
+            第二个是替换的值
+          默认替换满足条件的第一个
+        
+        trim 返回字符串去掉首尾空格的结果
+
+
+        字符串的大小写转换
+
+        用户输入的时候 很有可能大小写瞎搞 全部转换成为大写或者小写
+
+        .toUpperCase 全部转换成大写
+        .toLowerCase 全部转换成小写
+
+        一个非常邪恶的方法: 可以对字符进行 运行操作
+
+        eval 函数
+          对传入的字符串进行JS解析(表达式运行), 执行
+
+          ** 请尽量不要用它, 因为这可能包含用户输入,有可能被利用
+
+          什么情况下都可以不用 eval 解决
+
+          计算器? 
+    */
+
+    // let style = `width: 300px;height: 300px;background-color: red;`
+    // let styleArr = style.split(";")
+    // console.log(styleArr)
+    // 3+2
+
+    /*
+      数组的方法: 
+        对数组进行批量操作
+        .length 返回的是数组的长度
+
+        通过下标的方式访问数组
+        arr = [1,2,3]
+
+        concat 传入若干参数(可以是单独的值也可以是数组) 在尾部拼接
+          如果传入的是数组, 他会分解成为一个单独的值拼接
+        不能使用+的
+
+        数组的遍历操作
+          对数组的每一个元素进行操作
+          forEach
+            接受一个参数(是 回调函数)
+            这个函数就是对数组里面每一项的操作方法
+            函数接受三个参数
+              item  指的是单个元素本身
+              index 元素的下标
+              arr   数组本身
+
+          如果所forEach对于函数和函数参数没有搞明白
+          reduce map filter every some ...
+    */
+    // let arr1 = [1, 2, 3]
+
+    // let arr2 = [
+    //   [3],
+    //   [4],
+    //   [5],
+    // ]
+
+    // let arr3 = arr1.concat(arr2)
+    // // 返回一个数组 
+    // console.log(arr3)
+
+    // function fn(item, index, arr){
+    //   console.log(item, index, arr)
+    // }
+    
+    /*
+      console.log 是什么?
+      函数, 可以接受几个参数? 无限
+      接受几个, 就打印几个
+
+      console.log.apply(console,arguments)
+    
+      call 
+        改变函数调用的主体对象 后续接受若干个参数 单个单个传入
+      apply 
+        后续只接受一个参数, 这个参数是数组, 
+
+    */ 
+
+    // function fn(a,b){
+    //   console.log(a,b)
+    // }
+    // fn.call(null, "1", "2")
+
+    // function log(){ // 几乎复现了console.log的功能
+    //   console.log.apply(console,arguments)
+    //   // console.log(...arguments)
+    //   // 将arguments 数组 拆分成单个的参数依次传入 console.log
+    // }
+
+    // arr.forEach(log)
+
+    /*
+      数组长度有多少, 函数就执行多少次
+        每次都是自己的 元素 下标 和 数组本身传入这个函数
+    */
+    // let arr = ["大", "家", "好"]
+    // arr.forEach(function(item, index, arr){
+    //   arr[index] = item+index
+    // })
+
+    // 一个数组 里面有若干项, 有正数有负数, 咱们使用forEach将所有的负数变成正数
+
+    let arr = [1, 3, -1, -3, 0, 2.5, -0.5]
+
+    // arr.forEach(function(item,index,arr){
+    //   if(item<0){
+    //     arr[index] = -item
+    //   }
+    // })
+
+    arr.forEach((item,index)=>(item<0) && (arr[index] = -item))
+
+    console.log(arr)
+
+
+
+  </script>
+
+  <input type="text">
+</body>
+</html>

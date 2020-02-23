@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+  // get set 让元素的属性比较安全
+
+  // 对象的一些方法: Object的方法
+
+  // es6之后 方法很多..
+
+  // Object.is 传两个参数, 这两个参数会进行比较 true false
+  // 数字中-0是一个很特殊的数字: 在计算的过程中有可能出现特殊的情况(+0/-0, NaN)
+  // 适用性覆盖了 === 的情况的, 也是可以使用Object.is比较
+
+  //
+
+  // 创建一个对象a
+
+  // 执行以下代码
+
+  // 如何 实现 a在每次比较的时候返回对应的内容
+
+  // let a = {
+  //     i: 1,
+  //     toString: function () {
+  //         return this.i++
+  //     }
+  // }
+  //
+  // if(a == 3 && a == 2 && a == 1){
+  //     console.log("第一个if判断执行成功")
+  // }
+  //
+  // // 为什么这段不行? 因为a.i 4
+  // if(a == 4 && a == 5 && a == 6){
+  //     console.log("第二个if判断执行成功")
+  // }
+  //
+  // if(a == 3){
+  //     console.log("第三个if判断执行成功")
+  // }
+
+
+  // // get set 方法控制a属性的值
+  // let obj = {
+  //     _val: 1, // obj内部的一个属性
+  //     get a(){
+  //         return this._val++
+  //     }
+  // }
+  //
+  // if(obj.a == 1 && obj.a == 2 && obj.a == 3){
+  //     console.log("执行成功")
+  // }
+
+
+  // 可枚举: 对象还是数组都是有可枚举属性 可以通过for in进行遍历的属性
+  // 显示的写出来的值就是可枚举属性
+
+  // let a = {
+  //     prop1: "a",
+  //     prop2: "b",
+  // }
+  // let b = ["c", "d"] // 属性名不需要你手动的写, 自动根据顺序增加
+  //
+  // for(let i in a){
+  //     console.log(i)
+  // }
+  //
+  // for(let i in b){
+  //     console.log(i)
+  // }
+
+  // Object.keys 遍历可枚举属性的属性名, 并且组合成数组返回
+  // 作用: 不管数组还是对象都是可以通过这个方法遍历的
+  //for(let i = 0;i < Object.keys(obj).length;i++){}
+
+  // Object.values 遍历可枚举属性的属性值, 并且组合成数组返回
+
+  // Object.entries
+
+  // let divList = document.querySelectorAll("div")
+  // // let [...divList]
+  // console.log(Object.values(divList))
+
+  // 对象的生成 Object.create 生成对象的底层方法: 以什么什么为原型生成对象
+  // 传入的值作为原型存在的 :null Object.prototype
+  // 可以生成一个非常纯粹的对象
+  // 而 {} 生成的对象其实在代码底层中已经经过了加工
+  // new Object()
+
+
+  // Object.assign 写轮眼模式: 合并操作
+  // 将你有我没有的方法添加进来,
+  // 你有我有的方法, 把我覆盖掉,
+  // 我有你没有的不管
+
+  // let a = {
+  //     props1: "val1",
+  //     props2: "val2",
+  // }
+  // let b = {
+  //     props2: "new-val2",
+  //     props3: "new-val3",
+  // }
+  // // 将后面的值添加到前面的对象合并方式
+  // // Object.assign(a, b)
+  //
+  // // 底层实现? 作业?
+  //
+  // // obj 里面有 a,b,c,d属性
+  // // 将这四条属性都添加到this中
+  // function foo(obj){
+  //     // this.a = obj.a
+  //     // this.b = obj.b
+  //     // this.c = obj.c
+  //     // this.d = obj.d
+  //     Object.assign(this, obj)
+  //     console.log(o === this)
+  //     console.log(Object.keys(this)) // 按属性添加顺序遍历
+  // }
+  // let o = {e: 6,a: 3} // 一开始 a , e
+  // foo.call(o,{
+  //     a: 1,
+  //     b: 2,
+  //     c: 3,
+  //     d: 4,
+  // })
+
+
+
+
+
+
+  // let newa = {
+  //     props1: "val1",
+  //     props2: "new-val2",
+  //     props3: "new-val3"
+  // }
+
+
+
+  // Object.defineProperty() 底层代码包装属性, 私有化 可控制性
+
+  // 对 对象设置属性 更加细致控制属性的特点,
+  // 第一个是 对象
+  // 第二个是 属性名
+  // 第三个是 属性特点 (对象: JSON 信息特点)
+  // let obj = {}
+  // let num = 1
+  // // 通过对象设置属性的操作, 关联到不同的物体当中, 数据绑定(vue 底层的实现原理2.0实现)
+  // // vue 3.0 proxy...
+  // // obj.props1 和 num关联在一起的
+  // // 基础用法: 类似于 get set 操作
+  // Object.defineProperty(obj, "props1", {
+  //     get: function () {
+  //         return num // 通过this进行控制对象
+  //     },
+  //     set: function (val) {
+  //         num = val
+  //     }
+  // })
+
+
+  // 第二种用法:
+  // 参数:
+  // 第一个是 对象
+  // 第二个是 属性名
+  // 第三个是 属性特点 (对象: JSON 信息特点)
+  //  value  这个属性的值是多少
+  //  enumerable   这个属性是否可枚举: 默认为false 无法重新定义的, configurable控制
+  //  writable    这个属性是否可修改: 默认为false
+  //  configurable 这个属性设置了这些状态是否锁死 默认值是false 可枚举属性是否可修改
+
+
+  // let obj = {}
+  // // 如果直接设置了一个值得话 不可枚举不可修改的
+  // Object.defineProperty(obj, "props1", {
+  //     value: 3,
+  //     enumerable: true,
+  //     writable: true,
+  //     configurable: true
+  // })
+  // // Object.defineProperty(obj, "props2", {
+  // //     value: 3,
+  // //     enumerable: true,
+  // //     writable: true,
+  // //     configurable: true
+  // // })
+  // // props1属性是可以修改可以枚举的
+  // console.log(obj.props1)
+  // console.log(Object.keys(obj))
+  // obj.props1 = "新的值"
+  // console.log(obj.props1)
+  //
+  // // 锁定对象的属性值
+  // Object.defineProperty(obj, "props1", {
+  //     enumerable: false,
+  //     writable: false,
+  // })
+  // obj.props1 = "新的值2"
+  // console.log(Object.keys(obj))
+  // console.log(obj.props1)
+
+  // 一旦你使用了get set  后面的value, enumerable ...3个都没办法使用
+
+  // 一旦你使用了后面的value, enumerable ...3个 get 和 set也没有办法使用了
+
+
+
+
+  // 深拷贝: 将对象完全的复制下来, 并且两者之间没有关系
+
+  // let a = [1, 2, 3]
+  // let b = a // 赋值是浅拷贝, 拷贝的对象的内存地址
+  //
+  // a[0] = "asd"
+  //
+  // console.log(b)
+
+
+  // 方法一: JSON.parse JSON.stringify
+  // 对象 => 转换成字符串 => 对像(重新创建对象)
+  let a = [
+      {
+          name: "asad1",
+          value: 1232
+      },
+      {
+          name: "asad2",
+          value: 1231
+      },
+      {
+          name: "asad3",
+          value: 1231
+      },
+  ]
+
+  // let b = JSON.parse(JSON.stringify(a)) // 格式化转化成为一个可以转换成为对象的字符串
+  //
+  // a[0].name = "iqoeuioqw"
+  // console.log(a, b)
+
+
+  // 深拷贝 对象属性全部都复制了一次进行拷贝
+  // 递归的方式进行拷贝操作 只能够拷贝可枚举属性:
+  // deepClone 深拷贝的方法, 肯定有返回, 传入参数拷贝完之后的结果
+
+
+
+
+  // 循环引用本来就是深拷贝无解
+  // 记录 递归的每一项
+
+  function deepClone(obj){
+      // 如果obj既不是数组也不是对象, 那就直接return
+      // if(list.some(item => item === obj)){
+      //     throw new Error("循环引用了")
+      // }
+      let list = [] // 不会暴露全局
+      function getType(obj){
+          return {}.toString.call(obj).slice(8, -1)
+      }
+
+      function trueDeepClone(obj){
+          let type = getType(obj)
+          if(type!== "Object" && type !== "Array")
+              return obj
+          // 拿一个载体去进行深拷贝
+          let result  = type === "Object"?{}:[]
+
+          // 需要记录之前拷贝的结果, 判断和之前有没有重复的, 如果有, 直接报错
+
+          if(type === "Array"){
+              // 对数组中的每一项再进行深拷贝
+              for(let i = 0;i < obj.length;i++){
+                  list.push(obj[i])
+                  result.push(trueDeepClone(obj[i]))
+              }
+          } else{
+              // 对对象进行深拷贝
+              for(let i in obj){
+                  list.push(obj[i])
+                  result[i] = trueDeepClone(obj[i])
+              }
+          }
+          console.log(list)
+          return result
+      }
+      return trueDeepClone(obj)
+      //
+      //
+      // return result
+  }
+
+
+
+
+</script>
+</body>
+</html>

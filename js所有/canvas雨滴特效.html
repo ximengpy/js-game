@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+  body{
+   margin: 0;
+  }
+ canvas{
+  background-color:block;
+  display: block;
+  
+ }
+ </style>
+</head>
+<body>
+ <canvas> </canvas>
+ <script>
+ let canvas = document.querySelector("canvas")
+ let ctx = canvas.getContext("2d")
+ let w, h
+  w = canvas.width = window.innerWidth
+  h = canvas.height = window.innerHeight
+  window.addEventListener("resize", function () {
+    w = canvas.width = window.innerWidth
+    h = canvas.height = window.innerHeight
+  })
+
+ class Drop{
+  init(){
+   this.x = random(0,w)
+   this.y = 0
+   //落下的速度
+   this.vy = random(4,5)
+   //雨滴的最大高度
+   this.l = random(0.7*h,0.8*h)
+   //波纹的初始半径
+   this.r = 1
+   this.vr = 1//半径变化的数值
+   this.a = 1 //透明度
+   this.va = 0.9 //透明度的变化系数
+  }
+   //设置坐标
+  
+  
+  draw(){  
+   if(this.y>this.l){// 雨滴落到最大高度时
+    ctx.beginPath()
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2)
+    ctx.strokeStyle = `rgba(200,13,21,${this.a})`
+    ctx.stroke()
+   }else {
+    ctx.fillStyle = "rgb(200,54,98)"
+    ctx.fillRect(this.x,this.y,2,10)
+   }
+   this.update()
+  }
+  update(){       //更新雨滴
+   if(this.y<this.l){
+    this.y += this.vy
+   }else {
+    if(this.a>0.03){
+     this.r += this.vr
+     if(this.r>50){
+      this.a *= this.va
+     }
+    }else {
+     this.init()
+    }
+
+   }
+  }
+ }
+
+
+ let list =[]
+ for(let i = 0;i<30;i++){    //让雨滴落下的顺序不一样
+  setTimeout(()=>{
+   let drop = new Drop()
+   drop.init()
+   list.push(drop)
+  } ,i*300)
+ }
+
+ 
+   function render(){
+   ctx.fillStyle = "rgba(0,0,0,0.1)"
+   ctx.fillRect(0,0,w,h)
+   
+  requestAnimationFrame(render)
+  list.forEach( raindrop=>{
+    raindrop.draw()
+   
+
+  })
+ }
+ render()
+ function random(min,max){
+  return Math.random()*(max-min)+min
+ }
+ </script>
+</body>
+</html>

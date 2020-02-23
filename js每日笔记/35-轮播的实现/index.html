@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    ul{
+      list-style: none;
+      padding: 0;
+    }
+    .swiper{
+      position: relative;
+      margin: 100px auto;
+      width: 600px;
+      height: 400px;
+      border: 1px black solid;
+      overflow: hidden;
+    }
+    .swiper>li{
+      position: absolute;
+      width: 600px;
+      height: 400px;
+      transition: 0.8s;
+    }
+  </style>
+</head>
+<body>
+  <ul class="swiper"></ul>
+  <div class="left">左切换</div>
+  <div class="right">右切换</div>
+  <script>
+    /*
+      轮播图: 页面有限区域, 动态切换图片资源的 区域 自动播放
+        张数 5: 
+      普通轮播: 切换到最后一张, 飞快的换到第一张  
+        非常不美观: 
+      无缝轮播: 
+        切换到最后一张, 继续向右, 回到了第一章
+        收尾插入的方式 最后一张图片后面插入第一章图片 
+        在第一张图片前面插入最后一张
+      数据驱动: 
+
+    */
+    // 后台请求返回回来的图片地址
+    let imgArr = [
+      "./images/1.jpg",
+      "./images/2.jpg",
+      "./images/3.jpg",
+      "./images/4.jpg",
+      "./images/5.jpg",
+    ]
+
+    // 获取swiper
+    let swiper = document.querySelector(".swiper")
+
+    // 布局, 初次渲染 , 点击切换的渲染, 需要改样式就可以了
+    function init(){
+      let str = ""
+      imgArr.forEach((src, index) => {
+        // 每一个li标签
+        let li = 
+          `<li style="
+            background: url(${src}) center/cover;
+            left: ${index*600}px;
+            "></li>`
+        str += li
+      })
+      swiper.innerHTML = str
+      // 获取页面的节点并转换成为数组对象返回
+      return [...document.querySelectorAll(".swiper>li")]
+    }
+    let liDomArr = init()
+    let leftData = []
+    let current = 0
+    // dom.style 访问的样式是行内样式
+    liDomArr.forEach(item => {
+      leftData.push(parseInt(item.style.left))
+    })
+    
+    // 将当前current下标的 图案渲染出来
+    function render(current){
+      // 重新渲染 , 修改 leftData 值
+      leftData.forEach((data,index, arr) => {
+        // index * 600 可以换成data吗? 
+        // 因为我们一旦切换, 这个值就已经变了
+        // 根据初始值减去 差值才是最终值
+        arr[index] = index * 600 - current * 600
+      })
+      // leftData 渲染到dom中
+      liDomArr.forEach((li, index) => {
+        li.style.left = leftData[index] + "px"
+      })
+    }
+
+
+    // 左切换, 右切换
+
+    function moveLeft(){
+      // 修改数值
+      current -- 
+      if(current < 0){
+        current = leftData.length - 1
+      }
+      // 重新渲染
+      render(current)
+    }
+
+    function moveRight(){
+      // 修改数值
+      current ++ 
+      if(current > leftData.length - 1){
+        current = 0
+      }
+      // 重新渲染
+      render(current)
+    }
+
+    let left = document.querySelector(".left")
+    let right = document.querySelector(".right")
+    // 拿一个状态来判断 canClick表示可以点击
+    let canClick = true
+
+    let timer = setInterval(moveRight,2000)
+
+
+    left.onclick = () => {
+      // 如果之前已经点击过了, 我们必须要等0.6s之后才能点击
+      if (canClick){
+        // 内部切换
+        canClick = false
+        setTimeout(()=>{
+          canClick = true
+        }, 800)
+        moveLeft()
+        // 暂停定时器
+        clearInterval(timer)
+        // 再开启定时
+        timer = setInterval(moveRight,2000)
+      }
+    }
+    right.onclick = () => {
+      if (canClick){
+        canClick = false
+        setTimeout(()=>{
+          canClick = true
+        }, 800)
+        moveRight()
+        // 暂停定时器
+        clearInterval(timer)
+        // 再开启定时
+        timer = setInterval(moveRight,2000)
+      }
+    }
+
+    // 按钮点击, 请也顺便开启关闭定时器 留给课后完成
+
+    
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" name="user">
+  <input type="text" name="password">
+  <div class="btn">登录</div>
+  <p class="info"></p>
+  <script>
+    //1. 创建一个ajax对象
+
+
+
+    //4. 接受数据, 事件监听
+    // 判断状态的改变, 如果状态改变成已经返回成功的状态, 就可以了
+    // xhr 的状态 readyState
+    // 5中状态: 0 1 2 3 4 这5中
+    // 0: 请求未初始化
+    // 1: 服务器连接已建立
+    // 2: 请求已接收
+    // 3: 请求处理中
+    // 4: 请求已完成，且响应已就绪
+
+    // 状态码(100 - 600) status
+    // 1xx 消息还没有发送
+    // 2xx 表示成功ok没问题
+    // 3xx 表示重定向 304
+    // 4xx 表示失败拒绝 =>
+    // 5xx 表示服务器崩了 => 后台的问题
+
+
+
+    let btn = document.querySelector(".btn")
+    let user = document.querySelector("input[name='user']")
+    let password = document.querySelector("input[name='password']")
+    let info = document.querySelector(".info")
+    btn.onclick = function () {
+      const xhr = new XMLHttpRequest()
+      //2. 做基础的设置, 请求地址 请求方式, 携带的参数...
+      // open 接受 请求方式 请求地址
+      const url = `http://localhost/get?user=${user.value}&password=${password.value}`
+      xhr.open("get", url)
+      //3. 发送请求
+      // 可以携带数据的, 也可以在url后面以?衔接数据
+      xhr.send(null)
+      xhr.onreadystatechange = function () {
+        // 这才是一次完整请求的成功
+        if(xhr.readyState === 4 && xhr.status>=200 && xhr.status < 300 || xhr.status === 304){
+          // 拿到数据xhr.responseText
+          let resData = JSON.parse(xhr.responseText)
+          // console.log(typeof )
+          if(resData.code === 0){
+            info.innerHTML = "猜对了"
+          }else{
+            info.innerHTML = "搞错了"
+          }
+        }
+      }
+    }
+    // 后台返回的数据, 其实就是后台接口处理的问题, 后端工程师做的事情的
+
+
+    // get发送请求的时候, 怎么去携带数据呢?
+
+    // post 封装一下请求: 特别麻烦
+
+    // 服务器端如何实现
+
+  </script>
+</body>
+</html>

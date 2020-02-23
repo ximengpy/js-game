@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+  </ul>
+
+  <script>
+    /*
+      循环绑定一个点击事件, 点击谁就打印他的序号
+    */
+
+    // let liList = document.querySelectorAll("ul>li")
+
+    // // ES6中解决问题的方法
+    // // 知其所以然
+    // // let 的特性是什么? 而是块作用域
+
+    // for(let i = 0; i < liList.length; i++){
+    //   liList[i].onclick = function(){
+    //     // 函数等待执行才会保留
+    //     console.log(i)
+    //   }
+    // }
+
+    // {
+    //   let i = 0
+    //   liList[i].onclick = function(){
+    //     console.log(i)
+    //   }
+    // }
+    // {
+    //   let i = 1
+    //   liList[i].onclick = function(){
+    //     console.log(i)
+    //   }
+    // }
+    // {
+    //   let i = 2
+    //   liList[i].onclick = function(){
+    //     console.log(i)
+    //   }
+    // }
+
+
+
+
+
+
+
+
+
+
+    // for (var i = 0; i < liList.length; i++){
+    //   // console.log(i)
+    //   // 核心思路将全局的i
+    //   // 转换成为当时的局部的 current
+    //   // plan 1
+    //   // liList[i].onclick = (function (current) {
+    //   //   // 闭包的核心
+    //   //   // var current = i
+    //   //   return function (){
+    //   //     console.log(current)
+    //   //   }
+    //   // })(i)
+
+    //   // 没有什么是一层作用域搞不定的, 有, 再加一层
+      
+    //   (function (current){
+    //     liList[current].onclick = function(){
+    //       console.log(current)
+    //     }
+    //   })(i)
+    // }
+
+
+    // console.log("i的最终值是", i)
+
+    /* 
+      核心思想: 保留函数执行到那个时候的i的值
+
+        因为直接写function是不执行的
+
+        所以我们可以让代码走到那里的时候执行
+    
+    */
+
+
+
+    
+    /*
+      作用域: 函数执行的时候创建作用域
+        会占据内存空间, 存储作用域内部生效的变量
+        消失 会伴随着函数执行完成之后才消失, 正常情况 函数执行完立马消失
+
+
+      消失: JS 垃圾回收机制
+        1. 标记清除
+        2. 引用计数
+        都是为了判断这个作用域该不该回收: 看作用域是否还需要被使用
+        
+      函数的这个作用域, 在函数执行完成之后 还存在被引用的关系, 他就不会消失
+
+      闭包: 保存了本该消失的作用域的函数
+        动词: 行为
+        形成闭包
+    */
+    // function foo(){
+    //   var a = 3
+    //   console.log(a)
+    // }
+
+    // foo()
+
+
+    // function foo(){
+    //   var private = 0
+    //   // 是不是 foo2 === window.foo2
+    //   public = function (){
+    //     console.log(private)
+    //   }
+    // }
+
+    // foo()
+
+    // public()
+    // private会不会消失? 会不会被访问得到
+    
+    // 介绍数组的方法:
+    // var arr = []
+    // // 往数组里面挨个添加值 
+    // arr.push(1)
+    // arr.push(2)
+    // console.log(arr)
+      // var arr = []
+      // function foo(){
+      //   var index = 0
+      //   function foo2(){
+      //     index++
+      //     return index
+      //   }
+      //   arr.push(foo2)
+      // }
+
+      // foo() // 生成第一个作用域 默认index=1
+      // foo() // 生成第二个作用域 默认index=0
+      // foo() // 生成第三个作用域 默认index=0
+      // foo() // 生成第四个作用域 默认index=0
+      // foo() // 生成第五个作用域 默认index=0
+
+      
+
+
+
+  </script>
+</body>
+</html>

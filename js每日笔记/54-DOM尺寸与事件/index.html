@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+    }
+    body{
+      height: 3000px;
+    }
+    /*.box{*/
+    /*  !*position: relative;*!*/
+    /*  margin: 100px auto;*/
+    /*  width: 500px;*/
+    /*  height: 500px;*/
+    /*  !*padding: 20px;*!*/
+    /*  border-top: 1px black solid;*/
+    /*  border-left: 3px black solid;*/
+    /*  overflow: scroll;*/
+    /*}*/
+    /*.small{*/
+    /*  !*position: absolute;*!*/
+    /*  !*top: 0px;*!*/
+    /*  !*left: 0px;*!*/
+    /*  width: 100px;*/
+    /*  height: 1000px;*/
+    /*  background-color: #ccc;*/
+    /*}*/
+  </style>
+</head>
+<body>
+<!--  <div class="box">-->
+<!--    <div class="small">123123</div>-->
+<!--  </div>-->
+<div class="list">
+  <p><img src="" alt=""></p>
+</div>
+
+<script>
+  // 这些尺寸数据都是只读属性: 查询信息用
+  // 修改 => 只能通过样式进行修改.
+  // DOM相关尺寸信息位置信息
+  // 一般来说不考虑右边和下边
+  // 盒子尺寸: clientWidth clientHeight: 盒子content大小加上盒子padding大小
+  // 边框: clientTop clientLeft 盒子边框上 左
+  let box = document.querySelector(".box")
+  let small = document.querySelector(".small")
+
+  console.dir(box)
+  console.dir(small)
+
+  // 文档对象模型document的尺寸:
+  // 浏览器窗口大小: 内部大小(可视区域): window.innerWidth window.innerHeight
+  //    外部大小(软件的大小): window.outerWidth window.outerHeight
+
+  // 位置: 参照物 : 父级元素 定位父级 窗口 document
+  // offset 偏移的值: (元素没有定位属性, 直接找到body标签当成定位父级)
+  //      如果是有定位属性: 返回参照定位父级的偏移
+  //      如果没有定位属性: 返回参照body标签的偏移
+  // 参考父级是谁? offsetParent 递归的找到自己的定位父级是谁
+  //
+
+  // 计算任意物体距离body标签左上角的偏移量: 计算出来了之后, 任意两个元素之间的相对位置找得到了啊
+  // 定位的参考是参考父级边框内的那条分界线的 需要叠加父级的边框的
+
+  function getOffset(node){
+    let o = {
+      x: 0,
+      y: 0
+    }
+    // 一直套到body标签为止
+    while(node !== document.body){
+      o.y += node.offsetTop + node.offsetParent.clientTop // 需要加上父级边框的大小的
+      o.x += node.offsetLeft + node.offsetParent.clientLeft
+      node = node.parentNode // 距离自己定位父级的元素替换掉
+    }
+    return o
+  }
+
+  getOffset(small)
+
+
+  // scroll 滚动相关的尺寸
+  // scrollTop scrollLeft 描述的生成滚动条的那个盒子的滚动大小或者是位置
+  // scrollHeight scrollWidth 描述的是盒子里面的内容的可以滚动的大小
+  // scrollTop: 0
+  // scrollLeft: 0
+  // scrollWidth: 100
+  // scrollHeight: 1000
+
+  // 整体页面的滚动位置以及可滚动区域的大小看 html标签的 scrollHeight/scrollTop
+
+  // 懒加载: 根据滚动位置以及滚动事件等相关的操作 获取当前页面滚动到哪里了
+  // 及时的生成加载相关的内容
+  // onscroll 事件:
+  // 1. 直接写在window下面进行全局滚动更新
+  // 2. 或者是写在被滚动的那个物体上
+
+  // 事件节流
+  // 事件防抖
+  window.onscroll = function () {
+    // 一瞬间出现了很多次
+    console.log(document.documentElement.scrollTop)
+  }
+
+</script>
+</body>
+</html>

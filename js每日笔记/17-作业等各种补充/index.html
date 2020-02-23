@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="select">
+    <div class="main">
+      <input class="total-check" type="checkbox">
+      <span class="choose-all">全选</span>
+      <span class="inverse">反选</span>
+    </div>
+    <ul class="list">
+      <li><input type="checkbox"><span>1</span></li>
+      <li><input type="checkbox"><span>2</span></li>
+      <li><input type="checkbox"><span>3</span></li>
+      <li><input type="checkbox"><span>4</span></li>
+      <li><input type="checkbox"><span>5</span></li>
+      <li><input type="checkbox"><span>6</span></li>
+      <li><input type="checkbox"><span>7</span></li>
+      <li><input type="checkbox"><span>8</span></li>
+      <li><input type="checkbox"><span>9</span></li>
+      <li><input type="checkbox"><span>10</span></li>
+    </ul>
+  </div>
+
+
+  <script>
+    /*
+      需求分析: 
+        1. 列表 生成列表的
+
+        2. 触发逻辑
+          点下任意一个按钮都会触发页面的状态的改变
+
+      页面的状态的改变: 
+        1. 读取页面的状态
+        2. 修改状态
+        3. 将状态渲染到页面中
+
+
+      数据的分离 => 
+      页面的状态的改变: 
+        1. 初始化数据             => 将当前数据渲染到页面中
+        2. 点击修改的时候修改数据  => 将当前数据渲染到页面中
+
+
+      这个数据结构是什么??
+      单条数据
+        {
+          checkState: true/false, // 复选框被勾选的状态
+          content: "这是第一段数据"
+        }
+      一共有十条: 放到数组中
+        [
+          {
+            checkState: true/false, // 复选框被勾选的状态
+            content: "这是第一段数据"
+          },
+          {
+            checkState: true/false, // 复选框被勾选的状态
+            content: "这是第二段数据"
+          },
+          {
+            checkState: true/false, // 复选框被勾选的状态
+            content: "这是第三段数据"
+          },
+        ]
+      整体: 
+          {
+            total: {
+              checkState: true/false,
+              content: 全选
+            },
+            data: [
+              {
+                checkState: true/false, // 复选框被勾选的状态
+                content: "这是第一段数据"
+              },
+              {
+                checkState: true/false, // 复选框被勾选的状态
+                content: "这是第二段数据"
+              },
+              {
+                checkState: true/false, // 复选框被勾选的状态
+                content: "这是第三段数据"
+              },
+            ]
+          }
+    */
+    // 后台传输过来的数据
+    let projectData = {
+          total: {
+            checkState: false, // 指代页面中的全选按钮
+            content: "全选" // 指代的是对应旁边的文字
+          },
+          data: [
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第一段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第二段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第三段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第四段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第五段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第六段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第七段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第八段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第九段数据"
+            },
+            {
+              checkState: false, // 复选框被勾选的状态
+              content: "这是第十段数据"
+            },
+          ]
+        }
+    
+    // 全选按钮
+    let totalCheckState = document.querySelector(".total-check")
+    // 全选文本
+    let totalContent = document.querySelector(".choose-all")
+    // 渲染的每一个元素的input标签
+    let inputList = document.querySelectorAll(".list input")
+    // 渲染的每一个文本
+    let contentList = document.querySelectorAll(".list span")
+    // 反选按钮
+    let inverse = document.querySelector(".inverse")
+
+    // console.log(projectData)
+    // 执行render 将 projectData 数据状态渲染到页面中
+    function render(projectData){
+      totalCheckState.checked = projectData.total.checkState
+      totalContent.innerHTML = projectData.total.content
+      // 循环 projectData.data
+      let arr = projectData.data
+      for(let i = 0; i < arr.length; i++){
+        // 绑定每一个input
+        inputList[i].checked = arr[i].checkState
+        // 渲染所有的文字内容
+        contentList[i].innerHTML = arr[i].content
+      }
+    }
+
+    render(projectData)
+
+    // 点击每一个按钮, 修改状态
+
+    // 全选按钮的逻辑
+    totalCheckState.onclick = function (){
+      // 修改数据
+      // 判断全选的状态 如果没有全选就全选, 如果全选就全不选
+      /*
+        之前玩的代码
+        if(projectData.total.checkState){
+          projectData.total.checkState = false
+          projectData.total.content = "全选"
+          for(let i = 0;i < projectData.data.length; i++){
+            projectData.data[i].checkState = false
+          }
+        }else{
+          projectData.total.checkState = true
+          projectData.total.content = "全不选"
+          for(let i = 0;i < projectData.data.length; i++){
+            projectData.data[i].checkState = true
+          }
+        }
+      */
+      let state = !projectData.total.checkState
+      projectData.total.checkState = state
+      projectData.total.content = state?"全不选":"全选"
+      for(let i = 0;i < projectData.data.length; i++){
+        projectData.data[i].checkState = state
+      }
+      projectData.total.checkState = state
+      // 渲染数据
+      render(projectData)
+    }
+
+    // 当数据中数组全是真的时候 改成真, 其余时候改成假
+    function changeAll(list){
+      let state = true
+      // 怎么让全部为真的时候修改成真, 其余为假
+      for(let i = 0;i < list.length;i++){
+        if(!list[i].checkState){
+          state = false
+          break
+        }
+      }
+      projectData.total.checkState = state
+      projectData.total.content = state?"全不选":"全选"
+    }
+
+    for(let i = 0;i < inputList.length;i++){
+      inputList[i].onclick = function(){
+        projectData.data[i].checkState = !projectData.data[i].checkState
+        // 维护全选状态的表现
+        changeAll(projectData.data)
+        render(projectData)
+      }
+    }
+
+    inverse.onclick = function(){
+      // 修改对应的状态数据
+      for(let i = 0;i < projectData.data.length;i++){
+        projectData.data[i].checkState = !projectData.data[i].checkState
+      }
+      // 维护 total整理的
+      changeAll(projectData.data)
+      // 再将数据渲染出来
+      render(projectData)
+    }
+
+    /*
+      数据和结构分离:
+        
+    
+    */
+
+
+  </script>
+</body>
+</html>

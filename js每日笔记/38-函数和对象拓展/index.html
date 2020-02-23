@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+  /*
+    数组的方法:
+      回调函数通用的功能就是判断方法是什么情况下满足条件
+      对数组修改:
+        判断(every/some)
+        普通的遍历(forEach) 挨个进行操作, 结果使用不需要的
+        筛选(filter)
+        挨个加工(map)
+        迭代(reduce) 挨个操作,统计出来,进行下次的操作
+        每个都填充(fill)
+        查询某个满足条件的第一个元素(find)
+        查询某个满足条件的第一个元素的下标(findIndex)
+        反转数组输出(reverse)
+        数组合并成为字符串的方法(join)
+        ...
+    字符串, 同理 => 字符串搞不定的用数组搞,
+  */
+  // 实现fill方法
+  // function fill1(arr, content){
+  //   return arr.map(()=>content)
+  // }
+  // function fill2(arr, content){
+  //     // let result = []
+  //     for (let i = 0; i < arr.length; i++) {
+  //         arr[i] = content
+  //     }
+  //     return arr
+  // }
+  //
+  // let arr = [1, 2, 3]
+  //
+  // console.log(fill2(arr, 0))
+
+  // function find(arr, cb) {
+  //     let result = undefined
+  //     for (let i = 0; i < arr.length; i++) {
+  //         if(cb(arr[i], i, arr)){
+  //             result = arr[i]
+  //             break // 结束查询条件
+  //         }
+  //     }
+  //     return result
+  // }
+  // function findIndex(arr, cb) { // cb : callback
+  //     let result = -1
+  //     for (let i = 0; i < arr.length; i++) {
+  //         if(cb(arr[i], i, arr)){
+  //             result = i
+  //             break // 结束查询条件
+  //         }
+  //     }
+  //     return result
+  // }
+
+  // function reverse(arr){
+  //     let result = []
+  //     for(let i = 0; i < arr.length;i++){
+  //         result.unshift(arr[i])
+  //     }
+  //     return result
+  // }
+
+  // function push(arr, ...item){
+  //     // item 是一个数组
+  //     // 修改数组的长度
+  //     let last = arr.length
+  //     arr.length = arr.length + item.length
+  //     for(let i = 0;i < item.length;i++){
+  //         arr[last+i] = item[i]
+  //     }
+  //     return arr.length
+  // }
+  // api 程序提供的接口, 方便我们使用的工具
+  // 写api 等于造轮子
+  // function pop(arr){
+  //     let result = arr[arr.length - 1]
+  //     arr.length = arr.length - 1
+  //     return result
+  // }
+  // shift/ushift 同上
+
+  // let arrUtils = {
+  //     push,
+  //     pop,
+  //     reduce,
+  //     ....
+  // }
+
+
+  // function join(arr, str){
+  //     let result = ''
+  //     for (let i = 0; i < arr.length-1; i++) {
+  //         result += arr[i] + str
+  //     }
+  //     // 最后一项末尾不需要添加
+  //     result += arr[arr.length-1]
+  //     return result
+  // }
+
+  // 作业: 去重操作 一行代码 实现字符串统计的操作
+
+  // census 统计字符串中字符出现的次数
+  // result 统计格式 键值对: 键:字母 值:出现次数
+  // for循环实现版本
+  // function census(str){
+  //     let arr = str.split("")
+  //     let result = {}
+  //     for(let i = 0; i < arr.length;i++){
+  //       if(result[arr[i]]) {
+  //           result[arr[i]] ++
+  //       }else{
+  //           result[arr[i]] = 1
+  //       }
+  //     }
+  //     return result
+  // }
+
+  // 直接使用reduce的api
+  // reduce的迭代体, 返回什么, 迭代体就是什么
+  let str = "asad21b31buie1hi"
+  // let arr = str.split("")
+
+  // item是字符串中的每个字符
+  // obj是统计对象
+  // obj[item] 统计对象中查看当前字符是否存在
+  // reduce版本
+  let result = str.split("").reduce(function (obj, item) {
+     if(obj[item]){
+         obj[item]++
+     } else {
+         obj[item] = 1
+     }
+     return obj
+  },{})
+
+
+  // 箭头函数后面的大括号是需要返回的, 如果你写小括号或者是不写代表表达式, 直接不写return
+  // a,b a执行完返回b
+  let result2 = str.split("").reduce((x, y) => ((x[y]?x[y]++:(x[y] = 1)),x),{})
+
+  // 去重
+  let result3 = str.split("").reduce((x, y) => ((x[y]?x[y]=1:(x[y] = 1)),x),{})
+  // 一行代码
+
+
+  // console.log($$)
+
+  // $$ 不会在代码中出现的, 但是浏览器环境是存在的 等价于querySelectAll
+
+  // document.getElmentByIphone 这是一个段子: 表示获取你的iphone手机
+
+  // '#'+Math.random().toString(16).slice(2,8)
+
+  // 函数的操作
+
+
+
+
+
+</script>
+</body>
+</html>

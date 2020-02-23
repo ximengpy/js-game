@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      position: relative;
+      margin: 400px auto;
+      width: 20px;
+      height: 20px;
+      background-color: #f00;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <script>
+    // let x = 0
+    // function fn(){
+    //   x+=5
+    //   box.style.left = x + "px"
+      
+    //   if(x < 100){
+    //     在下次渲染的时候执行这个函数, 如果我们离开这个页面, 页面就不会渲染
+    //     requestAnimationFrame(fn)
+        
+    //   }
+    // }
+    // setInterval(fn, 1000/60) 
+    // 在页面中定时插入代码, 按系统时间插入, 代码存在阻碍. 会导致间隔时间不均匀. 出现卡顿
+    // fn()
+
+    // 数学对象 Math
+    /*
+      常见的常数 PI E
+
+      取整操作 3个 floor ceil round
+
+      随机数 Math.random: 0 - 1 借着做任意情况的随机
+
+      Math.abs 绝对值 去掉数的符号部分
+
+      三角函数: 角度和 边比值关系 用别的方法描述角度的大小
+
+      角度: 一条射线绕端点逆时针旋转扫过区域的程度: 角度
+        单位: 
+          角度值: 90deg 旋转一周 360deg
+          弧度值: 规定 360deg = 2*Math.PI
+            180deg = Math.PI
+            90deg = Math.PI/2
+            60deg = Math.PI/3
+            30deg = Math.PI/6
+            1deg = Math.PI/180 (非常重要)
+          范围是多少? (-Infinity,Infinity)
+          -Math.PI/6 + Math.PI/3 = Math.PI/6
+
+        三角函数: (找一本高中的数学书, 三角函数这章)
+          由角构成一个直角三角形: 邻边 对边 斜边
+          Math.sin(弧度) = 对边/斜边
+          Math.cos(弧度) = 邻边/斜边
+          Math.tan(弧度) = 对边/邻边
+
+          30deg 的直角三角形 <=> 60deg 的直角三角形
+          长度: 短 中 长
+          短:中:长 = 1:√3:2
+
+          45deg 的(等腰)直角三角形
+          长度: 短 短 长
+          短:短:长 = 1:1:√2
+
+          3:4:5 的直角三角形
+
+
+          Math.cos(Math.PI/3) = 1/2
+          Math.sin(Math.PI/6) = 1/2
+
+          Math.asin(对边/斜边) = 弧度
+          Math.acos(邻边/斜边) = 弧度
+          Math.atan(对边/邻边) = 弧度
+
+          求算数平方根和次方的统一方式
+          Math.pow(6, 12)
+            第一个参数是底数
+            第二个参数是指数
+          6^12
+
+          parseInt
+            需要解析的字符串
+            (默认是10进制)以什么进制解析
+          会将解析的结果转换成为10进制
+
+          parseFloat 浮点类型的数 带小数点的数
+            会去解析一个字符串, 根据结果返回数
+            传入类型可以是任意类型 但是在内部进行转换
+
+          (1.23456).toFixed(2)
+            传入一个参数表示保留小数点后面几位
+            四舍五入
+            转换成为字符串
+    */ 
+
+    /*
+      画一个动画: 
+    */
+    let box = document.querySelector(".box")
+    let x = 0, // x坐标
+        y = 0, // y坐标
+        r = 0, // 渲染角度坐标
+        l = 0  // 轴的长度 绕轴旋转的半径
+    let lSpeed = 1 // 轴长度的变化速率
+    let rSpeed = 0.1 // 轴的角速度
+
+    function animation(){
+      l = 50
+      r += rSpeed
+      // 有一定角度的r
+      // box.style.left = x + "px"
+
+      // 包含r的旋转
+
+      box.style.top = l * Math.sin(r) + "px"
+      box.style.left = l * Math.cos(r) + "px"
+      requestAnimationFrame(animation)
+    }
+    animation()
+
+    // 今晚作业: 9大行星绕着太阳旋转的操作: 要求: 你能控制旋转的半径而且可以改变
+
+
+  </script>
+</body>
+</html>

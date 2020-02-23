@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      作用域: 变量存在的范围
+    
+      函数: 
+        1. 函数是JS中的一等公民: 函数的优先级很高
+          运行代码达到效果:函数不停的调用
+        
+        2. 复杂问题(分析) => 
+          1. 简单问题1 ...
+            function foo1(){}
+          2. 简单问题2 ... 
+            function foo2(){}
+      代码5分钟 (实现效果) 
+      扯淡2小时 (真理思路)
+
+      输入一个数n 输出n^2
+
+      
+
+    */
+    // function foo(){
+    // }
+    // var foo 
+    // console.log(foo)
+
+    // function foo1(){
+
+    // }
+
+    /*
+      进行独立功能: 
+        1. 有输入(形参) 有输出(return) 不会对外界产生影响
+          对某个东西进行加工
+        2. 输入输出随意 专门修改外界的值
+
+        对外界没有任何影响(不改变外界的任何值)
+        可以改变外界的值的函数
+      
+      当我们使用对象的时候, 对象之间的传值不是复制, 是引用地址的传递
+
+      1. 
+
+
+    // */
+
+    // let obj = {
+    //   age: 18
+    // }
+    // function foo(n){
+    //   // 纯函数 对外界没有任何影响
+    //   n.age++
+    //   return n
+    // }
+    // foo(obj)
+
+
+
+    /*
+      新: 
+        1. 参数: 
+    
+    
+    */
+    /*
+      call 打电话 通知 告知 
+
+      做一个函数, 接受若干的参数, 返回 他们的和
+      sum(1,2) // 3
+      sum(1,2,3,3,4) // 13
+      sum() // 0
+      接受不定参数: 对形参进行控制
+      ES6 知识: ie8以下不行的
+      一个对象 arguments 相当于保留字
+        1. 一定要在函数内部使用
+        2. 相当于是一个数组, 可以进行数组遍历操作
+        3. arguments.callee 
+          这个arguments所属的函数是什么, 就是当前函数本身
+          获取匿名函数
+        4. 请不要使用arguments这个变量名
+    */
+
+      // function foo1(){
+      //   let arguments = 3
+      //   console.log(arguments)
+      // }
+      // foo1()
+
+
+
+
+    // function sum(){
+    //   console.log(arguments.callee === sum)
+    //   let result = 0
+    //   for(let i = 0;i < arguments.length;i++){
+    //     result += arguments[i]
+    //   }
+    //   return result
+    // }
+
+    // let f = ((function (){
+    //   return arguments.callee
+    //   // 可以在函数内部通过这个方法获取函数的引用
+    // })())
+
+
+      /*
+        es5 操作守则
+        函数参数的默认值
+        例子: 做一个求和函数, 接受最多两个参数, 返回和
+        sum(a, b)
+        没有给函数添加默认值:
+          添加默认值
+        
+        考虑一些极端情况
+          a = a || 0
+          b = b || 0
+        
+        es6 默认值得情况
+          不传就用默认值
+          直接在参数中添加 = 默认值
+      */
+
+      // function sum(a = 0, b = 0){
+      //   return a + b 
+      // }
+
+
+      /*
+        es6 
+        剩余参数(前面不要 最后全部打包)
+        手动打包后续内容
+        转换成为一个数组
+        即使是没有, 也会打包一个空数组
+      */
+
+      // function foo(a, b, ...restAll){
+      //   // console.log(a, b, restAll)
+        
+      // }
+
+      // function foo(a,...restAll,b){
+      //   console.log(a, b, restAll)
+      // }
+
+
+      /*
+        for循环的一些优秀操作
+      
+
+      */
+
+
+      /*
+        箭头函数 和 普通函数的区别: 
+          普通函数是有arguments 和剩余参数 还有默认值
+
+
+          箭头函数
+            1. 是没有arguments
+            2. 有剩余参数的
+            3. 有默认值的
+    
+      */
+        // let foo = (x = 0, y = 0) => {
+        //   return x + y
+        // }
+
+
+      /*
+          函数的this
+
+          this 指代某个东西
+            this是什么(指向谁)
+
+          函数写出来是为了执行的 
+            关键词
+            this就是(调用函数的主体对象)
+              谁点它执行 this就指向谁
+              谁调用它 this就是指向谁
+              对象obj调用函数 函数的this就指向对象obj
+          
+          *** this的指向只有在执行的时候才能够确定 ***
+        
+        
+        如果没有明确的调用主体, 那就是window干的
+
+      */
+      // function foo(){
+      //   console.log(this)
+      // }
+      // foo() 完全等价于 window.foo()
+
+      // let obj = {
+      //   fn: function(){
+      //     // console.log(obj.fn === arguments.callee)
+      //     console.log(this === obj)
+      //   }
+      // }
+      // window.obj.fn()
+
+
+      // let obj = {
+      //   a: {
+      //     b: {
+      //       c: function(){
+      //         console.log(this)
+      //       }
+      //     }
+      //   }
+      // }
+      
+      /*
+        函数是谁? 
+          obj.a.b.c 这是我们的函数
+      
+        谁调用的这个函数？ 
+          obj.a.b 这个对象调用内部的c属性执行?
+      */ 
+      // obj.a.b.c() // obj.a.b
+      // 右边是一个函数, 左边是一个变量
+      // let fn = obj.a.b.c
+      // // fn() 
+
+      // obj.a = obj.a.b.c
+      
+      // obj.a()
+      
+      // function main(){
+      //   function main1(){
+      //     
+      //   }
+      //   main1()
+      // }
+      // main()
+      
+      // let body1 = document.querySelector("body")
+
+      // let s = document.querySelector
+
+      // console.log(s === document.querySelector)
+
+      // s("body")
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    #canvas{
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="800"></canvas>
+<script>
+  let canvas = document.querySelector("#canvas")
+  let ctx = canvas.getContext("2d")
+
+  let startPoint = {
+    x: 100,
+    y: 100,
+    r: 5
+  }
+  let controlPoint1 = {
+    x: 100,
+    y: 500,
+    r: 5
+  }
+  let controlPoint2 = {
+    x: 500,
+    y: 500,
+    r: 5
+  }
+  let endPoint = {
+    x: 500,
+    y: 100,
+    r: 5
+  }
+  // 放到一个数组里面方便循环判断
+  let pointList = [startPoint, controlPoint1, controlPoint2, endPoint]
+
+  function render(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.beginPath()
+    ctx.moveTo(startPoint.x, startPoint.y)
+    ctx.bezierCurveTo(controlPoint1.x, controlPoint1.y,controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y) // 三次贝塞尔曲线
+    ctx.lineWidth = 3
+    ctx.strokeStyle = "#000"
+    ctx.stroke()
+    // 开始点
+    ctx.beginPath()
+    ctx.arc(startPoint.x, startPoint.y, startPoint.r, 0, Math.PI*2)
+    ctx.fill()
+    // 控制点1
+    ctx.beginPath()
+    ctx.arc(controlPoint1.x, controlPoint1.y, controlPoint1.r, 0, Math.PI*2)
+    ctx.fill()
+    // 控制点1
+    ctx.beginPath()
+    ctx.arc(controlPoint2.x, controlPoint2.y, controlPoint2.r, 0, Math.PI*2)
+    ctx.fill()
+    // 结束点
+    ctx.beginPath()
+    ctx.arc(endPoint.x, endPoint.y, endPoint.r, 0, Math.PI*2)
+    ctx.fill()
+    // 那些基础的连线
+    ctx.beginPath()
+    ctx.lineWidth = 1
+    ctx.moveTo(startPoint.x, startPoint.y)
+    ctx.lineTo(controlPoint1.x, controlPoint1.y)
+    ctx.moveTo(endPoint.x, endPoint.y)
+    ctx.lineTo(controlPoint2.x, controlPoint2.y)
+    ctx.strokeStyle = "#f00"
+    ctx.stroke()
+  }
+
+  render()
+
+
+  // 拖拽事件 鼠标按下 鼠标移动 鼠标抬起
+  let movePoint = null
+  let canDrag = false
+  canvas.addEventListener("mousedown", e => {
+    // 判断鼠标按下的位置有没有球
+    let mousePoint = {x: e.offsetX, y: e.offsetY}
+    pointList.forEach(point => {
+      let distance = Math.pow(point.x - mousePoint.x, 2) + Math.pow(point.y - mousePoint.y, 2)
+      if(distance < Math.pow(point.r, 2)){
+        // 已经拖拽到了一个控制点
+        movePoint = point
+        // 开启拖拽控制
+        canDrag = true
+      }
+    })
+  })
+  canvas.addEventListener("mousemove", e => {
+    if(canDrag && movePoint){
+      // 修改位置
+      movePoint.x = e.offsetX
+      movePoint.y = e.offsetY
+      // 重绘
+      render()
+    }
+  })
+  canvas.addEventListener("mouseup", e => {
+    movePoint = null
+    canDrag = false
+  })
+
+  // 鼠标跟随 .. 控制模块的一个环节
+  // 全局有一个鼠标位置
+  // 1. 鼠标移动 更新鼠标位置
+  // 2. 元素围绕鼠标位置旋转(离得远, 引力大, 离得近, 斥力大) => 在一定的距离绕着鼠标位置旋转.
+  // 直角坐标系 => 极坐标 ( 角速度 + 距离 + 绕心点)
+
+  // 除非你有地图的数据包, 知道怎么算出来绘制出路径
+
+  // canvas引入图片读取图片数据会跨域:
+
+
+</script>
+</body>
+</html>

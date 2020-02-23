@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+  body{
+   margin: 0;
+  }
+canvas{
+ display: block;
+ background-color: #000;
+}
+ </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+    let canvas = document.querySelector("canvas")
+    let ctx =canvas.getContext("2d")
+    let w,h
+    w = canvas.width= window.innerWidth
+    h = canvas.height= window.innerHeight
+    window.addEventListener("resize" ,(e) =>{
+     w = canvas.width= window.innerWidth
+    h = canvas.height= window.innerHeight
+    })
+    //设置初始原点
+    const mousePoint= {
+     x:w/2,
+     y:10
+    }
+    class Scrollpoint{
+     constructor(){
+      this.size = 2+Math.random()*2
+      this.corlor = '#'+Math.random().toString(16).slice(2,8)
+      this.basicR = 50+Math.random()*150// 距离鼠标的标准位置
+      this.currentr = this.basicR         //实际距离位置
+      this.angle = Math.random()*Math.PI*2// 旋转角度
+      this.vangle = 0.05                  //旋转角速度
+      this.x = mousePoint.x +this.currentr*Math.cos(this.angle)//球的x和y坐标
+      this.y = mousePoint.y +this.currentr*Math.sin(this.angle)
+     }
+     distance(p1,p2){
+      return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2))
+
+     }
+     rollBy(p){  //p 鼠标当前位置
+      this.currentr = this.distance(p,this)
+      this.currentr += - (this.currentr - this.basicR)*0.03
+      this.x = p.x +this.currentr*Math.cos(this.angle)
+      this.y = p.y +this.currentr*Math.sin(this.angle)
+      this.angle += this.vangle
+
+     }
+     draw(ctx){
+      ctx.beginPath()
+      ctx.fillStyle = this.corlor
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2)
+      // console.6log(this.x,this.y)
+      ctx.fill()
+     }
+
+    }
+  
+    function render(){
+     requestAnimationFrame(render)
+     ctx.fillStyle = "rgba(0,0,0,0.1)"
+     ctx.fillRect(0,0,w,h)
+    list.forEach(point =>{
+      point.draw(ctx)
+     point.rollBy(mousePoint)
+    })
+    }
+    let list =[]
+   for(let i = 0;i<100;i++ ){
+    list.push(new Scrollpoint())
+   }
+    render()
+    canvas.addEventListener("mousemove",(e) =>{
+     mousePoint.x = e.offsetX
+     mousePoint.y = e.offsetY
+    })
+
+
+    </script>
+</body>
+</html>

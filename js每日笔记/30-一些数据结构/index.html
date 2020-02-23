@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // let n = 1000
+    // let arr = new Array(n).fill(0).map((item, index)=>(index+1)).sort(()=>Math.random()-.5)
+    // console.log(arr)
+    /*
+      数据结构: 二叉树
+        1. 有一个根节点(没有父级节点)
+        2. 每个节点最多有两个子树 
+        3. 每个节点都在同一个树中 
+
+      利用这样的数据结构: 做排序
+      二叉搜索树: 
+        4. 左子树小于(等于)根( 节点比左边任意一个节点都要大或者等 )
+        5. 右子树大于根 (节点比右边部分任意一个节点都要小)
+
+      1. 排序有什么关系?
+        从小到大: 左子树 => 根节点 => 右子树
+        从大到小: 右子树 => 根节点 => 左子树
+      2. 如何生成二叉搜索树? 
+
+
+      排序问题: 
+        1. 生成一个二叉搜索树
+
+        2. 将这样的二叉搜索树输出出来
+          2.1 利用递归的原理, 
+            1> 输出左子树
+            2> 输出根节点
+            3> 输出右子树
+
+
+      [3,1,5,3,4,1,6,2,8,2,9,7]
+      转换成二叉搜索树的? 
+      通过不停添加的方式完善一个二叉搜索树. 
+
+      假设: 我们已经构建好了二叉搜索树 (这颗树是空的)
+
+      1. 当树根不存在的时候, 我们添加元素直接添加到树根位置
+      2. 当树根存在的时候,比较添加的元素和树根的关系
+        添加的比树根大 => 添加到右子树中
+        添加的比树根小或者是相等 => 添加到左子树中
+      [3,1,5,3,4,1,6,2,8,2,9,7]
+      [1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8 , 9]
+    */
+    /*
+      树的基本结构大概是有哪几部分? 
+      3部分 左子树 根 右子树
+
+      节点: 
+        节点之间的关系怎么存储? 
+    */
+
+    // let obj1 = {
+    //   data: 1,
+    //   left: null,
+    //   right: null,
+    // }
+    //
+    // let obj3 = {
+    //   data: 3,
+    //   left: obj1,
+    //   right: null,
+    // }
+
+    // obj3的左边节点怎么找? obj3.left
+    // obj3左子树的右子树
+    // obj3.left.right
+
+    // 写一个节点生成器
+    function node(data){
+      let o = {
+        data: data,
+        left: null,
+        right: null,
+      }
+      return o
+    }
+
+    // 如何 存储图 ... 
+    
+
+    // 递归代码 
+    // tree表示现在我要插入的那棵树, data表示插入的值
+    function insertNode(tree, data){
+      // 比较tree根的节点 和data的值, 小于等于在左边, 大于在右边
+      // 插入的值小于等于 树根的值
+      if(data <= tree.data){
+        // 走左边
+        //如果左边没有值, 直接赋值插入
+        if(tree.left === null){
+          tree.left = node(data) // 这就是递归的终点
+        }else{
+          // 左子树存在, 递归用自己的方法插入左边
+          insertNode(tree.left, data)
+        }
+      }else{
+        // 走右边的情况
+        if(tree.right === null){
+          tree.right = node(data) // 这就是递归的终点
+        }else{
+          insertNode(tree.right, data)
+        }
+      }
+    }
+
+
+    let binarySearchTree = {
+      // 整个树就是tree的属性值, null表示: 虚无
+      tree: null,
+      // 排序之后的结果
+      ans: [],
+      // 插入到一个现成的树种
+      insert: function(data){
+        // 如果当前tree不存在, 先添加一个元素到当前tree中作为根
+        if(!this.tree){
+          this.tree = node(data)
+        }else{
+          // 树已经存在了, 进行递归操作
+          // 对当前树的节点判断, 走左还是走右
+          insertNode(this.tree, data)
+        }
+      },
+      // 左 => 根 => 右
+      output: function(tree){
+        // 将tree形参 按 左 => 中 => 右方式输出, 并且可以递归
+        // tree的左子树存在, 输出左子树
+        if(tree.left){
+          this.output(tree.left)
+        }
+        // 输出数根
+        this.ans.push(tree.data)
+        // 如果右边存在,则输出右边部分
+        if(tree.right){
+          this.output(tree.right)
+        }
+      },
+      // find: function(tree, data){
+      //   if(tree.data === data){
+      //     return true
+      //   }
+      //   // if(!(tree.left || tree.right)){
+      //   //   return false
+      //   // }
+      //   if(tree.data > data && tree.left){
+      //     this.find(tree.left, data)
+      //   }
+      //   if(tree.data < data){
+      //     this.find(tree.right, data)
+      //   }
+      //   return false
+      // }
+    }
+
+    // let arr = [3,1,5,3,4,1,6,2,8,2,9,7]
+    let n = 1000000
+    let arr = new Array(n).fill(0).map((item, index)=>(index)).sort(()=>Math.random()-.5)
+    // 树是一个一个添加的, 所以遍历数组添加树
+    // 输出是一次性输出
+    // 排序是不优秀的: 一旦生成了, 其实就不需要再去生成了. 
+    console.time("BST")
+    arr.forEach(item => {
+      binarySearchTree.insert(item)
+    })
+    binarySearchTree.output(binarySearchTree.tree)
+    console.timeEnd("BST")
+
+
+    console.time("qs")
+    arr.sort((i,j)=>(i-j))
+    console.timeEnd("qs")
+
+    console.log(binarySearchTree.ans)
+
+
+
+    const ans = binarySearchTree.find(-1)
+    console.log(ans)
+    // binarySearchTree 就是一个已经构建好的二叉搜索树
+    // ... 
+
+    // 按顺序输出
+
+    // 做开发的时候: 数据量会越来越大的
+
+    // 假如面对一个只有递增的数据, 用普通的快排每次都要从新排序, 时间是不会被省下来的, 而且会很多重复操作
+    // BST 添加, 只需要添加比较 额外的内容, 对整体没有影响, 输出会节省大量的时间
+
+    // 也可以进行查询:  查询是非常优秀的
+
+    // 在极端情况下, 树会变得很深, (后续算法研究的内容)
+
+    // 删除: 也是可以删除, 复杂 左右子节点的判断
+
+    // 树... 链表 队列 图 ... 
+
+    // 基础基本功... 
+
+    // 作业: 二叉搜索树 
+      // 1.查询 
+      // 2.删除 
+
+    // 前端基本功继续下去 
+
+  </script>
+</body>
+</html>

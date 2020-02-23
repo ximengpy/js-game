@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div,li{
+      width: 300px;
+      height: 300px;
+      border: 1px black solid;
+    }
+  </style>
+</head>
+<body>
+<div>div</div>
+<li>li</li>
+<script>
+  // 我们没有办法自己去监听触发 => 写在底层代码中
+  // onclick addEventListener
+
+
+  // 封装 addEventListener removeEventListener 底层思想, 借助了 onclick
+  // 具体做什么: 任何一个元素都可以有我的方法 => 在原型操作
+
+  let div = document.querySelector("div")
+  let li = document.querySelector("li")
+  //
+  // console.dir(div)
+  // console.dir(li)
+
+  // 设计一个数据结构:
+  // {
+  //    "click": [foo1, foo2],
+  //    "mousemove": [foo3]
+  // }
+  // 被人修改了很危险的
+  myEvent = {
+    myAddEventListener : function (type, handleFunction) {
+      this.eventObject = this.eventObject || {}
+      type = type.toLowerCase()
+      // 初始化事件对象保存器
+      this.eventObject[type] = this.eventObject[type] || []
+      // 判断数组里面有没有之前添加过的函数
+      // 如果有就白干
+      if(this.eventObject[type].includes(handleFunction)) return
+      // 接下来添加
+      this.eventObject[type].push(handleFunction)
+      // 事件绑定的处理
+      this["on"+type] = e => {
+        this.eventObject[type].forEach(fn => fn(e))
+      }
+    },
+    myRemoveEventListener : function (type, handleFunction){
+      if(this.eventObject[type].includes(handleFunction)){
+        // 删除操作
+        this.eventObject[type] = this.eventObject[type].filter(item => item!== handleFunction)
+        this["on"+type] = e => {
+          this.eventObject[type].forEach(fn => fn(e))
+        }
+      }
+    }
+  }
+  Object.assign(HTMLElement.prototype, myEvent)
+
+
+  // div.addEventListener("click", function () {
+  //   console.log(1)
+  // })
+  // div.addEventListener("click", function () {
+  //   console.log(2)
+  // })
+
+  // 因为借用了DOM0级 on事件 所以DOM0级事件操作会失效 =>
+
+
+
+</script>
+</body>
+</html>

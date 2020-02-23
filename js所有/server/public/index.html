@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+ <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+ <style>
+ div{
+  width:256px;
+  height:300px;
+  margin:auto;
+  text-align:right;
+
+ }
+ p{
+  width:100px;
+  height:40px;
+  background-color:burlywood;}
+ </style>
+</head>
+<body>
+<div class="wrap">
+ 用户名：<input type="text" name ="user">
+ 密码：<input type="text" name = "password">
+ <button class = "get"> get 登录</button>
+ <button class = "post"> post 登录</button>
+
+ <p></p>
+</div>
+<script>
+ let user = document.querySelector("input[name = 'user']")
+ let password = document.querySelector("input[name = 'password']")
+ let getbut = document.querySelector(".get")
+ let postbut = document.querySelector(".post")
+
+ let p = document.querySelector("p")
+//  getbut.onclick = function(){
+//   const xhr = new XMLHttpRequest
+//   const url = `http://localhost:80/get?user=${user.value}&password=${password.value}`
+//   xhr.open("get",url)
+//   xhr.send(null)
+//   xhr.onreadystatechange = function(){
+//    if(xhr.readyState ==4 &&xhr.status >= 200&& xhr.status <300|| xhr.status == 304){
+//     let resdate = JSON.parse(xhr.responseText)
+//     if(resdate.code ==0){
+//      p.innerHTML = "登录成功"
+//     }else {
+//      p.innerHTML = "登录失败"
+//     }
+//    }
+//   }
+
+//  }
+//  postbut.onclick = function(){
+//   const xhr =new  XMLHttpRequest
+//   xhr.open('post','/post')
+//   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+//   xhr.send(`user=${user.value}&password=${password.value}`)
+//   xhr.onreadystatechange = function(){
+//    if(xhr.readyState ==4 &&xhr.status >= 200&& xhr.status <300|| xhr.status == 304){
+//     let resdate = JSON.parse(xhr.responseText)
+//     if(resdate.code ==0){
+//      p.innerHTML = "登录成功"
+//     }else {
+//      p.innerHTML = "登录失败"
+//     }
+//    }
+//   }
+//  }
+//  $.get('/get?user=yinshi&password=123', res => {
+//     console.log(res.msg,"getJquery")
+//   })
+
+
+//   $.post(
+//     "/post",{user:'aaa',password:'456'},function(data,state){
+//         console.log(data.msg,"postJquery");
+//         console.log(state);
+//     },
+//     "json"
+// )
+
+//自己封装的get
+// function ajaxget(url, cb){
+//  let xhr = new XMLHttpRequest
+//  xhr.open('get',`http://localhost:80${url}`)
+//  xhr.send(null)
+//  xhr.onreadystatechange = function(){
+//    if(xhr.readyState ==4 &&xhr.status >= 200&& xhr.status <300|| xhr.status == 304){
+//    cb(JSON.parse(xhr.responseText))
+//   }
+//  }
+
+// }
+
+
+// function ajaxpost( num,obj, cb){
+//  let xhr = new XMLHttpRequest
+//  let {user,possword} = obj
+//  xhr.open('post','/post')
+//  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+
+//  xhr.send(`user=${user}&password=${password}`)
+//   xhr.onreadystatechange = function(){
+//    if(xhr.readyState ==4 &&xhr.status >= 200&& xhr.status <300|| xhr.status == 304){
+//     let resdate = JSON.parse(xhr.responseText)
+//     cb(resdate)
+//    }
+//   }
+
+// }
+
+getbut.onclick = function(){
+axios.get('/get?user=${user.value}&password=${password.value}')
+.then(res =>{
+ console.log("axios",res.data.msg)
+})
+  }
+  postbut.onclick = function(){
+axios(
+ {
+  methods:'post',
+  url:'/post?user=${user.value}&password=${password.value}',
+
+ })
+.then(res =>{
+ console.log("axios",res.data.msg)
+})
+  }
+</script>
+</body>
+</html>

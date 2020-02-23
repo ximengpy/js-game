@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .big{
+      width: 500px;
+      height: 500px;
+      background-color: red;
+    }
+    .middle{
+      width: 300px;
+      height: 300px;
+      background-color: blue;
+    }
+    .small{
+      width: 100px;
+      height: 100px;
+      background-color: green;
+    }
+    /**{*/
+    /*  cursor: none;*/
+    /*}*/
+  </style>
+</head>
+<body>
+<div class="big">
+  <div class="middle">
+    <div class="small"></div>
+  </div>
+</div>
+<a href="asd">链接</a><img src="https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1048747646,994525702&fm=26&gp=0.jpg" alt="">
+<input type="text">
+<script>
+  let big = document.querySelector(".big")
+  let middle = document.querySelector(".middle")
+  let small = document.querySelector(".small")
+
+  // ie8 这一坨所有方法几乎全部不一样
+
+  big.addEventListener("click", function (e) {
+    e.stopPropagation()
+    console.log("big")
+  }, true)
+  middle.addEventListener("click", function (e) {
+    // 阻止事件进一步传递
+
+    console.log("middle")
+  })
+  small.addEventListener("click", function () {
+    console.log("small")
+  })
+
+  // 对谁操作谁就会触发
+  // 现在是同一个事件
+
+  // 深刻
+  // 本质是这样的: 点击操作的
+  // 系统处理点击操作等事件行为时会遵循一定的顺序
+  // 首先是点到哪个软件身上 => 浏览器 => document身上 => body => big => middle => small
+
+  // 由外到内的操作顺序: 撒网捕鱼 逐步定位到目标元素身上
+  // 事件触发流程:
+  // 事件捕获阶段 直到目标元素
+
+  // 后续还有: 事件还需要传递给系统
+  // small 行为告诉自己父元素 => middle => big => body => document => 浏览器 => 系统
+  // 事件冒泡阶段
+
+  // 任何一个事件触发:
+  // 1. 事件捕获阶段 从外到内 找到元素
+  // 2. 事件冒泡阶段 从里到外 传递信息出去
+
+  // 任何元素都会出现两次触发的时机
+
+  // 触发的问题. 事件是在冒泡阶段触发的
+
+  // 修改事件触发的时机: 在 addEventListener的第三个参数中
+  // 一个布尔值 false
+  // 是否在捕获阶段触发:
+
+  // 事件流
+
+  // 阻止事件进一步传递: 事件流打断 event对象
+  // e.stopPropagation()
+
+  // 阻止默认事件
+
+  // 页面中的元素有些有默认行为: 比如跳转 , 拖拽 ...
+
+  // 阻止事件的默认行为 e.preventDefault()
+
+
+  let a = document.querySelector("a")
+  a.addEventListener("click", function (e) {
+    e.preventDefault()
+  })
+
+  let img = document.querySelector("img")
+  img.addEventListener("dragstart", function (e) {
+    e.preventDefault()
+  })
+
+  // 右键点击事件
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault()
+    // 自己在页面中写一个右键菜单
+    //
+  })
+
+  window.addEventListener("keydown", function (e) {
+    if(e.key.toLowerCase() === "f12"){
+      e.preventDefault()
+    }
+    if(e.key.toLowerCase()==="i" && e.ctrlKey && e.shiftKey){
+      e.preventDefault()
+    }
+  })
+
+
+
+</script>
+</body>
+</html>

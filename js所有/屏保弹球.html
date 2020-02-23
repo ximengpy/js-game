@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style> 
+ .wrap{
+  position: relative;
+  width:1226px;
+  height:600px;
+  background-color:burlywood;
+  margin:auto;
+ }
+ .ball{
+  position: absolute;
+  width:100px;
+  height:100px;
+  /* background-color: red; */
+  box-shadow: 10px 10px 40px #666 inset;
+  border-radius: 50%;
+  z-index: 100;
+ }
+ </style>
+</head>
+<body>
+ <div class="wrap">
+   <!-- <div class="ball"></div> -->
+   <script>
+    let wrap = document.querySelector(".wrap")
+    let balllist = []
+   
+    function createball(){
+     let o = {
+      x:Math.random()*1126,
+      y:Math.random()*500,
+      vx : Math.random()*2+2,
+      vy : Math.random()*3+2,
+      update:function(){
+       if(this.x > 1126 ||this.x < 0 ){
+        this.vx *=  -1
+       }
+       if(this.y >500 || this.y < 0 ){
+        this.vy *= -1
+       }
+       this.x += this.vx
+       this.y += this.vy
+      },
+      color:colorchange()
+     }
+     return o
+    }
+    
+    wrap.onclick = function(){
+     balllist.push(createball())
+     console.log(balllist)
+    }
+    function colorchange(){
+     return `rgb(${Math.floor(Math.random()*256)} ,${Math.floor(Math.random()*256)} ,${Math.floor(Math.random()*256)} )`
+    }
+    function rander(){
+     let str = ""
+     let save =[].concat(balllist)
+     
+     save.forEach(o=> {
+      
+     str += `<div class="ball" style = "left: ${o.x}px;
+     top: ${o.y}px;box-shadow: 0 0 30px ${o.color} inset;"></div>`
+ 
+     wrap.innerHTML = str
+     })
+    }
+    
+    function annimation(){
+     balllist.forEach(o=> {
+      o.update()
+     })
+     rander()
+     requestAnimationFrame(annimation)
+     
+    }
+    annimation()
+    
+    
+   </script>
+ </div>
+</body>
+</html>

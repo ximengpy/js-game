@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    /*
+
+      数组翻转: 
+        reverse 返回数组反转的结果
+
+      数组的基础方法
+
+      数组开头结尾的添加与删除
+        修改原数组
+      4个方法
+      结尾的方法: 
+        栈的概念 站台
+        入栈 出栈 从数组的某个位置 输入内容/添加内容
+        算法
+        push 推入 若干个
+          返回数组最终的长度
+        pop 输出 最后一个元素 
+          1. 数组最后一个元素删除
+          2. 数组被删除的元素返回出来, 供后续使用
+      
+      头部的方法: 
+
+        头部之前插入
+          unshift 添加元素 返回数组最终长度
+            整体添加, 添加之后的结果和传参顺序是一致的
+            传入几个参数, 就会添加几个参数, 
+        头部之前数出
+          shift
+            1. 数组第一个元素删除
+            2. 数组被删除的元素返回出来, 供后续使用
+
+      数组删除操作,请用length判断数组是否没有内容了
+
+      如果对空数组进行删除 返回 undefined 表示没有东西可以删除了 
+
+      就是一个抄作业的过程: 
+      slice 字符串用到了 裁切 (从哪 到 哪)
+        开始下标(包含)
+        结束下标(不包含)
+          还是一个抄写的一个过程
+        
+        返回复制出来的数组
+        不会改变原数组的
+
+      splice 数组里面最强大的方法(没有之一)
+        能对数组在任意位置(删除任意个元素)或者(添加任意个元素)
+
+      接受至少1个参数
+        第一个参数(数值) 表示数组的 操作位置
+        第二个参数(数值) n表示删除 几位
+        第三个以及后续参数 表示在这个被删除的位置添加若干个
+
+      splice 函数执行完成之后 返回被删除的元素
+
+        如果不想删除, 就请给第二个参数写上 0
+
+      我们没有办法跳过中间参数直接传后面参数
+    */
+
+    function fooo(a = 1, b = 2, c = 3){
+      console.log(a, b, c)
+    }
+    fooo("a","c")
+    
+    let arr = ["大", "家", "好"]
+    // arr.push("好")
+    // arr.push("好")
+
+    // function pop(arr, index){
+    //   let tempArr = []
+    //   for(let i = 0;i < index;i++){
+    //     tempArr.push(arr.pop())
+    //   }
+    //   return tempArr.reverse()
+    // }
+
+    // let rest = pop(arr, 2)
+
+    // console.log(arr)
+
+    // 页面中有很多泡泡
+
+    // function reverse(str){
+    //   return 字符串反转的结果
+    // }
+  </script>
+</body>
+</html>

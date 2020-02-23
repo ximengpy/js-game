@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  // 核心: 了解在JS中对象的前生今世以及特点以及与函数(构造函数,原型链..)之间的关系
+
+  // 1. 任何函数都是对象
+  // 但是在面向对象讨论过程中 严格区分对象和函数
+  // 如果一个对象可以执行, 那么他就是一个函数
+  // 函数分成两种:
+  //    1. 普通函数
+  //    2. 构造函数 (new 这种方式执行的函数就是构造函数)
+
+
+  // 对象是什么? 一个具有自己独立属性具有方法的抽象集合体 无序性(和数组对比)
+
+  // 对象的生成方式是怎么操作的呢?
+  // 直接写 {} 可以生成了 => 语法糖
+  // 然而实际上任何对象的生成方式都是通过了new 这个关键字生成的
+  // new: 从内存地址中拿到一个可以使用的地址, 生成一个对象, 经过了一些操作添加了一些内容生成
+  // new 操作在底层中使用了 Object.create方法
+  // Object 是什么呢? 他是一个构造函数
+
+  // 任何对象都是通过构造函数(使用new)生成的
+
+  // let yinshi = new Object()
+  // yinshi.name = "银时"
+  // yinshi.age = 19
+  // yinshi.say = say
+  // // say方法 需要 打印调用者的属性
+  // function say(){
+  //   console.log(`我的名字是${this.name},我今年${this.age}岁了`)
+  // }
+  // let afei = new Object()
+  // afei.name = "阿飞"
+  // afei.age = 29
+  // afei.say = say
+
+  // 多个对象的开发流程: 分别重新创建每个对象, 之后修改各个对象的属性, 并且添加(类似的)方法
+
+  // 做一下优化, 可以用一个函数代替我们完成这样的功能
+  //
+
+  // function createobject(options){
+  //   // 函数作用域内部生成全新对象
+  //   let {name, age, say} = options
+  //   let o = new Object() // 这一步操作的时候就给对象赋予了一些基本的特性
+  //   o.name = name
+  //   o.age = age
+  //   o.say = say
+  //   return o
+  //   // return Object.assign(o, options)
+  // }
+  //
+  // let yinshi = createobject({name: "yinshi", age: 19, say})
+  // let afei = createobject({name: "afei", age: 29, say})
+
+  // 如果我要修改两个对象的say的方法怎么操作?
+  // 如果我想给这两个对象添加一个喝水的操作怎么操作?
+  // 操作...
+  // 需要修改方法
+
+  // 任何两个对象之间他们是没有关系的, 独立控制每个对象的方法操作属性
+  // 同时添加一条属性 .. 至少对两个对象进行操作
+  // yinshi.say = function () {
+  //   console.log(`我今年${this.age}岁了,我的名字是${this.name}`)
+  // }
+  // afei.say = function () {
+  //   console.log(`我今年${this.age}岁了,我的名字是${this.name}`)
+  // }
+  //
+  // yinshi.drink = function () {
+  //   console.log(`${this.name},喝水`)
+  // }
+  // afei.drink = function () {
+  //   console.log(`${this.name},喝水`)
+  // }
+
+
+  // 解决方案: 对象他们是有关联的, 可以共用方法的
+
+
+  // yinshi = { //
+  //   name: "yinshi",
+  //   age: 19
+  // }
+  // console.log(yinshi)
+
+
+  // 对象的访问属性的方法:
+  // 原型: 这个对象的基因 => 在对象的基因中创建方法, 是不是所有的对象都有了这样的方法了
+
+  // 不能直接写在对象中, 因为对象是通过构造函数生成的
+
+  // new 的操作符做了什么事情?
+
+  // 实例: 构造函数通过new生成出来的对象
+  // 带大家写构造函数 和new 还有 实例 之间的关系
+  // 规定: 构造函数都是大写字母开头(区分普通函数)
+
+  // 构造函数创建, Person就是构造函数
+  // 只要是函数都可以当成是构造函数可以使用new操作符执行
+  // 在构造函数中不是依赖return返回内容
+  // 在构造函数中作用域内的任意内容都不和 实例有关
+  // this是构造函数的灵魂:
+  // 因为在构造函数中this直接指向了实例
+  // new操作符的核心
+  //  new 的一个操作符确确实实执行了 构造函数
+  //  new操作符 实际上将构造函数的this返回了 指向了实例
+  //  new操作符 每次执行的时候都会创建一个新的对象
+  // function Person(x){
+  //   // console.log(x)
+  //   this.x = x
+  //   return 1 // 什么时候执行结束的功能
+  // }
+  // let yinshi = new Person(3)
+  //
+  // console.log(yinshi)
+
+  // 尝试写出来new操作的执行逻辑
+  // new做了什么
+  // function myNew(){
+  //
+  // }
+  //
+  function Foo(x, y){
+    this.x = x
+    this.y = y
+  }
+  //
+  let obj = new Foo(1, 2)
+  console.log(obj) // {x:1, y:2}
+
+  let myObj = myNew(Foo, 1, 2)
+
+  function myNew(cb, ...rest){ // 后续所有的参数打包
+    let o = {} // ?
+    cb.apply(o, rest) // 传入参数数组
+    return o
+  }
+
+  console.log(myObj)
+
+
+  // new 操作符更深层次的含义:
+
+  // 访问属性
+
+
+  // 任何对象都有基因: 都是从祖先当中继承下来的
+  // 任何对象的基因就是 __proto__: 属性中的内容
+  // 基因其实是可以访问的:
+  // 为什么 o.toString 直接访问了 o.__proto__.toString
+
+  // 对象访问属性: 首先从对象身上访问, 如果找不到这条属性, 就会去原型( 基因/__proto__ )上找
+  // 递归下去, 直到没有
+  // 对象访问属性的方式: 会从__proto__里面访问的
+
+  // 假设: 假设o.__proto__这个对象也有__proto__这条属性
+
+  // 访问o.a 访问顺序是什么?
+  // 现在o对象中找属性a 找不到
+  // o.__proto__上找属性a 找不到
+  // o.__proto__.__proto__上找 ....
+  // 直到 没有__proto__为止 返回找不到:
+
+
+  // 那么这个基因这么好用 这个基因又是从哪来的呢? 在构造函数实例对象的时候, 是从哪搞来的??
+
+
+
+
+</script>
+</body>
+</html>

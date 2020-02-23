@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    h1{
+      text-align: center;
+    }
+    .game-area{
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      width: 540px;
+      height: 540px;
+      border: 1px black solid;
+    }
+    .game-area>div{
+      width: 60px;
+      height: 60px;
+      box-shadow: 0 0 5px #999 inset;
+      text-align: center;
+      line-height: 60px;
+      /* border-radius: 50%; */
+    }
+  </style>
+</head>
+<body>
+  <h1>开关灯小游戏</h1>
+  <div class="game-area"></div>
+
+  <script>
+    // 棋盘的大小
+    let n = 3 
+    let gameArea = document.querySelector(".game-area")
+    // 生成地图
+    function createMap(n){
+      let str = ""
+      for(let i = 0;i < n*n;i++){
+        let div = `<div>${i}</div>`
+        str += div
+      }
+      gameArea.innerHTML = str
+      // 动态设置gameArea的大小
+      gameArea.style.width = n * 60 + "px"
+      gameArea.style.height = n * 60 + "px"
+    }
+
+    // 生成9*9的界面
+    createMap(n)
+
+    // 给每一个盒子绑定一个点击事件
+
+    let boxList = document.querySelectorAll(".game-area>div")
+
+    /*
+      数组通过下标获取每一个元素的 下标从0开始
+      数组有一个属性 length 表示数组的长度
+      数组遍历: 
+        对每一个小盒子绑定一个点击事件
+    */
+
+    // 让这个index的盒子颜色切换
+    
+
+    for(let i = 0; i < boxList.length; i++){
+      // 此时boxList[i]就是每一个元素
+      // 初始化 每一个小盒子的颜色
+      boxList[i].style.background = "#fff"
+      // 绑定点击事件
+      boxList[i].onclick = function () {
+        // 修改编号为i的这个盒子,相关的内容
+        change(i)
+        // 游戏胜负进行判断
+        if(check()){
+          document.querySelector("h1").innerHTML = "666! 恭喜你! 游戏通关"
+        }
+      }
+    }
+
+
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+ .box1{
+  width:100px;
+  height:100px;
+  background-color: blueviolet;
+  
+ }
+ .box2{
+  width:100px;
+  height: 100px;
+  background-color: chocolate;
+ }
+ </style>
+</head>
+<body>
+ <div class="box1">
+  <ul>
+   <li></li>
+  </ul>
+ </div>
+ <div class="box2"></div>
+ <script>
+ let li = document.querySelector("li")
+ var d = new Date(2018/05/09)
+ </script>
+ <!-- <script>
+ let box1 = document.querySelector(".box1")
+ let box2 = document.querySelector(".box2")
+ HTMLElement.prototype.myaddEventListener =function(type,handleFunction){
+  this.eventObject = this.eventObject|| {}
+  type = type.toLowerCase()
+  this.eventObject[type] = this.eventObject[type] || []
+  if(this.eventObject[type].includes(handleFunction))  return  //有相同名的函数就不执行
+  this.eventObject[type].push(handleFunction)
+  this["on"+type] = e =>{
+   this.eventObject[type].forEach(fn => (fn(e)));
+  }
+ }
+ HTMLElement.prototype.myRemoveEventListener = function(type,handleFunction){
+  if(this.eventObject[type].includes(handleFunction)){
+   this.eventObject[type] = this.eventObject[type].filter(item =>item!=handleFunction)
+   this["on"+type] = e => {
+          this.eventObject[type].forEach(fn => fn(e))
+        }
+  }
+ }
+ function foo(){
+console.log(3)
+ }
+ box1.myaddEventListener("click",function(){
+  console.log(1)
+ })
+ box1.myaddEventListener("click",foo)
+ 
+ box2.myaddEventListener("click",function(){
+  console.log(2)
+ })
+ box2.myaddEventListener("click",function(){
+  console.log(4)
+ })
+ box1.myRemoveEventListener("click",foo)
+
+  function foo1(){
+  console.log(1)
+ }
+  function foo2(){
+  console.log(2)
+ }
+ box1.addEventListener("click",foo1)
+ box1.addEventListener("click",foo2)
+ //给box1绑定了两个点击事件，只要点击盒子box1就会触发两个事件函数，输出1 2 
+ box1.removeEventListener("click",foo1)
+ //把box1其中添加foo1的绑定函数取消，这时候点击盒子就只输出2 
+  -->
+  </script>
+</body>
+</html>

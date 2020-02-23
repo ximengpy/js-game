@@ -1,0 +1,139 @@
+
+
+
+
+
+
+
+
+<script>
+
+  /*
+    function 声明
+      和 var 一致
+
+
+    函数声明
+    function foo1(){
+
+    }
+
+    函数表达式
+    var foo2 = function(){
+
+    }
+    
+    立即执行的匿名函数表达式:
+
+    1. (function(){})()
+
+    2. +function(){}() // + - ! ~
+
+    3. (function(){console.log(1)}())
+
+    因为有括号的出现, 在前文的代码可能会和后面匿名函数表达式的代码结合, 出现语法错误
+
+  */
+  // foo()
+
+  // var foo = function(){ // 函数表达式
+  //   console.log("foo 执行")
+  // }
+  // var a = 3
+
+  // ;(function(){
+  //   console.log(1)
+  // })()
+    // function request(){
+
+    // }
+    // // 我又想不让用户访问到这个密码
+    // let obj = (function fooo(){
+    //   var password = request()
+    //   // ...各种操作
+    //   return {
+    //     a: 123
+    //   }
+    // })()
+    
+  /*
+      JS代码执行的时候: 
+        按顺序执行, 当访问一个变量的时候: 会怎么去访问?
+        按照函数声明所在的位置进行查询, 返回上层作用域查询
+
+      访问一个变量的时候: 
+        首先在当前作用域查询
+        如果没有, 返回上层作用域(指的是谁? )
+          一定永远指的是 声明 的时候的作用域
+  */ 
+
+  // var a = "全局"
+
+  // function foo1(){
+  //   // var a = "foo1"
+  //   console.log(a) // 打印哪个地方的a? 
+  // }
+  // function foo2(){
+  //   function foo1(){
+  //     // var a = "foo1"
+  //     console.log(a) // 打印哪个地方的a? 
+  //   }
+  //   foo1()
+  //   var a = "foo2"
+  // }
+
+  // foo2()
+
+  // function foo1(){
+  //   var a = b = 3
+  //   /*
+  //     window.b = 3
+  //     var a = 3 
+  //   */
+  // }
+  // console.log(b) // 
+  // foo1()
+
+  // console.log(a) // not defined
+  
+  // a()
+  // if(typeof a === "function"){
+  //   var a
+  //   console.log("if")
+  // }else{
+  //   function a(){
+  //     console.log(a)
+  //   }
+  //   console.log("else")
+  // }
+
+  // 相当于面试的很奇怪的题: 
+  // 严格遵循: 先声明后执行 => 用let就对了
+
+  let f = function(){}
+
+  b()
+  {
+    function b(){}
+  }
+
+
+
+  /*
+    var 和 function 声明同名变量
+
+      不管先后顺序,一定会变成function, 因为
+        函数是JS第一等公民 => 优先级最高
+  */
+  // console.log(typeof a)
+
+  // function a(){
+  //   console.log(a)
+  // }
+  // var a
+
+  
+
+
+  
+</script>

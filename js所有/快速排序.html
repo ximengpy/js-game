@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ 请输入要排序的长度:<input type="text" value="10">
+  <button>提交</button>
+ <script>
+  let input = document.querySelector("input")
+  let button = document.querySelector("button")
+  let num
+ 
+  button.onclick = function(){
+    num = input.value
+    // console.log(num)
+    let  arr = new Array(Number(num)).fill(0)
+    console.log(arr)
+    arr.forEach((item,index)=>(arr[index]= index+1))
+    arr.sort(()=>Math.random()-.5)
+    // console.log(arr)
+    // qsort(arr)
+  }
+  function swrap(arr,i,j){
+   let temp
+   temp = arr[i]
+   arr[i] = arr[j]
+   arr[j] = temp
+  }
+  function qsort(arr){
+   function qs(arr,left,right){
+    let i = left ,
+        j = right
+    while(i<j){
+     while(arr[i]<arr[j]&&i<j){
+      i++
+     }
+     swrap(arr,i,j)
+    while(arr[i]<arr[j]&&i<j){
+     j--
+    }
+    swrap(arr,i,j)
+    let middle = i
+    // console.log(middle)
+    qs(arr,left,middle-1)
+    qs(arr,middle+1,right)
+    }
+   }
+   qs(arr,0,arr.length-1)
+  }
+  // console.log(arr)
+ </script>
+</body>
+</html>

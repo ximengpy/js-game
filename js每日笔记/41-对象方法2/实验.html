@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ <div></div>
+ <div></div>
+ <div></div>
+ <script>
+  // let divList = document.querySelectorAll("div")
+  // // let [...divList]
+  // console.log(Object.values(divList))
+  // Object.creat()
+//   let a = {
+//       props1: "val1",
+//       props2: "val2",
+//   }
+//   let b = {
+//       props2: "new-val2",
+//       props3: "new-val3",
+//   }
+//   // 将后面的值添加到前面的对象合并方式
+//   Object.assign(a, b)
+// function foo(obj){
+//       // this.a = obj.a
+//       // this.b = obj.b
+//       // this.c = obj.c
+//       // this.d = obj.d
+//       console.log( obj)
+//       Object.assign(this, obj)
+
+//       console.log(Object.keys(this)) // 按属性添加顺序遍历
+//   }
+//   let o = {e: 6,a: 3} // 一开始 a , e
+//   foo({
+//       a: 1,
+//       b: 2,
+//       c: 3,
+//       d: 4,
+// //   })
+// let obj = {}
+//   let num = 1
+//   Object.defineProperty(obj, "props1", {
+//       get: function () {
+//           return num // 通过this进行控制对象
+//       },
+//       set: function (val) {
+//           num = val
+//       }
+//   })
+//深拷贝
+function deepClone(obj){
+    function typeif(obj){
+        return {}.toString.call(obj).slice(8,-1)
+    }
+    function truedeepClone(obj){
+        let type  = typeif(obj)
+        if(type != Array && type != Object)
+        return obj
+        let result = type == Array?[]:{}
+        if(type == Array){
+            for(let i = 0;i<obj.length;i++){
+                result.push(truedeepClone(obj[i]))
+            }
+        } else{
+              // 对对象进行深拷贝
+              for(let i in obj){
+                 
+                  result[i] = trueDeepClone(obj[i])
+              }
+          }
+          return result
+    }
+    return truedeepClone(obj)
+}
+let a = deepClone([4,3,5,[4,5]])
+
+ </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html >
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+  .reward{
+    /* position: relative; */
+   width:100px;
+   height:100px;
+   margin: 50px auto;
+   border-radius: 50%;
+   background: red;
+   text-align:center;
+   line-height:100px;
+   cursor: pointer;
+  }
+  .area{
+    position: relative;;
+    width:300px;
+    height:300px;
+    background-color:aquamarine;
+    margin:auto;
+    border-radius: 50%;
+  }
+  .area >p{
+    position: absolute;
+    width:2px;
+    height:2px;
+    background-color:red;
+    border-radius: 50%;
+  }
+  .center{
+    width:4px;
+    height:4px;
+    background-color:blueviolet;
+    position: absolute;
+    /* l/eft:50%; */
+    /* top:50%; */
+    /* margin-top:-15px; */
+    /* margin-left:-15px; */
+    border-radius: 50%;
+  }
+ </style>
+</head>
+<body>
+  <div class = "reward">点击抽奖</div>
+  <div class="area">
+    <!-- <div class="center"></div> -->
+  </div>
+ <script>
+ function random(n,m){
+      let temp =Math.abs(n-m)
+      let min =Math.ceil(Math.min(n,m)) 
+      // console.log(min)
+      // if(min<Math.max(a,b))
+
+      let a = Math.floor(temp*Math.random()+Math.min(n,m))
+      console.log(a)
+
+}
+ let reward = document.querySelector(".reward")
+ reward.onclick = function(){
+  random()
+  
+  
+ }
+ function random(){
+  let random1 = Math.random()
+  console.log(random1)
+  if(random1<0.01){ alert("银时老师女装照片!");return}
+  if(random1<0.03) {alert("银时老师么么哒 ") ;return}
+  if(random1<0.15) {alert("meco老师照片");return}
+  if(random1<0.44) {alert("作业一份   "); return}
+ }
+
+
+ 
+  let area = document.querySelector(".area")
+  let center = document.querySelector(".center")
+  let r ,l ,a,b
+  let str = ""
+  function random(){
+  r = Math.random()*Math.PI*2
+  l = Math.random()*146
+  a= Math.sin(r)*l
+  b = Math.cos(r)*l
+ str += `<div class = "center" style = "top:${a+150}px;left:${b+150}px"></div>`
+  area.innerHTML += str
+  
+}
+setInterval(random, 1000/60)
+
+
+
+
+
+
+
+
+ </script>
+</body>
+</html>

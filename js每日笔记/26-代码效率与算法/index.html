@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  
+    
+    /*
+      科班出生: 
+        1. 底层 设计思想 实现原理
+        2. 做一些题: 算法题(数据结构, 模型, 实现原理)
+      
+      算法: 计算(出效果)方法.
+        不同的算法有优劣
+        1+2+...+100 => (1+100)*50 => 5050
+
+      算法优劣的区分方式: 
+        时间: 谁用的时间少(相对的概念)
+          相对于相同的参照物
+        空间: 谁消耗的空间资源小
+        
+      计算机中: 
+        时间 > 空间(运行内存)
+        前端: 优秀的用户体验 => 时间当中
+
+        做算法的时候优先的考虑时间问题.
+
+        把单句代码看成是单位时间 => 代码执行了几句
+      
+      时间复杂度: 
+        量级的比较:
+          随着n增加时间t变大 的变化速率
+        O(N) => 和n成线性关系 => N的变化倍率和时间变化倍率成正比
+
+        O(N^2) => 和n^2成线性关系 => 
+
+      O(N^2) >> O(N)
+
+      时间复杂度的通用表
+
+      O(N^N) >> O(2^N) >> O(N^3) >> O(N^2) >> O(N*lnN) >> O(N) >> O(lnN) >> O(K)
+
+
+      指数 是非常恐怖的
+      程序员的常识: 
+    */
+
+    // p1 3n => O(N)
+    let n = 100
+    for(let i = 0;i < n;i++){
+      let a = 3;
+      // 300 次
+    }
+
+    //p2 4n => O(N)
+    for(let i = 0;i < n;i++){
+      let a = 3;
+      let b = 2
+      // 
+    }
+
+    // O(N)*O(N) => O(N^2)
+    for(let i = 0;i < n;i++){
+      for(let j = 0;j < n;j++){
+        let a = 3
+      }
+    }
+
+
+
+    // 现有一个有序数组, k 在数组中, 求k所在数组的下标 经典问题: 
+    // 二分查找
+    // n 是 arr的长度
+    // O(N) 次 假设 数组 1...100
+    // O(lnN) 
+    let arr = [1,2,3,5,7,9,11,13]
+    let k = 75
+    // 75次
+    // function findK(k){
+    //   for(let i = 0;i < arr.length;i++){
+    //     if(arr[i] === k){
+    //       return i
+    //     }
+    //   }
+    //   return -1
+    // }
+
+    // 2次 
+    // function findK2(k, l, r){
+    //   if(arr[l+Math.floor((r-l)/2)] < k){
+    //     findK2(k, l+Math.floor((r-l)/2), r)
+    //   }else{
+
+    //   }
+    // }
+
+
+
+    // console.log(findK(9))
+
+
+  </script>
+
+  <p>我从1-100随机生成了一个数, 请猜出这个数是多少</p>
+  <input type="number"><input type="button" value="提交">
+  <p></p>
+
+  <script>
+    // 随机生成一个 1- 100的整数
+    let ans = Math.floor(Math.random()*100) + 1
+
+    let btn = document.querySelector("[type=button]")
+
+    let input = document.querySelector("[type='number']")
+    let p = document.querySelector("p")
+    btn.onclick = function(){
+      let val = Number(input.value)
+      if(val === ans){
+        p.innerHTML += `恭喜!就是${val}!!<br>`
+      }
+      if(val > ans){
+        p.innerHTML += `对不起结果大了<br>`
+      }
+      if(val < ans){
+        p.innerHTML += `对不起,结果小了<br>`
+      }
+    }
+  </script>
+</body>
+</html>

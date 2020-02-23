@@ -1,0 +1,142 @@
+<ul class="list">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+<script>
+  /*
+    forEach 将数组挨个的进行操作
+    数组的方法: 任意的数组都是可以使用
+      forEach函数 接受一个参数: 操作方法(function)
+        一共往操作方法里面传入三个参数
+        接受三个参数
+          item => 数组里面的每个元素
+          index => 数组下标
+          arr => 数组本身整体
+  */
+  let objArr = [
+    {name: "obj1"},
+    {name: "obj2"},
+    {name: "obj3"},
+    {name: "obj4"},
+    {name: "obj5"},
+  ]
+  // // example1
+  // objArr.forEach(function(item, index, arr){
+  //   item.age = index // 只写了一次, 但是一共要执行3次
+  // })
+  // console.log(objArr)
+
+  // example2
+  // objArr.forEach(console.log)
+
+  // 如何去改装接受不定参
+  // function fn(){
+  //   // arguments 数组, 按顺序接受参数
+  //   // 如何让接受的参数由 [] 变成 单个的形式
+  //   // apply 一共接受两个参数 第一个是调用主体 第二个是 由参数组成数组
+  //   console.log.apply(console, arguments)
+  // }
+
+  // bind: 修改函数调用主体然后返回一个函数 
+  // let fn = console.log.bind(console)
+  // objArr.forEach(fn)
+
+  // 给每一个li 里面添加文字, 添加 objArr的每一项的name
+  // getElementsByTagName 获取的是类数组, 就不应该拥有数组的方法
+  let liArr = document.getElementsByTagName("li");
+  
+  // liArr.forEach(function(li, index){
+  //   // 此时这个li指的是每一个li元素
+  //   li.innerHTML = objArr[index].name
+  // })
+
+
+  /*
+    一个长得很像数组的类数组想要使用数组的方法
+      想要像数组一样操作?
+
+      可以借用数组的方法, 只需要改变数组方法的执行主体
+
+      call 修改执行主体
+
+      谁call谁?
+
+      数组方法调用的时候 悄悄 修改调用主体
+        call方法一定要在执行之前使用
+
+        数组.forEach.call(liArr)
+
+        [].forEach().call(liArr, function)
+
+        以哪个数组来作为借鉴呢?
+        只要是数组就都可以
+        []
+
+      document.querySelectAll 虽然是类数组, 但是自身携带了一个forEach
+  */
+  // [].forEach.call(liArr, function(li, index){
+  //   li.innerHTML = objArr[index].name
+  // })
+  // console.log(liArr)
+
+  // 字符串可不可以遍历? 
+
+  // let str = "asdfgh";
+
+  // [].forEach.apply(str, [function(item){
+  //   console.log(item)
+  // }]);
+
+  // let fn1 = [].forEach.bind(str,function(item){
+  //   console.log(item)
+  // })
+  // fn1()
+  // let fn2 = [].forEach.bind(str)
+
+  //   // fn2 携带了调用主体的函数, 但是等待传参执行
+  // fn2(function(item){
+  //   console.log(item)
+  // })
+
+  /*
+    也是我们的 遍历
+    for...in 通常遍历对象
+      可以遍历数组甚至对象: 访问每一个 可枚举 属性
+      遍历下标
+
+      可枚举: 循环遍历的时候是否可以列举出来
+
+      比如 数组中的length 以及任意对象中的 __proto__ 都是不可枚举的
+        表现效果就是这条属性颜色比较浅, 后面可以修改
+      栗子
+    for...of 非常有用
+      遍历每一项的值
+      遍历数组, 类数组, 字符串, 不会从原型链迭代的
+      只能遍历哪些可数(iterable 可迭代)的东西
+  */
+  let arr = ["a", "s", "d"]
+  let obj = {
+    0: "a1",
+    1: "b1",
+    2: "c1",
+    "length": 3,
+  }
+  // for(let i in obj){
+  //   console.log(i)
+  // }
+
+  // for(let i in arr){
+  //   console.log(i)
+  // }
+
+  // for( let i of liArr ){
+  //   console.log(i)
+  // }
+
+
+    
+
+</script>

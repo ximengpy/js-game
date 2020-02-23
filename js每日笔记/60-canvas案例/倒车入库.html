@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>倒车入库</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    canvas{
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<!--
+  在canvas中绘制逐帧动画 插入这张图片, wsad控制 ws 往前往后, ad 左转和右转
+  1. 在页面中做出逐帧动画
+  2. 控制小鱼的转向和前进后退
+      2.1 drawImage的旋转 ctx绘制过程中的旋转
+      ctx.rotate() // 弧度
+      // 默认会绕着左上角的位置进行旋转 调整旋转的中心 ctx.translate(x, y)
+      // 先调整旋转位置, 在旋转
+-->
+<canvas id="canvas"></canvas>
+<script>
+  // 初始化完成
+  const canvas = document.querySelector("#canvas")
+  const ctx = canvas.getContext("2d")
+  let w, h
+  w = canvas.width = window.innerWidth
+  h = canvas.height = window.innerHeight
+  window.addEventListener("resize", function () {
+    w = canvas.width = window.innerWidth
+    h = canvas.height = window.innerHeight
+  })
+
+  // 鲸鱼 写一个对象控制 => 写个构造函数 实例 鲸鱼
+
+  const keyMap = {
+    w: false,
+    s: false,
+    a: false,
+    d: false,
+  }
+
+
+
+  class Fish{
+    constructor(){
+      this.src = './fish.png'
+      this.img = new Image()
+      // 鱼图: 位置
+      this.posX = 200
+      this.posY = 200
+      // 图片的切换张数
+      this.count = 12
+      // 图片的缩放比例
+      this.scale = 0.5
+      // 绘制位置的计数
+      this.index = 0
+      this.c = 0
+      this.degree = 0
+      this.vDegree = 0.07
+      // 小鱼的移动速度
+      this.v = 8
+      this.init()
+    }
+    init(){
+      this.img.src = this.src
+      // 单张图片的实际大小
+      this.basicWidth = this.img.width
+      this.basicHeight = this.img.height / this.count
+      // 单张图片的缩放大小
+      this.width = this.basicWidth * this.scale
+      this.height = this.basicHeight * this.scale
+    }
+    // draw的操作是要draw很多次的 调整完成之后一定要调整回来
+    draw(ctx){
+      // 九个参数的绘制方式
+      // 图片 素材开始位置 素材大小 页面开始位置 页面大小
+      // 先调整旋转中心 =>
+      ctx.translate(this.posX + this.width / 2, this.posY + this.height / 2)
+      // 再旋转
+      ctx.rotate(this.degree)
+      ctx.drawImage(
+        this.img,
+        0, this.index * this.basicHeight,
+        this.basicWidth, this.basicHeight,
+        -this.width/2, -this.height/2,
+        this.width, this.height
+      )
+      // 调整中心旋转之后归位
+      ctx.rotate(-this.degree)
+      ctx.translate(-this.posX - this.width / 2, -this.posY - this.height / 2)
+    }
+    update(){
+      // 更新, 更新绘制的图片的位置 index 表示绘制位置的更新
+      // 每 渲染6次 更新一次index的值
+      this.c++
+      if(this.c > 6){
+        this.index++
+        if(this.index >= this.count){
+          this.index = 0
+        }
+        this.c = 0
+      }
+      if(keyMap["w"]) this.forward()
+      if(keyMap["s"]) this.goBack()
+      if(keyMap["a"]) this.turnLeft()
+      if(keyMap["d"]) this.turnRight()
+
+      // 碰到边上停下来, 前进不了
+      if(this.posX < 0) this.posX = 0
+      if(this.posX > w - this.width) this.posX = w - this.width
+      if(this.posY < 0) this.posY = 0
+      if(this.posY > h - this.height) this.posY = h - this.height
+
+    }
+    turnLeft(){
+      this.degree -= this.vDegree
+    }
+    turnRight(){
+      this.degree += this.vDegree
+    }
+    forward(){
+      this.posX += Math.cos(-this.degree)*this.v
+      this.posY -= Math.sin(-this.degree)*this.v
+    }
+    goBack(){
+      this.posX -= Math.cos(-this.degree)*this.v
+      this.posY += Math.sin(-this.degree)*this.v
+    }
+  }
+
+  // 加载图片并且做一些尺寸上的初始化
+  let fish = new Fish()
+  let bg = new Image()
+  bg.src = "./bg.jpg"
+  function drawBg(ctx) {
+    ctx.drawImage(bg, 0, 0, w, h)
+  }
+
+  // canvas的渲染
+  function render() {
+    drawBg(ctx)
+    requestAnimationFrame(render) // 一秒60帧
+    // 绘制鱼
+    fish.draw(ctx)
+    fish.update()
+  }
+  render()
+
+
+  // keydown的事件的触发规律是这样的: 如果长按 先触发一次, 听一下, 然后不停触发
+
+  // 按键 抽象成为状态了
+  window.addEventListener("keydown", e => {
+    keyMap[e.key.toLowerCase()] = true
+  })
+  window.addEventListener("keyup", e => {
+    keyMap[e.key.toLowerCase()] = false
+  })
+
+
+</script>
+</body>
+</html>

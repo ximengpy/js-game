@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    .on{
+      background: #fff;
+    }
+    .off{
+      background: #ccc;
+    }
+  </style>
+</head>
+<body class="on">
+  <div class="box">添加</div>
+  <input type="text" value="">
+  <ul></ul>
+  <script>
+    /*
+      switch case
+      break default
+      也是条件判断:
+      使用的情况是相等匹配, 不是
+      范围比较
+      if ... else 可以进行范围比较 
+
+
+      抽奖: 
+        一等奖 
+
+        二等奖 
+
+        三等奖 
+
+        安慰奖 
+    */
+
+    let jiangquan = 50
+    switch (jiangquan) {
+      case "一等奖": 
+        console.log("颁发一等奖")
+        break
+      case "二等奖":
+        console.log("二等奖颁发")
+        console.log("再接再厉")
+        break
+      case "三等奖":
+        console.log("颁发三等奖")
+        break
+      default :
+        console.log("下次再来吧")
+    }
+    // 尝试 换成if...else 的情况
+
+    // 三目运算符 其实是一个表达式
+    // 表达式会返回内容
+    // 本质上就是一个if...else
+    // 语法格式: 
+      // expression?sentence1:sentence2
+      // 如果 expression为真返回 sentence1否者 返回 sentence2
+    
+      // 三目运算符里面只能跟单条语句 
+    /*
+      假如 light 为"on"改成 "off" 
+      假如 light 为"off"改成 "on" 
+    */
+
+    // if(light == "on"){
+    //   light = "off"
+    // } else if(light=="off") {
+    //   light = "on"
+    // }
+    // var light = "on" // "on" "off"
+    // let body = document.querySelector("body")
+    // function turn(){
+    //    修改light值 on => off off=>on
+    //   light = (light=="on")?"off":"on" 
+    //   将修改好的值赋值给body的class类名
+    //   body.className = light
+    // }
+
+    // let box = document.querySelector(".box")
+
+    // box.onclick = turn
+
+    /*
+      1. 写一个可以用input输入点击添加增加列表的功能
+      最多可以添加 5条记录
+      当出现5条记录的时候 不会添加, 会弹窗(alert)
+    */
+
+    /* 循环 遍历*/
+
+
+    /* 
+      作业: 创建一个obj对象, 有一个count属性默认是0
+        有一个方法add 执行的时候让count自己增加1
+        obj.count = 0
+        obj.add()
+        obj.add()
+        obj.count // 2
+    */
+
+    let obj = {
+      count: 0,
+      add: function () {
+        obj.count += 1
+      }
+    }
+    /*
+      自加 自减:
+      自己加上一个1 自己减去一个1
+      通过++ / -- 这个符号来的
+      可以写在变量前面或者后面的
+
+      写在前后最终这个值都会增加1
+
+      a++和++a有什么区别呢?
+
+      a++
+      先返回a
+      再去自己增加
+
+      ++a
+      先自己增加
+      再返回
+
+    */
+    let a = 3
+    // ++a
+    // console.log(a)
+    let b = (a++)+(++a)+(++a) 
+    let c = (++a)+(++a)+(++a)
+    console.log(c)
+
+  </script>
+</body>
+</html>

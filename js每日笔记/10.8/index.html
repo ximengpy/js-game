@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 300px;
+      height: 300px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">这是盒子里面的文字</div>
+  <!--
+    JS: 页面的一个脚本, 运行执行代码逻辑, 达到想要的效果
+
+    点击一个盒子, 让盒子变色.(红色 => 绿色)
+      变得是css中background-color
+    
+    1. 这些操作都是在JS中实现的, 写JS代码
+      1.1 JS代码写在哪里? 
+        1> 直接写到页面中, body标签结束之前, script标签
+          也可以写在任意你想出现的位置
+          alert: 警告
+          文字一般放到引号内
+        2> 通过引入文件的方式引入JS代码
+          JS文件 .js
+          新建文件 引入当前页面中 script标签方式引入
+        3> 直接在控制台书写代码
+          F12打开控制台, 选择console区域 书写代码
+
+    2. 一个行为 是 由什么东西组成的. 
+      语言: 主+谓+宾
+        简化: 谓语+宾语
+
+        在JS中是有语法规范的: 
+          遵循规范: 
+            让浏览器知道被操作的对象是谁
+            css选择器
+          JS选中这个元素. 
+          DOM: document: 至整个页面的代码内容
+          BOM
+          ECMA
+        将document先输出一下
+    // 在控制台中打印括号里面的内容
+
+    console.log()  
+    
+    // 控制台的功能
+
+    在JS中-号有自己含义: 两者相减, 换成小驼峰命名
+
+
+    list-style-type
+
+    listStyleType
+
+
+    变量再去使用之前是需要声明的
+      JS编程语言: 很多内置的代码/方法: alert document console
+      自己定义保存一些东西: 自己起名字
+      向浏览器提出一个申请
+      let/var
+
+
+
+
+    JS代码是怎么执行的? 
+      1. 知道操作的主体
+      2. 知道操作的方法
+      3. 操作
+    
+    
+    变量的命名法则: 
+      1. 不能以数字开头(因为数字开头会被理解成为数字)
+      2. 首字母不能大写
+      3. 见名知义, 符合语义化
+      4. 虽然可以使用中文或者特殊符号, 但是不推荐
+    
+    var/let/const 是什么东西: 
+      他们都是变量声明的关键字: 
+        声明变量, 方便后面使用
+      其中var/let/const目前没啥区别
+    
+    var/let: 变量: 可以修改的量
+
+    const: 常量: 不能修改的量(通常情况下全部字母是大写)
+
+  -->
+  <script>
+    /* console.log(document.querySelector(".box")) */
+
+    // 将这个盒子的颜色变成绿色
+    // document.querySelector(".box").style.backgroundColor = "green"
+    
+    // 点击盒子的时候, 将这个盒子变成绿色
+    // 优化 对元素操作的时候元素单独储存起来呢
+    // 变量: 容器 称呼
+    // 
+
+    let yinshiAge = 18
+    const yinshiSex = "男"
+
+    let box = document.querySelector(".box")
+    // 点击xiaomin这个盒子 让他变成绿色
+
+    box.onclick = function () {
+      box.style.backgroundColor = "green"
+      box.style.color = "rgb(255,255,255)"
+      yinshiSex = "女"
+      console.log(yinshiSex)
+    }
+    // xiaomin.style.backgroundColor = "green"
+
+
+    // =号操作符: 传值得过程, 把等号右边的东西交给等号左边
+    // 
+
+    var a = "银时"
+    var b = "阿飞"
+
+    // 一段代码
+    var temp = a
+    a = b
+    b = temp
+
+    console.log(a, b) // 4 , 3
+
+
+    // 作业:  页面中有左右两个盒子
+
+    // 往页面元素内添加内容 
+  </script>
+</body>
+</html>

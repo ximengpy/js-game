@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    h1{
+      text-align: center;
+    }
+    .area{
+      display: none;
+      margin: 0 auto;
+      border: 1px black solid;
+    }
+    .area>div{
+      float: left;
+      width: 50px;
+      height: 50px;
+      border: 1px black solid;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 24px;
+      line-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>性感银时, 在线扫雷</h1>
+  <p>
+    <label for="width">地图宽: <input type="number" value="9" id="width"></label> <br>
+    <label for="height">地图高: <input type="number" value="9" id="height"></label> <br>
+    <label for="mine">地雷个数: <input type="number" value="9" id="mine"></label> <br>
+    <input type="submit" value="生成地图">
+  </p>
+  <div class="area"></div>
+  <script>
+    /*
+      扫雷: 
+        1. 地图 m*n大小的地图
+          每个单元格都有一个空地
+          地图中随机生成若干个地雷(隐藏不可见)
+            在某些位置有或者没有, 用数据的方式存储
+          地图的数值信息已经确定
+        
+        2. 游戏开始: 
+          点击地图区域,有反馈:
+            有雷, 游戏结束
+            没有雷就继续
+        
+        3. 点击之后如果没有雷
+          会显示这个点击位置周围8个格子雷的情况(雷的个数的总和)
+      
+      每一项代表地图中第几个盒子的信息
+        盒子的信息:  
+          value值两种状态
+            雷: *
+            数值: 0-8
+      mapData = [
+        
+      ]
+
+      Math.random() 返回 0~1之间的随机数
+        每次返回都不一样
+      Math.floor()  向下取整 1.3 1 2.3 2
+
+
+
+    */
+    // w 每行的个数
+    // h 行数
+    // mine 是地雷的个数
+    let w = 9, h = 9, mine = 9
+    let mapData = []
+    let submit = document.querySelector("input[type='submit']")
+    let area = document.querySelector(".area")
+    let boxList = null
+    // 被点击的数组
+    let clickArr = []
+
+    function initClickArr(){
+      for(let i = 0;i < w*h;i++){
+        clickArr[i] = false
+      }
+    }
+      // 地图生成
+      createMap()
+      // 雷的数据生成
+      createMineData()
+      // 绑定点击事件
+      register()
+
+    submit.onclick = function(){
+      // 地图生成
+      createMap()
+      // 雷的数据生成
+      createMineData()
+      // 绑定点击事件
+      register()
+    }
+    // 地图尺寸信息
+    function createMap(){
+      w = Number(document.querySelector("#width").value)
+      h = Number(document.querySelector("#height").value)
+      let str = ``
+      for(let i = 0;i < h;i++){
+        for(let j = 0;j < w;j++){
+          let box = `<div></div>`
+          str += box
+        }
+      }
+      area.style.display = "block"
+      area.style.width = w * 50 +"px"
+      area.style.height = h * 50 +"px"
+      area.innerHTML = str
+    }
+    function createMineData(){
+      // 先将地图的随机位置生成雷
+      mine = Number(document.querySelector("#mine").value)
+      // mineData先清空
+      mapData = []
+      // 先给地图添加初始值
+      for(let i = 0;i < w*h;i++){
+        // 往数组的最后一位添加一个0
+        mapData[i] = 0
+      }
+      // console.log(mapData)
+      // 生成mine个地雷
+      // 已经生成了多少个地雷
+      let count = 0
+      // 已经生成地雷个数小于地雷总数, 就该生成地雷
+      while(count < mine){
+        // 从0 ~ w*h 生成一个随机的整数
+        let rdm = Math.floor(Math.random()*w*h)
+        if(mapData[rdm] === 0){
+          mapData[rdm] = "*"
+          count++
+        }
+      }
+      // 统计0位置周围8个(合法)盒子的雷的个数
+      calculate()
+
+      // 辅助显示当前页面信息
+      // render()
+    }
+    function calculate(){
+      // .... 没有雷的位置值是0
+      for(let i = 0;i < mapData.length;i++){
+        // 初始值
+        let count = 0
+        if(mapData[i] === 0){
+          // 设置最多8个位置
+          // (当不在第一列的时候)左上角
+          ((i % w)!== 0)&&(mapData[i - w - 1] === "*") && (count++);
+
+          // 上
+          (mapData[i - w] === "*") && (count++);
+
+          // (当不在最后一列的时候: i%w!=w-1)右上
+          ((i % w)!== (w-1))&&(mapData[i - w + 1] === "*") && (count++);
+
+          // (当不在第一列的时候)左边
+          ((i % w)!== 0)&&(mapData[i - 1] === "*") && (count++);
+
+          // 右边
+          ((i % w)!== (w-1))&&(mapData[i + 1] === "*") && (count++);
+
+          // (当不在第一列的时候)左下
+          ((i % w)!== 0)&&(mapData[i + w - 1] === "*") && (count++);
+
+          // 下边
+          (mapData[i + w] === "*") && (count++);
+
+          // 右下
+          ((i % w)!==(w-1))&&(mapData[i + w + 1] === "*") && (count++);
+
+          mapData[i] = count
+        }
+      }
+    }
+    // 渲染数据
+    function render(){
+      boxList = document.querySelectorAll(".area>div")
+      for(let i = 0;i < boxList.length;i++){
+        boxList[i].innerHTML = mapData[i]
+      }
+    }
+ 
+    function register(){
+      // 生成好了之后再获取元素
+      boxList = document.querySelectorAll(".area>div")
+      for(var i = 0;i < boxList.length;i++){
+        boxList[i].onclick = (function(j){
+          return function(){
+            // 建立一个被点击过的数组, 在此时初始化
+            let clickArr = initClickArr()
+            click.call(boxList[j],j)
+          }
+        })(i)
+      }
+    }
+ 
+
+    // 点击位置为index的盒子
+    /*
+      1. 递归
+
+          . 来回判断
+
+
+      深度优先搜索
+        
+    
+    */ 
+    function click(index){
+      // 当前盒子已被点击了
+      console.log("点击")
+      clickArr[index] = true
+      if(mapData[index] === 0){
+        // click 周围的8个合法格子
+        // 左上
+        /*
+          1. 不在第一列, 可以左上角 
+          2. 并且左上角存在
+          3. 并且这个位置没有被点击过
+          4. 那么 点击 左上角
+        */
+        ((index % w) !== 0) && (mapData[index - 1 - w]!==undefined) && !clickArr[index - 1 - w] && click(index - 1 - w);
+        // 上面  同理
+        (mapData[index - w]!==undefined) && !clickArr[index - w] && click(index - w);
+        // 右上角
+        ((index % w) !== (w - 1)) && (mapData[index + 1 - w]!==undefined) && !clickArr[index + 1 - w] && click(index + 1 - w);
+        // 左边
+        ((index % w) !== 0) && (mapData[index - 1]!==undefined) && !clickArr[index - 1] && click(index - 1);        
+        // 右边
+        ((index % w) !== (w - 1)) && (mapData[index + 1]!==undefined) && !clickArr[index + 1] && click(index + 1);     
+        // 左下
+        ((index % w) !== 0) && (mapData[index - 1 + w]!==undefined) && !clickArr[index - 1 + w] && click(index - 1 + w);
+        // 下
+        (mapData[index + w]!==undefined) && !clickArr[index + w] && click(index + w);
+        // 右下
+        ((index % w) !== (w - 1)) && (mapData[index + 1 + w]!==undefined) && !clickArr[index + 1 + w] && click(index + 1 + w);
+      }
+
+      boxList[index].innerHTML = mapData[index]
+      if(mapData[index] === "*"){
+        // alert("游戏失败, 你被炸了")
+        for(let i = 0;i < mapData.length;i++){
+          // if(mapData[i] === "*"){
+            boxList[i].innerHTML = mapData[i]
+            
+          // }
+        }
+      }
+    }
+ 
+
+    /*
+      1. 踩雷全显示 搞定
+      2. 
+    */
+
+  </script>
+</body>
+</html>

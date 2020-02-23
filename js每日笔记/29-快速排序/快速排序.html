@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    
+    /*
+      算法: 
+        有可能面试的时候用到. 
+          加很多分
+
+        实现原理: 基于实现原理实现. 
+
+        快速排序: (速度很快)
+
+          递归的思想.
+
+          复杂的问题转换成为若干个简单问题并被解决的方法
+
+
+        将长度为n的数组排序 
+          qS(arr, left, right) 目标问题: 将数组arr 从left到right这一段排序
+            arr  目标数组
+            left 需要排序数组的左边开始的位置下标
+            right需要排序数组的右边结束的位置下标
+
+          qS(arr, 5, 8) 将数组中arr[5]...arr[8]这段进行排序
+
+          1. 将数组拆分成为三个部分 (左边数组 中间的一个数 右边的数组)
+            保证左边的数全部小于等于中间的数组 右边的数全部大于等于中间的数
+            
+            此时: 对于中间的数而言是有序的
+        递归解决的话: 
+        => 
+        
+        假设数组为arr, 长度为 arr.length 数组第一项为 arr[0] 最后一项为arr[arr.length-1]
+
+        qS(arr, 0, arr.length-1)
+        => 通过某种方法创建(找到了) 中间的那个值下标: middle
+
+        qS(arr, 0, middle - 1)
+        qS(arr, middle + 1, arr.length - 1)
+
+
+        2. 怎么去找到中间那个值得下标? 
+          成了解决问题的关键: 必须要筛选, 从右往左和从左往右同时进行, 对数组里面的数组进行调整. 
+
+          假设这里有两个小人(左, 右)
+          一个站在起点位置, 一个站在终点位置
+        核心时间复杂度 为 O(NlnN) => 几乎最快的排序方法
+        特殊的 O(N^2)
+
+      快速排序, 也是算法中很经典的递归问题
+
+    */
+    
+    // 生成长度n数组 并且打乱顺序
+    function getRandomArr(n){
+      let arr = new Array(n).fill(0)
+      arr.forEach((item,index,arr)=>(arr[index] = index+1)) // 改成为 1...n
+      arr.sort(()=>Math.random()-.5); // 将前面的数组打乱
+      return arr
+    }
+    
+
+    // 交换left/right下标对应的值
+    function swap(arr, left, right){
+      let temp = arr[left]
+      arr[left] = arr[right]
+      arr[right] = temp
+    }
+
+
+    function qSort(arr){
+      // 先寻找中间的那个数
+      // 递归的代码 从left到right找到中间的值得下标
+      function qS(arr, left, right){
+        let l = left // 小红的一开始的占位下标
+        let r = right // 小蓝一开始的占位下标
+
+        // 没必要奔现
+        if(l >= r) return 
+        // 进行不定次数循环找到中间的位置
+        // 尽可能在中间位置找到中间量, 越在中间, 递归的层数越低
+        while(l < r){
+          // 当小红遇到自己的数小于小蓝的数的时候自己往前先走一步
+          while(arr[l] <= arr[r] && l < r){ 
+            // l < r 的核心是永远在 一左一右的时候才能移动
+            // 只要相等, 移动就不可能存在
+            l++
+          }
+          // 现在该交换位置了, 将数组arr中l下标的元素和r下标的元素交换位置
+          swap(arr, l, r)
+          while(arr[l] <= arr[r] && l < r){ 
+            r--
+          }
+          // arr[l] > arr[r]
+          swap(arr, l ,r)
+        }
+        // l >= r 的时候就结束
+        // 已经找到中间值了
+        let middle = r
+        // console.log(l, r)
+        // 第二步: 递归 再将左右排序
+        qS(arr, left, middle -1)
+        qS(arr, middle + 1, right)
+      }
+      qS(arr, 0, arr.length - 1)
+    }
+
+    // 数组在打印的时候实际上是原本交换之前的值
+    // 但是qSort是修改的原数组, 因为数组和对象一样是引用类型
+
+    // console.log(arr)
+    // arr = [3,3,2,13,21,312,4,4,4,4,4,4,12,34,12,3,3,3,434,4,4]
+
+    let n = 10000000
+    let arr = getRandomArr(n)
+    console.time("自己的快排")
+    qSort(arr) // 稳定是系统排序的3倍
+    console.timeEnd("自己的快排")
+    arr = getRandomArr(n)
+    console.time("系统的快排")
+    arr.sort((i,j)=>(i-j)) 
+    console.timeEnd("系统的快排")
+    // console.log(arr)
+
+    // var obj = {a:1}
+
+    // console.log(obj) // 拍照这个对象的状态
+
+    // delete obj.a
+
+  </script>
+</body>
+</html>

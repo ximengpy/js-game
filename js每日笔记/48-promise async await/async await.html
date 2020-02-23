@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+
+<script>
+  // async await 两个关键词, 简化 promise异步操作的代码书写的 es8+
+  // 常用
+  // async 定义一个异步函数
+  // await 等待一个promise结果, 不能单独使用, 必须要放在async函数中
+
+  function getPromise(){
+    return new Promise(next => {
+      setTimeout(()=>{
+        next("定时器结束")
+      },1000)
+    })
+  }
+
+
+
+  // 搞出来了一个语法糖, await相当于简写的then操作把里面then内容提取出来
+  // 必须要运行在async函数中, 才有可能等待promise执行完成才会执行后面代码
+
+  // async 函数定义, 只有在处理await会等待promise返回的结果, 等待完成才能执行下一步, 否则一直卡在这里
+
+  // 总结: 这个写法非常优秀:
+  // async function wait(){
+  //   console.log("进入wait函数")
+  //   let result = await getPromise() //代码在这里卡住了
+  //   console.log(result)
+  // }
+  //
+  // wait()
+
+
+  // sleep(1000) 代码会在这里卡一秒钟
+
+  // function sleep(time) {
+  //   return new Promise(next => {
+  //     setTimeout(()=>{
+  //       next()
+  //     },time)
+  //   })
+  // }
+  //
+  //
+  // async function f() {
+  //   console.log("我准备睡觉了")
+  //   await sleep(10000)
+  //   console.log("睡得真香")
+  // }
+
+
+  // 吃饭
+  function eat() {
+    return new Promise(next => {
+      setTimeout(()=>{
+        console.log("eat")
+        next()
+      },1000)
+    })
+  }
+  // 洗澡
+  function shower() {
+    return new Promise(next => {
+      setTimeout(()=>{
+        console.log("shower")
+        next()
+      },1000)
+    })
+  }
+  // 睡觉
+  function sleep() {
+    return new Promise(next => {
+      setTimeout(()=>{
+        console.log("sleep")
+        next()
+      },1000)
+    })
+  }
+
+  // 用promise实现
+  // 假如吃完之后, 我要说, "真饱"
+  function normal(){
+    return Promise.resolve()
+      .then(eat)
+      .then(()=>{
+        console.log("真饱")
+      })
+      .then(shower)
+      .then(sleep)
+  }
+
+  async function special() {
+    await eat() // 仿佛他们都是同步代码一样,  严格按照代码执行顺序来执行
+    console.log("真香")
+    await shower()
+    await sleep()
+  }
+
+  async function nextDay() {
+    await special()
+    console.log("又是开心的一天")
+  }
+
+  // 返回一个promise对象的
+
+  // 非常优秀易读 简单的代码 => 来自于 Promise
+
+  // 后续写后台 koa 整个代码都是async函数await
+
+  // 支持性很好: 支持很多框架: 后台查询数据
+
+  // db.find({}).then((data)=>...)
+
+  // let result = await db.find({})
+
+  // 支持 axios => 简化业务代码
+
+  // 今后学mongodb => JSON
+
+  // 面想对象 是 一种思想
+
+  // BOM DOM JS
+
+  // box.onclick = function (e) {
+  //   console.log(e)
+  //   //
+  // }
+  // let option = [
+  //   {
+  //     key: "w",
+  //     handle: function f() {
+  //
+  //     }
+  //   }
+  // ]
+  //
+  //
+  //
+  // function register(option){
+  //   document.onkeydown = function (e) {
+  //     for()
+  //   }
+  // }
+
+  // dom bom ...
+
+  // 业务层的抽象
+
+</script>
+</body>
+</html>

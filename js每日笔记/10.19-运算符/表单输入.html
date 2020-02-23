@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text"><input type="submit"><input type="submit" value="清空">
+  <ul class="list"></ul>
+  <script>
+    /*
+      输入框输入内容, 最多5条
+      1. 分析一下事件: 点击事件
+        点击输入框, 将input标签内容添加到ul下面的li中
+
+        点击 => 获取input的输入内容
+
+        将输入内容整理 标签写法
+
+        添加到ul中
+
+        value 存放的是input输入框的值
+
+        input.value 从input标签获取里面value
+
+        每成功添加一次, 就记一次数
+        如果计数大于5条就不操作,
+
+      function () {
+        return 之后的代码不会执行
+      }
+        
+    */
+
+    let input = document.querySelector("input[type='text']")
+
+    let submit = document.querySelector("input[type='submit']")
+    
+    let clearBtn = document.querySelector("input[value]")
+
+    let list = document.querySelector(".list")
+    // 计数器, 记录有多少条数据
+    let count = 0
+
+    clearBtn.onclick = function () {
+      // 清空的是 innerHTML
+      list.innerHTML = ''
+      // 数据也需要清空
+      count = 0
+
+      input.focus()
+    }
+
+    submit.onclick = function () {
+      let value = input.value
+      // 输入不合法的返回信息
+      if(value == ""){
+        alert("请输入value值")
+        // 这是一个函数的出口
+        return 
+      }
+      if(count >= 5){
+        alert("最多添加五条数据")
+        input.value = ""
+        return 
+      }
+      
+      value = `<li>${value}</li>`
+      
+      // 计数器增加
+      count++
+
+      list.innerHTML += value
+      // 将input的value值清空
+      input.value = ""
+      // 将变量value清空
+      // value = ""
+
+
+      // 使input处于可以输入的状态
+      input.focus()
+    }
+  </script>
+</body>
+</html>

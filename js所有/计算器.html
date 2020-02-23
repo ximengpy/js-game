@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,p,ul,ol,h1,h2,h3,h4,h5,h6,dl,dd{
+		   padding:0;
+	       margin:0;}
+        .wrap{
+            width:300px;
+            margin: 50px auto;
+            background-color: pink;
+        }
+        ul{
+            display: flex;
+            flex-wrap: wrap;
+            width:300px;
+           
+        }
+        li{
+            list-style: none;
+            width:50px;
+            height:40px;
+            margin:10px;
+            line-height: 40px;
+            background-color: #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+        span{
+            display: block;
+            height:40px;
+            width:100%;
+            line-height: 40px;
+            border:1px solid rgb(204, 204, 204);
+            background-color:sandybrown ;
+        }
+        ul>li:focus{
+            background: red;
+        }
+        
+    </style>
+</head>
+<body>
+     <div class="wrap">
+         <span></span>
+        <ul class = "list1">
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+        </ul>
+        <ul class = "list2">
+            <li class="addition">+</li>
+            <li class = "subdation">-</li>
+            <li class="mul">*</li>
+            <li class = "division">/</li>
+            <li class="equal">=</li>
+            <li class = "clean">CE</li>
+        </ul>
+    </div>  
+    <script>
+       let span = document.querySelector("span"),
+        data = document.querySelectorAll(".list1 >li"),
+        addition = document.querySelector(".addition"),
+        subdation = document.querySelector(".subdation"),
+        mul = document.querySelector(".mul"),
+        division = document.querySelector(".division"),
+        equal = document.querySelector(".equal"),
+        clean = document.querySelector(".clean");
+        let num1 ="",num2 = ""
+        let arr = [""],
+            temp = "number",pointer = 0;
+        [].forEach.call(data,function(item){
+            item.onclick = function(){
+               
+                if(temp == "symbol"){
+                    pointer++
+                    temp = "number"
+                    arr[pointer] = ""
+                }
+                let val = item.innerHTML
+                arr[pointer] += val
+                reader()
+            }
+        })
+        addition.onclick = function(){
+            if(temp === "number"){
+                pointer++
+               
+                temp = "symbol"
+            }
+            arr[pointer] = "+"
+            reader()
+            
+        }
+        subdation.onclick = function(){
+            if(temp == "number"){
+                pointer++
+                temp = "symbol"
+            }
+            arr[pointer] = "-"
+            reader()
+        }
+        mul .onclick = function(){
+            if(temp == "number"){
+                pointer++
+                temp = "symbol"
+            }
+            arr[pointer] = "*"
+            reader()
+        }
+        division.onclick = function(){
+            if(temp == "number"){
+                pointer++
+                temp = "symbol"
+            }
+            arr[pointer] = "/"
+            reader()
+        }
+        function reader(){
+      
+      console.log(arr)
+      span.innerHTML = ""
+      arr.forEach((item, index) => {
+        //   console.log(item,index)
+        span.innerHTML += item
+        
+        
+      })
+ 
+    }
+    equal.onclick = function(){
+        while(arr.length>1){
+            const firstNumber = arr.shift()
+            const symbol = arr.shift()
+            arr[0] = calc(firstNumber, symbol, arr[0])
+        }
+        reader()
+        pointer = 0
+    }
+    clean.onclick = function(){
+        span.innerHTML = ""
+        arr = [""]
+        console.log(arr)
+    }
+
+    function calc( first,symbol,second){
+        first = Number(first)
+       second = Number(second)
+       let map = {
+        "+": (first, second) => (first + second),
+        "-": (first, second) => (first - second),
+        "*": (first, second) => (first * second),
+        "/": (first, second) => (first / second),
+        "%": (first, second) => (first % second),
+      }
+      return map[symbol](first, second)
+    }
+    
+
+       
+        
+        
+          
+    </script>
+</body>
+</html>

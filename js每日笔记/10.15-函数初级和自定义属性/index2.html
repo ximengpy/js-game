@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      函数的返回
+      return
+
+      函数是默认返回undefiend
+      在JS中函数是第一等公民
+      
+    */
+
+    /*
+      已知半径 函数执行 返回 面积
+
+      3.14159 * r * r
+    */
+
+    // function circleArea(r){
+    //   return 3.14159 * r * r
+    // }
+    // function mianji (w, h) {
+    //   return w * h
+    // }
+
+    // 求两点之间的距离的平方
+    let p1 = {
+      x: 3,
+      y: 6
+    }
+    let p2 = {
+      x: 2,
+      y: 13
+    }
+
+    function distance(p1, p2){
+      return (p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y)
+    }
+
+    /*
+      返回对象: 
+    */
+
+    // function getObj(name, age, sex){
+    //   let obj = {
+    //     name: name,
+    //     age: age,
+    //     sex: sex
+    //   }
+    //   return obj
+    // }
+
+    // let getObj = function(name, age, sex){
+    //   let obj = {
+    //     name: name,
+    //     age: age,
+    //     sex: sex
+    //   }
+    //   return obj
+    // }
+
+    let getObj = (name, age, sex) => {
+      let obj = {
+        name: name,
+        age: age,
+        sex: sex
+      }
+      return obj
+    }
+
+    /*
+      还可以返回函数:
+       函数执行可以返回函数,
+       做出了一个生成函数的函数
+    */
+    // 创建一个加法器
+    function createAdd(){
+      let sum = 0
+      let foo = num => sum += num
+      return foo
+    }
+
+    let add = createAdd()
+    // add现在是什么东西
+    // 是一个可以叠加的求和函数
+
+    // ES6 语法 箭头函数
+    // 是函数, 比普通函数简单
+    /*
+      语法糖: 
+        一种糖,吃起来很甜,大家都爱吃
+        这个语法用起来很爽, 大家都爱用
+    */ 
+
+    // function sum(a,b){
+    //   return a + b
+    // }
+
+    // let sum = (a,b) => (a + b)
+
+    // function foo1(n){
+    //   return n*n
+    // }
+    /*
+      1. function删除
+      2. 函数名后面写等号
+      3. 参数和代码块之间写 =>
+
+      特殊情况, 当只有一个参数的时候,括号可以删除
+        如果没有参数, 括号不能删除,
+        如果代码只有一句并且是返回的时候
+          后面的大括号可以写成小括号, 
+          并且return可以删除
+    */
+    // let foo1 = a,b => (n*n)
+    
+    // let n = n => n
+
+    // let a = 3
+    // let b = 4
+    // let c
+    // let d
+
+    let a = 3,
+        b = 4,
+        c,
+        d
+  </script>
+</body>
+</html>

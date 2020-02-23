@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .screen{
+      position: relative;
+      width: 1200px;
+      height: 800px;
+      border: 1px black solid;
+    }
+    .ball{
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      box-shadow: 0 0 30px #666 inset;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen"></div>
+  
+
+  <script>
+    /*
+      屏保效果: 小球在屏幕中弹, 谈到边界然后反弹回来
+
+      点击生成小球
+    */
+    let screen = document.querySelector(".screen")
+    function createBall(){
+      // screen.innerHTML += `<div class="ball"></div>`
+      let obj = {
+        x: Math.random() * 1100,
+        y: Math.random() * 700,
+        vx: Math.random() * 2 + 2,
+        vy: Math.random() * 3 + 2,
+        color: getRandomColor(),
+        update: function(){
+          // 更新obj内部的数据
+          // 边界的判断
+          // 下边界// 上边界
+          if(this.y > 700 || this.y < 0){
+            // console.log("超出边界了")
+            // 反弹回来
+            this.vy *= -1 
+          }
+          // 右边界// 左边界
+          if(this.x > 1100 || this.x < 0){
+            this.vx *= -1
+          }
+          // 数据更新
+          this.x += this.vx
+          this.y += this.vy
+        }
+      }
+      return obj
+    }
+
+    // let ball = createBall() // 生成小球的数据
+
+    // let ball2 = createBall()
+
+    // 拿一个数组存起来
+    let ballList = []
+
+    screen.onclick = () => {
+      ballList.push(createBall())
+      // 重新获取页面的元素节点.存到ballList当中的某个属性里面
+    }
+
+    // 动画效果的实现
+    function animation(){
+      // 更新数据
+      // 在下一个渲染时刻, 小球的位置由速度变成一个新的值
+      // 小球数据更新
+      // ball.update()
+      ballList.forEach(ball => {
+        ball.update()
+      })
+
+      // 渲染多个小球
+      render()
+      requestAnimationFrame(animation)
+    }
+
+    // render 的性能? 
+    // 有 储存页面的元素, 直接修改页面元素的操作
+    function render(){
+      let str = ""
+      ballList.forEach(ball => {
+        str += `
+          <div 
+            class="ball" 
+            style="
+              left: ${ball.x}px;
+              top: ${ball.y}px;
+              box-shadow: 0 0 30px ${ball.color} inset;"
+            ></div>`
+      })
+      // 每一次render都在将screen里面的东西擦了重写
+      screen.innerHTML = str
+    }
+
+    animation()
+    // 动画效果
+
+    // 代码控制小球: 有自己的位置变化, 碰撞反馈 小球的特性啊?
+    // 一个小球有什么属性? 位置x, y, 速度分解成为x,y方向速度: vx vy
+    // 在生成小球的时候: 保存小球的状态 (用对象保存)
+
+    // 数据和渲染分离
+
+    function getRandomColor(){
+      // 返回 颜色字符串 rgb的格式
+      return `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`
+    }
+    // 只在生成的时候重写页面
+    // 但是在数据更新的时候 , 用旧的DOM节点
+
+  </script>
+</body>
+</html>

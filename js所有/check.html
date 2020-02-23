@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <div class="select">
+                <div class="main">
+                  <input class="total-check" type="checkbox">
+                  <span class="choose-all">全选</span>
+                  <span class="inverse">反选</span>
+                </div>
+                <ul class="list"></ul>
+              </div>
+
+
+    <script>
+        let project = {
+                total:{
+                    checkstate:false,
+                    content:"全选"
+                },
+                data:[
+                    {
+                    checkstate:false,
+                    content:"one"
+                    },
+                    {
+                    checkstate:false,
+                    content:"two"
+                    },
+                    {
+                    checkstate:false,
+                    content:"three"
+                    },
+                    {
+                    checkstate:false,
+                    content:"four"
+                    },
+                    {
+                    checkstate:false,
+                    content:"five"
+                    },
+                    {
+                    checkstate:false,
+                    content:"six"
+                    },
+                ]
+        }
+       let list = document.querySelector(".list")
+        function readhtml(project){
+            let str = ""
+            for(let i=0;i < project.data.length;i++){
+                let li = `
+                    <li>
+                    <input type="checkbox" >
+                    <span>${project.data[i].content}</span>
+                    </li>`
+                str += li
+            }
+            list.innerHTML = str
+        }
+        readhtml(project)
+        let Oinput = document.querySelectorAll(".list li input")
+        let total_check = document.querySelector(".total-check")
+        let choose_all = document.querySelector(".choose-all")
+        let inverse = document.querySelector(".inverse"),
+            arr = project.data.length
+        function reader(project){
+            for(let i = 0;i < arr;i++){
+                Oinput[i].checked = project.data[i].checkstate
+            }
+            choose_all.innerHTML = project.total.content
+            total_check.checked = project.total.checkstate
+        }
+        
+        function checkall(project){
+            let state = true
+            for (let i = 0; i <  project.data.length; i++) {
+                if (!project.data[i].checkstate) {
+                    state = false
+                    console.log(state)
+                    break
+                }
+            }
+            project.total.checkstate = state
+            project.total.content = state?"全不选":"全选"
+            
+        }
+        reader(project)                 //渲染
+        total_check.onclick = function(){
+            project.total.checkstate  = ! project.total.checkstate 
+            project.total.content = project.total.checkstate?"全不选":"全选"
+            for(let i = 0;i <arr ;i++){
+                project.data[i].checkstate = project.total.checkstate
+            }
+            reader(project)          
+        }                                  //全选/全不选
+        for(let i = 0 ;i< Oinput.length;i++){
+            Oinput[i].onclick = function(){
+                project.data[i].checkstate = !project.data[i].checkstate
+                checkall(project)
+                reader(project)
+            }
+        }
+        inverse.onclick = function () {
+                for (let i = 0; i < project.data.length; i++) {
+                    project.data[i].checkstate = !project.data[i].checkstate
+                }
+                checkall(project)
+                reader(project)
+            }
+        
+
+    </script>
+    
+</body>
+</html>

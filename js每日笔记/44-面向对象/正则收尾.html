@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    /*body{*/
+    /*  background: red;*/
+    /*}*/
+  </style>
+  <title>Document</title>
+</head>
+<body>
+<script>
+/*
+* 贪婪模式和非贪婪模式:
+*     贪婪模式: (默认使用贪婪模式匹配)匹配的过程中尽可能匹配多的满足条件的元素 => 针对量词
+*     非贪婪模式: 尽可能少匹配到满足条件的元素 量词后面添加一个?(不是0次1次,而是尽可能匹配少的内容)
+* */
+// let reg = /a[bcd]*?/
+// let str = "adcbcda"
+// console.log(reg.exec(str))
+// 怎么匹配这一对div标签
+// let str = `<div>asdasd</div></div>`
+// let reg = /<div>.*?<\/div>/
+//
+// console.log(reg.exec(str))
+// 将字符根据标签(css语法规则)裁剪 , 页面写出来的代码本质是字符串:
+// 根据传入的标签的字符串获取元素
+// 返回一个满足条件的正则, 正则生成器
+// function getByTag(tagName){
+//   return new RegExp(`<${tagName}[^<>]*?>.*?<\/${tagName}>`,"ig")
+// }
+//
+// let str = "<div<div><ul><li></li><li></li><li></li></ul></div>"
+//
+// let divReg = getByTag("div")
+// let ulReg = getByTag("ul")
+// let liReg = getByTag("li")
+// // console.log(divReg)
+// console.log(divReg[Symbol.match](str))
+// // console.log(ulReg[Symbol.match](str))
+// // console.log(liReg[Symbol.match](str))
+// 大家去网上找几个正则: 手机, 身份证, 邮编, 邮箱 qq 校验密码长度啊之类的内容
+// 正则复杂的或 后缀里面要么是com要么是cn
+// 简单的或(单字母)[asd]
+// let emailReg = /^[\w-]{5,13}@(qq|gmail|163|sina))\.(com|cn)$/
+
+</script>
+</body>
+</html>

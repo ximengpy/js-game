@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<ul class="list">
+  123
+  <li>1</li>
+  <li>2</li>
+  123456
+  <li>3</li>
+  <li>4</li>
+</ul>
+<script>
+  // 1. 前端JS学习 主要是JavaScript js学好了 dom/bom非常简单的内容 => 熟悉API 写下来
+  // DOM BOM JavaScript(主要学习js)
+  // 2. 开发框架考虑: vue/react... 框架 核心 都是剥离dom/bom操作
+
+  // DOM相关文档API:
+  // DOM: document object model 文档对象模型
+
+  // 节点: 写代码的时候一个标签就是一个节点.单独的对象存在在页面中
+  // 节点之间是有关系的, 谁包裹谁, 谁在谁里面
+  // 父节点: 相对概念, 谁相对于谁是父节点 => 谁是谁的父亲
+  // 谁在外面紧紧包裹的里面的元素,外面的元素相对里面元素是父节点
+  // 子节点: 相对概念 紧紧挨着
+  // 一个标签既可以是父节点也可以是子节点
+
+  // 兄弟节点: 同属于一个父亲 就是兄弟节点
+
+  // DOM 树的概念 : 页面中元素从html标签开始分叉一直可以递归分叉到任意的元素中
+  // 这样的结构就是dom树
+
+
+  // 每个元素都是单独的对象:
+
+  // 最大的对象是: document 文档对象
+  // 里面有两个东西: 分别是
+  // <!doctype html> 文档的声明: 版本
+  // html 标签节点 document.documentElement
+  // head document.head
+  //   title
+  // body document.body
+
+
+  // 剩下的标签都是通过document的获取方式来获取的
+
+  // 获取方式:
+
+  // query系列 单个 =>
+  // 多个获取 不会动态更新的(返回的是寻找的结果) 兼容性差, 低版本文档ie不支持
+  //   let queryDivList = document.querySelectorAll("div") // 做更多的事情
+  // 请注意如果页面中的元素发生了改变, 请及时重新获取(绝对不会出错的)
+
+
+  // get系列 动态更新(返回了一个寻找关系) 稍微高一些
+  //   let getDivList = document.getElementsByTagName("div")
+  // getElementsByClassName // 多个元素 htmlCollection
+  // getElementById // 单个的元素
+
+  // 动态的问题和静态的问题
+  // 修改页面的元素 添加方式 document.body.appendChild
+  // 节点生成方式: document.createElement
+  // document.body.appendChild(document.createElement("div"))
+
+  // HTMLCollection 和 NodeList之间的区别:
+  // NodeList范围更加的广泛: 能够包含 标签节点 属性节点 文本节点
+
+  // NodeList 包含了其他的节点
+    // 标签节点 特点 nodeType: 1
+    // 属性节点(不考虑) nodeType: 2
+    // 文本节点 特点  nodeType: 3
+  // 任何节点都有一个nodeType 节点类型 帮助我们识别节点类型
+  // HTMLCollection 特指标签节点
+
+  // 只能够获取到标签节点..那些文本节点都不见了
+  let list = document.querySelector(".list")
+
+  // 举个例子
+
+  // 第三个li标签怎么获取
+
+  // 节点的相邻节点的方法: 封装框架
+  // nextSibling  后面相邻节点
+  // nextElementSibling 后面相邻标签节点
+  // previousSibling 前面相邻节点
+  // previousElementSibling 前面相邻标签节点
+
+  let li3 = document.querySelector(".list>li:nth-child(3)")
+
+
+
+  // 任何一个节点都有一个children的属性 : 是HTMLCollection
+
+  // DOM 节点的 增删改 查(√)
+  // innerHTML 错误的
+</script>
+</body>
+</html>

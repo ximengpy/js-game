@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    #canvas{
+      border: 1px black solid;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="800" height="800"></canvas>
+<script>
+  let canvas = document.querySelector("#canvas")
+  let ctx = canvas.getContext("2d")
+  // 看文档:
+  // 1. 动画 2. 交互
+  // animation知识: 需要绘制关键帧: 比较少的
+  // 其实也是绘制关键帧: 比较多通过JS代码 循环判断等内容绘制动画中的每一个关键帧
+  // 移动一个小球
+
+  // 1. 清空之前的画布 2. 使用延时画画 setTimeout
+  // 1s 24帧连续的画面保证看上去比较均匀
+  // 下限:
+
+  // 系统设备的设置: 显示器: 刷新频率 60
+
+  // 绘制一个在某个位置的小球
+  // ctx.beginPath()
+  // let posX = 200
+  // ctx.arc(posX, 200, 15, 0, Math.PI*2)
+  // ctx.fillStyle = "red"
+  //
+  // ctx.beginPath()
+  // let posY = 400
+  // ctx.arc(400, posY, 15, 0, Math.PI*2)
+  //
+  // ctx.stroke()
+  //
+  //
+  //
+  //
+  //
+  // // 重新绘制
+  // // setInterval(()=>{
+  // //   // 清空之前的画布 传入一个参数的清空的矩形区域有多大在哪
+  // //   ctx.clearRect(0, 0, canvas.width, canvas.height) // 瞬间操作
+  // //   ctx.beginPath()
+  // //   posX += 3
+  // //   ctx.arc(posX, 200, 15, 0, Math.PI*2)
+  // //   ctx.stroke()
+  // // }, 1000/60) // 1s 60帧的画面
+  //
+  // // 渲染频率有关: 不同设备不一样, 适配性就比较高
+  // function render() {
+  //   requestAnimationFrame(render) // 请求下一帧动画的时候渲染
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height) // 瞬间操作
+  //   ctx.beginPath()
+  //   posX += 3
+  //   ctx.arc(posX, 200, 15, 0, Math.PI*2)
+  //   ctx.fill()
+  //   // 前面一个球
+  //   ctx.beginPath()
+  //   posY -= 3
+  //   ctx.arc(400, posY, 15, 0, Math.PI*2)
+  //   ctx.fill()
+  //   // 后面一个球
+  // }
+  //
+  // render()
+
+
+  // 假如页面有多个物体他们分别有不同的移动方式.
+
+  // 分别拆开每个小球的绘制方法和 参数的变化.
+  // 每个物体都有自己的独有的属性 变化方法都是不一样的.
+  // 抽象: 小球抽象成为一个对象, 我们只需要给访问维护这个对象就可以了
+  // 面向对象的思想
+
+  // 小球的独特的属性是什么? 大小 颜色 速度(大小方向) 位置 贴图
+
+  // 构造函数:
+
+  class Ball{
+    constructor(options) { // 小球的配置参数
+      Object.assign(
+        this,
+        {x: 100, y: 100, r: 15, color: '#'+Math.random().toString(16).slice(2,8), vx: Math.random()*6-3, vy: Math.random()*6-3},
+        options
+      ) //小球配置参数合并到this中
+    }
+    draw(){
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2)
+      ctx.fillStyle = this.color
+      ctx.fill()
+    }
+    update() {
+      // 碰撞检测
+      // 左右互通原理
+      // if(this.x < 0){
+      //   // 只有向左走才能碰到外面, 现在想要返回来该怎么操作?
+      //   // 位置强行改到最右边
+      //   this.x += 800
+      // }
+      // if(this.x > 800){
+      //   this.x -= 800
+      // }
+      //
+      // if(this.y > 800){
+      //   this.y -= 800
+      // }
+      //
+      // if(this.y < 0){
+      //   this.y += 800
+      // }
+
+      // 碰撞反弹
+      if(this.x < 0 || this.x > 800){
+        // 速度反向的方式弹回来
+        this.vx *= -1
+      }
+      if(this.y < 0 || this.y > 800){
+        // 速度反向的方式弹回来
+        this.vy *= -1
+      }
+
+
+      // 更新数据
+      this.x += this.vx
+      this.y += this.vy
+    }
+  }
+
+  // 传参数的时候, 如果参数不完全, 要加上默认值, 这个默认值怎么加
+  let ball = new Ball({x: 150, y: 150, r: 10})
+
+  // 假设我们有100个初始位置随机的小球要同时绘制
+  // 全部打包
+
+  let ballList = []
+
+  for(let i = 0;i < 100;i++){
+    ballList.push(new Ball({x: Math.random()*800, y: Math.random()*800}))
+  }
+
+
+  // let ball1 = {
+  //   r: 15,
+  //   color: "red",
+  //   vx: 3,
+  //   vy: 0,
+  //   x: 200,
+  //   y: 200,
+  //   draw: function(){
+  //     ctx.beginPath()
+  //     ctx.arc(this.x, this.y, this.r, 0, Math.PI*2)
+  //     ctx.fillStyle = this.color
+  //     ctx.fill()
+  //   },
+  //   update: function () {
+  //     this.x += this.vx
+  //     this.y += this.vy
+  //   }
+  // }
+  //
+  // let ball2 = {
+  //   r: 25,
+  //   color: "#00ff00",
+  //   vx: 0,
+  //   vy: 3,
+  //   x: 400,
+  //   y: 400,
+  //   draw: function(){
+  //     ctx.beginPath()
+  //     ctx.arc(this.x, this.y, this.r, 0, Math.PI*2)
+  //     ctx.fillStyle = this.color
+  //     ctx.fill()
+  //   },
+  //   update: function () {
+  //     this.x += this.vx
+  //     this.y += this.vy
+  //   }
+  // }
+  // 表示暂停状态 false不暂停 true表示暂停
+  let paused = false
+  function render() {
+    if(!paused){ // 如果非暂停 才不停渲染
+      requestAnimationFrame(render)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ballList.forEach(item => {
+        item.draw()
+        // item.update()
+      })
+    }
+  }
+  // render()
+
+  // 通过构造函数的额方式生成对象, 以面向对象的形式去控制代码
+  // 针对canvas动画表现 游戏表现设计
+  // 数据模块: 存储所有需要的数据
+  // 渲染模块: 数据对应的物体渲染出来
+  // 更新模块: 更新数据
+  // 控制模块: 用户的控制
+  // 场景模块: 用于场景控制与 对象的调用
+  // 交互模块: 跨场景全局的调度, 碰撞
+
+
+  // 控制模块, 点击停止 点击小球
+  // 全局暂停
+  // canvas.addEventListener("click", function () {
+  //   paused = !paused
+  //   render()
+  // })
+
+  // 单个小球暂停
+  // 我们还是控制canvas 只能点击canvas 获取点击我的位置
+
+  canvas.addEventListener("click", e => {
+    let mousePosition = {x: e.offsetX, y: e.offsetY}
+    // 拿鼠标位置和所有的小球进行判断, 如果有小球在鼠标位置那里, 那么这个小球就可以暂停了
+    ballList.forEach( (ball, index) => {
+      let distance = Math.pow(ball.x - mousePosition.x, 2) + Math.pow(ball.y - mousePosition.y, 2)
+      if(distance < Math.pow(ball.r, 2)){
+        // 让小球停下来 修改vx vy
+        // ball.vx = ball.vy = 0
+        // return
+        // 删除小球 转换成为数据的控制: 在数组中删除这个小球就可以了
+        ballList.splice(index, 1)
+      }
+    })
+  })
+
+  // 拖拽模块的实现 + 贝塞尔曲线实现掉
+
+</script>
+</body>
+</html>

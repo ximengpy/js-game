@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <li></li>
+  <li></li>
+  <li></li>
+  <script>
+    /*
+      1. arguments 
+        ()=>{} 没有arguments
+      2. 默认值 es6 
+        学习es5的写法 b = b || 1
+      3. ... 剩余参数 
+    
+      4. this指向
+        指的是普通函数 function(){}
+        在函数内部, this默认指向调用此函数的主体对象
+    */
+  
+    // function getMoney(name, ...moneyList){
+    //   let sum = 0;
+    //   for(let i = 0;i < moneyList.length;i++){
+    //     sum += moneyList[i]
+    //   }
+    //   return `银时挣了: ${sum}`
+    // }
+    // getMoney("银时", 10, 20, 30, 40) // "银时挣了: 100"
+    // 找不到调用的主体: this就指向 window
+
+      // function returnThis(){
+      //   return this
+      // }
+
+      // let obj1 = {
+      //   name: "obj1",
+      //   returnThis: returnThis
+      // }
+
+      // let obj2 = {
+      //   name: "obj2",
+      //   returnThis: returnThis
+      // }
+
+
+
+    /*
+      最外层this 是 window
+      箭头函数的this问题: 
+        不会根据调用函数的主体对象来的,
+        根据外部的this来, 在声明位置强制绑定this的上下文
+
+        只有遇到 function的时候this指向才会变
+      
+    */
+
+    // let fn2 = () => { console.log(this) }
+
+    // let fn1 = function(){ console.log(this) }
+    
+    // let obj1 = {
+    //   name: "obj1",
+    //   fn1: fn1,
+    //   fn2: fn2
+    // }
+
+    // obj1.fn1()
+    // obj1.fn2()
+      
+
+    // console.log(this)
+    // this
+    // let obj = {
+    //   name: "obj",
+    //   fn: () => {
+    //     this
+    //     let fn1 = () => {console.log(this)}
+    //     let fn2 = function(){console.log(this)}
+    //     return fn2
+    //   }
+    // }
+    // let obj2 = {
+    //   name: "obj2",
+    //   fn: obj.fn()
+    // }
+
+    // obj2.fn() // this指向obj
+    /*
+      obj2.fn === obj.fn() === fn1
+    
+      this的功能: 
+
+    */
+
+    // var obj3 = {
+    //   fn: function(){
+    //     ;((()=>{
+    //       console.log(this)
+    //     })())
+    //   }
+    // }
+    
+    // obj3.fn()
+    /*
+      在默认情况下this的指向问题
+        es5: function(){}: 在函数内部, this默认指向调用此函数的主体对象
+          可以被 call/apply/bind 修改
+        es6: ()=>{}      : 
+          直接绑定到箭头函数书写位置的this
+          在考虑this的时候,箭头函数不是函数
+          不能由 call/apply/bind 修改
+      修改this指向的问题: 
+        通过代码修改this的指向
+        call/apply/bind
+    */
+    /*
+      机器学习: 
+    */ 
+    // function say(){
+    //   console.log(`我是${this.name}`)
+    // }
+
+    // let person = {
+    //   name: "银时",
+    //   say: say,
+    //   sing: function(){
+    //     // 只有这个person才拥有的方法???
+    //     // 怎么样把这个方法传递给robot让robot也能嘤嘤嘤呢?
+    //     console.log(this.name,"嘤嘤嘤")
+    //   }
+    // }
+
+    // let robot = {
+    //   name: "robot",
+    // }
+
+    // person.sing.call(robot)
+    // person.say()
+    /*
+      怎么样让机器人有说出自己名字的能力?
+        1. robot添加一条属性 say: say   
+
+      如果有一万个对象, 每个对象都要有这样的属性, 挨个添加赋值是不是很蠢?
+
+        借别人的方法操作
+      
+      say 这个函数在执行之前可以先规定调用它的主体对象
+      
+        call(obj) 让函数以obj调用的方式执行
+
+        say.call(obj) 
+          say函数以obj调用它来执行
+
+          say函数的this 会指向obj
+
+        核心功能: 
+          让不具有这个方法的对象使用这个方法
+
+    */
+    // say.call(robot)
+
+
+    // console.log(({}).toString.call({})) // 转换成为类型描述文字
+    // console.log(({}).toString.call(123)) // 隐式类型转换为字符串
+    // console.log(({}).toString.call("123"))
+    // console.log(({}).toString.call(function(){}))
+    // console.log(({}).toString.call(true))
+    // console.log(({}).toString.call(undefined))
+    // console.log(({}).toString.call(null))
+    // console.log(({}).toString.call([]))
+    // console.log(({}).toString.call(/fg/))
+
+    /*
+      1. 对象toString方法的妙用
+        可以将对象 按照类型输出
+    
+      能不能让 [] 使用({}).toString的方法
+        这个方法在底层中使用this判断主体是什么类型,并且
+        输出内容
+
+      各种类型使用对象的方法转换成为类型描述文字
+    */
+    /*
+      数组的方法: 
+        let arr = [1,2,3]
+
+        arr.forEach(function(item){
+          console.log(item)
+        })
+
+        数组自带的方法, 并且只有数组有这个方法
+    */
+      // 真正的数组, 有map方法
+      // let arr = [1,2,3]
+      // arr.map(function(item){
+      //   console.log(item)
+      // })
+
+      // let liList = document.querySelectorAll("li");
+
+      // // liList.map(function(item){
+      // //   console.log(item)
+      // // })
+
+      // ([]).map.call(liList, function(item){
+      //   console.log(item)
+      // })
+
+
+      /*
+        function foo(){
+
+        }
+call 方法 
+  第一个参数是调用的主体对象
+  后续参数和原函数一样
+apply 方法 和call 一模一样
+  除了参数传递的方式不一样
+  以数组方式传递
+
+bind 方法 也是修改this指向的方法
+  传参和call一样
+但是bind
+  1. 不执行
+  2. 返回一个this已经绑定好了的函数
+  3. 这个函数在任何时候执行内部的this都已经绑定好了 
+*/
+      function foo(a, b, c){
+        console.log(this, a, b, c)
+      }
+
+      let obj4 = {}
+
+      // foo.call(obj4, 1, 2, 3)
+      // foo.apply(obj4, [1, 2, 3])
+      let bindObj4foo = foo.bind(obj4, 1, 2, 3)
+
+      // let foo = () => {console.log(this)}
+
+      // let obj = {}
+
+      // foo.call(obj)
+
+      /*
+        有关 this 的知识是让 后续开发写代码灵活的灵魂
+
+        this 是new方法的灵魂
+
+        this 是原型链的灵魂
+
+        this 是继承的灵魂
+      
+        this 是面向对象的灵魂
+
+          **for循环优化
+        
+
+
+      */
+
+
+
+  </script>
+
+
+</body>
+</html>

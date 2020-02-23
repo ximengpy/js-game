@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 当n为10亿的时候 约1s
+    // let n1 =  1000000000
+    // console.time("代码一运行时间")
+    // for(let i = 0;i < n1;i++){ // O(N)
+
+    // }
+    // console.timeEnd("代码一运行时间")
+
+    // let n2 = 100000
+    // console.time("代码二运行时间")
+    // for(let i = 0;i < n2;i++){ // O(N^2)
+    //   for(let j = 0;j < n2;j++){
+
+    //   }
+    // }
+    // console.timeEnd("代码二运行时间")
+
+
+    // let n2 = 2000
+    // console.time("代码二运行时间")
+    // for(let i = 0;i < n2;i++){ // O(N^3)
+    //   for(let j = 0;j < n2;j++){
+    //     for(let k = 0;k < n2;k++){
+
+    //     }
+    //   }
+    // }
+    // console.timeEnd("代码二运行时间")
+
+
+    // for循环嵌套尽量少用, 注意优化
+
+    // 递归: 在函数内部自己调用自己就是递归
+    // Maximum call stack size exceeded 栈溢出
+    // 办证 A => B => A
+    // 约束好结束条件
+    // 递归可以很方便的帮助我们归纳问题: 将一个复杂的问题分界成一个(多个)简单问题
+    // let n = 0
+    // function foo(){
+    //   n++
+    //   console.log(`代码执行${n}次`)
+    //   n<10 && foo()
+    // }
+
+    // foo()
+
+    // 递归的例子
+    // n!
+    // 求阶乘: 输入n 输出 n * (n-1)*(n-2)*...*1
+    // n! = n * (n-1)!
+    // f(n) = n*f(n-1)
+    // function jiechen(n){
+    //   if(n<1) return 1
+    //   return n * jiechen(n-1)
+    // }
+    // jiechen(5)
+
+    // 高斯求和
+    // 这个代码的时间复杂度是多少?
+    function qiuhe(n){
+      if(n == 1) return 1
+      return n + qiuhe(n - 1) 
+    }
+
+    // 题目1  用递归实现斐波拉契数列的n项结果
+    // 规律1, 1, 2, 3, 5, 8, 13, 21, 34, ..., m, n, m + n
+    // 用递归做出一个函数: fn(n) 返回斐波拉契数列的第n项
+
+    // 题目2  汉罗塔 
+
+    // 输入一个n 表示汉罗塔的层数 
+    // 有A B C三个柱子
+    // 函数会输出若干行, 表示汉罗塔的走法
+    /*
+      例如: n = 2 
+        fn(2)
+      输出范例: 
+        A -> B
+        A -> C
+        B -> C
+    */  
+
+    // 聊聊排序算法 冒泡 选择排序 快速排序 二分查找树的方法(模型搭建..)
+
+  </script>
+</body>
+</html>

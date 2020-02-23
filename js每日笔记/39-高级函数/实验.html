@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+  .box{
+   width:300px;
+   height:400px;
+  }
+  
+ </style>
+
+</head>
+<body>
+ <div class="box"></div>
+ <script>
+  let div  = document.querySelector(".box")
+  // function creatstyle(dom){
+  //  return function (style){
+  //   return function (value){
+  //    dom.style[style] = value
+  //   }
+  //  }
+  // }
+  //  creatstyle(div)("background")("blue")
+  function curryFunc(cb){
+      let list = [] // 用数组进行保存
+      return function () { // 参数个数不定
+          // 对传入的参数个数进行判断,如果没有穿传参数, 就计算结果
+          if(arguments.length === 0){
+              return list.reduce(cb)
+          }
+          list.push.apply(list, arguments)
+          return arguments.callee // 指的就是当前这个arguments所在的函数
+      }
+  }
+
+  let sum = curryFunc((a,b)=>a+b)
+  sum(1,2,3)
+  sum(4)(5)(6)
+  console.log(sum());
+ </script>
+</body>
+</html>

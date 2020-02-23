@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      算法的奥秘: 常见的排序算法.
+      有一个数组: 进行排序
+      数组里面的值一般是乱序的, 将数组内部的值重新排序. 
+      1. 生成一个乱序的数组
+        介绍方法:
+          生成一个长度为1000的数组并且全部添加为0
+      
+      2. 如果让大家自己排序应该怎么做?
+
+      
+      假设 从小到大 排列
+
+
+      方法一: 选择排序
+        从数组中选择(并删除)最小的数出来放到新数组的第一项中
+        重复1000次就ok了
+    */
+      function getRandom(n) {
+        // fill 是全部添加0
+        let arr = new Array(n).fill(0)
+        arr.forEach((item, index, arr) => {
+          arr[index] = index + 1
+        })
+        // 排序这个数组, 一会正序一会儿倒序排列, 打乱数组的操作
+        arr.sort(() => Math.random() - .5)
+        return arr
+      }
+      // 生成一个长度为1000的大软之后的数组
+      let n = 50000
+      let arr = getRandom(n)
+
+      // console.log(arr)
+
+      // 
+      function chooseSort(arr) {
+        // 找到数组中最小那个数的下标
+        // 先去给一个初始值, 再遍历数组, 如果遇到比ans小的数,就修改下标i和ans的值
+        let newArr = []
+        // 当我们数组有东西的时候去遍历
+        while (arr.length) {
+          // 从数组中找到最小的数, 删除并添加到新数组中了
+          let i = 0
+          let ans = arr[0]
+          // 遍历arr数组, 一旦找到比之前的数ans大的就替换掉
+          arr.forEach((item, index) => {
+            if (ans > item) {
+              i = index
+              ans = item
+            }
+          })
+          // 从数组中裁切掉 添加到新数组中
+          arr.splice(i, 1)
+          newArr.push(ans)
+        }
+        return newArr
+      }
+
+
+      // 这个代码的时间复杂度是多少? O(N^2)
+      console.time("chooseSort")
+      arr = getRandom(n)
+      arr = chooseSort(arr)
+      console.timeEnd("chooseSort")
+
+      console.time("自带排序算法")
+      arr = getRandom(n)
+      arr.sort((i, j)=>(i - j))
+      console.timeEnd("自带排序算法")
+
+
+
+      // 冒泡排序
+      /*
+        就好像气泡一样的对待每一个数,让数和数相邻的比较,交换位置
+
+        5, 2, 1, 4
+
+        2, 5, 1, 4
+
+        2, 1, 5, 4
+
+        2, 1, 4, 5
+      */
+
+      function swap(arr, i, j) {
+        // 初级方法
+        let temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+
+        // 
+      }
+
+
+      function bubbleSort(arr) {
+        for (let j = 0; j < arr.length; j++) {
+          // 先将最小的寄到右边
+          for (let i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+              // 交换i和i+1的位置
+              swap(arr, i, i + 1)
+            }
+          }
+        }
+      }
+
+      console.time("bubbleSort") // O(N^2)
+      arr = getRandom(n)
+      bubbleSort(arr)
+      console.timeEnd("bubbleSort")
+      // [12, 333, 1, 534, 5, 3, 3345]
+
+      // 猴子排序
+
+
+
+
+
+      /*
+        数组交换位置的方法: 
+
+      */
+
+      let arr = [12,34,234,23,4,56]
+
+
+      // 会用这个方法就行, 推荐用这个方法
+      function swap2(arr, i, j){
+        // 基础方法: 临时变量存储
+        // [arr[i], arr[j]] = [arr[j], arr[i]]
+        let temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+      }
+
+      function swap3(arr, i, j){
+        // 数学方法; 适用于数值
+        // i  j
+        // 2, 3
+        arr[i] = arr[i] + arr[j] 
+        // 5, 3
+        arr[j] = arr[i] - arr[j]
+        // 5, 2
+        arr[i] = arr[i] - arr[j]
+        // 3, 2
+      }
+
+
+      // 猴子排序 => 让猴子去给我排序
+      /*
+        P类问题和NP类问题
+          寻找一个问题的答案, 远远大于 验证一个答案的正确性 消耗的时间多
+
+      */
+
+      // console.time("monkeySort") // O(N^2)
+      // arr = getRandom(n)
+      // monkeySort(arr)
+      // console.timeEnd("monkeySort")
+
+      // function check(arr){
+      //   // 判断这个数组是否是有序的数组
+      //   // ...
+      // }
+      // function monkeySort(arr){
+      //   while(!check(arr)){
+      //     arr.sort((i,j) =>Math.random()-.5)
+      //   }
+      // }
+
+
+      // 天才一样的排序: 
+      // 定时器(可以规定在多少ms之后执行代码)排序法
+      
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+   body{
+     position: relative;
+   }
+ .box{
+  position: absolute;
+  width:100px;
+  height:100px;
+  background-color:pink;
+ }
+ </style>
+</head>
+<body>
+ <div class="box">
+
+ </div>
+ <script>
+  let box = document.querySelector(".box")
+  function movefirst(e){
+    window.addEventListener("mousemove",movedo)
+  }
+  function movedo(e){
+    box.style.left= e.clientX-50+"px"
+    box.style.top = e.clientY-50+"px"
+   
+  }
+  function moveend(e){
+    window.removeEventListener("mousemove",movedo)
+    
+
+  }
+  box.addEventListener("mousedown",movefirst)
+  box.addEventListener("mouseup",moveend)
+  
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+  // 异步: 不按顺序: 定时器, 后续触发的事件, 请求 ... 等待同步代码执行完成之后才执行
+
+  // 就是根据时间来处理的代码
+  // setTimeout(function () {
+  //   console.log("起床")
+  //   setTimeout(function () {
+  //     console.log("刷牙")
+  //     setTimeout(function () {
+  //       console.log("吃饭")
+  //       setTimeout(function () {
+  //         console.log("上班")
+  //       },400)
+  //     },300)
+  //   },200)
+  // },1000)
+
+  // console.log("起床")
+  // console.log("刷牙")
+  // console.log("吃饭")
+  // console.log("上班")
+
+  // 如何严格的保证代码的执行顺序?
+
+  // 回调地狱:
+
+  // Promise函数帮助我们解决这样的问题
+
+  // 构造函数: new实例化的 返回一个Promise的对象, 整理代码让代码扁平化
+
+  // Promise:  承诺在传入的函数执行完成(成功之后),继续执行后面的内容 接受一个参数 执行的函数
+  // 传入回调函数接受的两个参数
+  // 都是Promise的内置的函数可以直接执行
+  // resolve: 解决 => 函数执行成功
+  // 当resolve执行的时候Promise就知道此时函数执行完成并且成功了
+  // reject:  拒绝 => 函数执行失败
+  // 当reject执行的时候Promise就知道此时函数执行失败了
+
+
+  // 一个函数不能简单的通过return判断是否执行完成了
+  // function foo(){
+  //   setTimeout(function () {
+  //     console.log("foo还依然在执行")
+  //   }, 1000)
+  //   return "foo返回了一段内容"
+  // }
+  //
+  // let str = foo()
+  // console.log(str)
+
+  // resolve的方法是异步方法, 绝对是异步执行的,在当前代码块中
+
+
+  // let promise = new Promise(function main(resolve, reject){ // 异步代码
+  //   setTimeout(function () {
+  //     console.log("第一段代码")
+  //     setTimeout(function () {
+  //       console.log("第二段代码")
+  //       resolve()
+  //     }, 1000)
+  //   }, 1000)
+  // })
+  //
+  // promise.then(function () { // 同步代码
+  //   console.log("第三段代码执行")
+  // })
+
+
+  // 多个then连接我们的代码
+
+
+  // let promise1 = new Promise(function (resolve, reject) {
+  //   setTimeout(function () {
+  //     console.log("第一段")
+  //     resolve()
+  //   },1000)
+  // }).then(function () {
+  //   return new Promise(function (resolve, reject) {
+  //     setTimeout(function () {
+  //       console.log("第二段执行")
+  //       resolve()
+  //     },1000)
+  //   })
+  // }).then(function () {
+  //   return new Promise(function (resolve, reject) {
+  //     setTimeout(function () {
+  //       console.log("第三段执行")
+  //       resolve()
+  //     },1000)
+  //   })
+  // })
+
+
+  // 等待一段time时间
+  // function waitForSec(time){
+  //   return new Promise(function (resolve, reject) {
+  //     setTimeout(function () {
+  //       console.log(`${time}等待完成`)
+  //       resolve() // 监听等待完成的操作
+  //     }, time)
+  //   })
+  // }
+
+  // waitForSec(1000)
+  //   .then(function () {
+  //     return waitForSec(1100)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(1200)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(900)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(800)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(700)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(600)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(500)
+  //   })
+  //   .then(function () {
+  //     return waitForSec(400)
+  //   })
+
+
+  // Promise then 的 核心
+
+  // 等待结果, 才能执行后续的内容 => 后续执行内容依赖前面的结果
+
+  // next/resolve 支持传入参数的
+  // new Promise(next => {
+  //   let result = null
+  //   setTimeout(() => {
+  //     // 等待了一秒之后总算拿到数据了
+  //     result = {
+  //       name: "yinshi",
+  //       point: 59
+  //     }
+  //     next({result, another: 1}) // 可以执行后续then的代码了, 并且传入result
+  //   },1000)
+  // }).then(res => { // 返回的数据
+  //   //
+  //   console.log(res.result.point)
+  //   res.result.point++
+  //   res.message = "这个小朋友真棒~"
+  //
+  //   return new Promise(next=>{
+  //     next(res)
+  //   })
+  //
+  // }).then( res => {
+  //   console.log(res)
+  // })
+
+  // 30% 工作都离不开Promise 写后台都是需要的
+
+  // babel
+
+  // 代码执行失败的操作
+
+  // 使用的请求数据的操作
+  // function request(url) {
+  //   // 请求数据的逻辑
+  //   return {
+  //     success: function (data) {
+  //       console.log()
+  //     },
+  //     fail: function (err) {
+  //       throw new Error("报错") // 抛出
+  //     }
+  //   }
+  // }
+  // 内部代码
+  function request(options){
+    const {url, success, fail} = options
+    setTimeout(function () {
+      if(Math.random()-0.5>0){
+        success({data: 9527, msg:"恭喜你, 数据拿到成功"})
+      }else{
+        fail && fail({data: 0, msg: "不好意思, 数据出错了"})
+      }
+    },1000)
+  }
+
+  // 真实执行的时候代码是如何书写的
+
+  // 其实是以回调函数的形式书写的
+
+  request({
+    url: "www.yinshi.com",
+    success: function (data) {
+      console.log(data)
+    }
+  })
+
+  // 如何将 request封装起来 封装成 Promise的形式
+
+  // function myRequest(url) {
+  //   return new Promise((success, fail) => {
+  //     request({
+  //       url,
+  //       success,
+  //       fail
+  //     })
+  //   })
+  // }
+  //
+  // myRequest("www.yinshi.com")
+  //   .then(data => {
+  //     console.log(data)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+
+
+  // [2,3,5,1,2,4]
+  // 分别表示 等待200ms报时, 等待 300ms报时 等待 500毫秒报时 .... 到结束
+  // 打印报时,
+
+  // 想想, 怎么样实现这个效果 不要用累加 =>
+
+  // 假设网站网页 100张图片, 同时下载 肯定非常消耗资源的 下载效率
+
+  // 先下载第一张 完成了 再去下载第二张 ...
+
+  // function getImg(options){
+  //   const {success, count} = options
+  //   setTimeout(function () {
+  //     console.log(count, "下载成功")
+  //     success(count, "下载成功")
+  //   }, Math.random()*500)
+  // }
+
+  // function myPromise(count){
+  //   return new Promise(next=>{
+  //     getImg({
+  //       count,
+  //       success: next
+  //     })
+  //   })
+  // }
+
+
+
+  // 下载一百张图片, 怎么操作?
+
+  // let promise = Promise.resolve() // 创建一个成功的promise
+  //
+  // for(let i = 0; i < 100;i++){ //
+  //   promise = promise.then(() => myPromise(i+1)) // 核心代码
+  //   // getImg({
+  //   //   count: i+1,
+  //   //   success: (data)=>{}
+  //   // })
+  // }
+
+
+  // 作业: 这里有个: LazyMan (基础)
+  // 推荐大家 使用class和Promise完成内容
+  // 尝试封装一下 Promise
+  // let  man = new LazyMan("yinshi")
+  //
+  // man.say().sleep(3000).say().sleep(1000).say()
+  // // 先打印: "大家好, 我是银时"
+  // // "银时说话"
+  // // 等待3秒
+  // // "银时说话"
+  // // 等待1秒
+  // // "银时说话"
+  //
+  // man.sleep(2000).sleep(3000).say().say()
+  // // 先打印: "大家好, 我是银时"
+  // // 等待2秒
+  // // 等待3秒
+  // // "银时说话"
+  // // "银时说话"
+  //
+  // // LazyMan (进阶版)
+  // // sayFirst() 无论写到哪都是最先执行的 : "银时有话要说"
+  //
+  // man.sleep(2000).sleep(3000).sayFirst().say()
+  // // 银时有话要说
+  // // 等待2秒
+  // // 等待3秒
+  // // "银时说话"
+  //
+  // // LazyMan (再次进阶版)
+  // // say里面传入说话的内容
+  //
+  // man.sleep(2000).sleep(3000).sayFirst("不开心").say("开心")
+  // "不开心"
+  // 等待2秒
+  // 等待3秒
+  // "开心"
+
+
+
+
+
+  // Promise.resolve() 直接返回一个promise成功的promise对象
+  // 等价于 new Promise(res => res())
+
+
+  // Promise状态:
+  // 三种: pending 等待 resolve promise成功了 reject promise已经失败了
+
+
+
+  // Promise.all 构造函数的方法, 往里面传入一个数组
+  // 数组的每一项为一个Promise对象
+  // 可以跟then then会在所有Promise resolve之后执行
+  // 也就是前面所有的Promise都执行之后才能执行
+  // 请求一百张, 何时能够知道所有的图片都下载下来了呢 Promise.all
+
+
+  function getRandomPromise(){
+    return new Promise(next => {
+      let time = Math.random()*5000
+      setTimeout(()=>{
+        console.log("单个promise完成, 耗时", time)
+        next(time)
+      },time)
+    })
+  }
+
+  let promiseList = []
+
+  for(let i = 0; i < 10;i++){
+    promiseList.push(getRandomPromise()) // 存放了10个等待执行的promise的对象
+  }
+
+  // Promise.all(promiseList)
+  //   .then((arr)=>{
+  //     console.log(arr, "promiseList都执行完成了")
+  //   })
+
+  Promise.race(promiseList)
+    .then((arr)=>{
+      console.log(arr, "promiseList都执行完成了")
+    })
+
+  // Promise.race 赛跑: 只要数组中有promise执行成功, 就会触发then的操作.
+  // 有多种方法可以获取数据, 只要一种跑通了, 就可以拿到数据了,
+
+
+  // Promise 知识 很考验大家的编程能力的, 用得好, 代码就很优雅, 可读可写性会很高
+
+  // 用的不好, 不如用回调
+
+  // async await Promise 的 语法糖
+
+  // ajax 在页面中的请求 XMLHttpRequest fetch axios $.ajax
+
+  //
+
+</script>
+</body>
+</html>

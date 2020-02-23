@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ <div id="time"></div>
+ <div class="count"></div>
+ <script>
+ // 以前写过时钟没有 ??? => 2019年11月29日21:38:22 这个时间要不停更新
+    // 距离过年还有 xx天:xx时:xx分:xx秒 (春节1.24)
+  let date =  new Date()
+   let year = date.getFullYear()
+    let month = date.getMonth()+1
+    let day = date.getDate()
+    let hour = date.getHours()
+    let min = date.getMinutes()
+    let sec = date.getSeconds()
+   setInterval(function(){
+    judge()
+    document.getElementById("time").innerHTML = year + "年" + month + "月" + day + "日" + "\t" + hour + ":" + min +":" + sec + "\t"  ;
+    // console.log(sec)
+   },1000)
+  
+  function judge(){
+   sec += 1
+   
+   if(sec >60) {
+    min += 1
+    sec = 0
+  }
+  
+  if(min >60){
+   hour += 1
+   min = 0
+  }
+  if(hour >24){
+   day += 1
+   hour = 0
+  }
+  if(day >31){
+   month += 1
+   day = 1
+  }
+  if(month >12){
+   year += 1
+   month = 1
+  }
+  }
+  function judge2(){
+   arr1.differSec--
+   if(arr1.differSec<0) {
+    arr1.differMin-= 1
+    arr1.differSec = 60
+  }
+  if(arr1.differMin <0){
+   arr1.differHour--
+   arr1.differMin = 60
+  }
+  if(arr1.differHour <0){
+   arr1.differDay--
+   arr1.hour2 = 24
+  }
+  
+  
+ 
+  }
+  let count = document.querySelector(".count")
+  let dateNub = date.valueOf()
+  dateNub += 1000*60*60*24*55
+  let festival = new Date(dateNub)
+  let differ = festival-date
+   
+  let arr1 = {
+   differDay : differ/1000/60/60/24,
+   differHour:24-date.getHours(),
+   differMin:60-date.getMinutes(),
+   differSec :60-date.getMinutes(),
+   sec2 :date.getSeconds()
+  }
+  
+  
+  
+  
+     
+      
+      
+   timer = setInterval(() => {
+     judge2(  )
+     count.innerHTML = "距离过年还有："+arr1.differDay  + "天" + "\t" + arr1.differHour + ":" + arr1.differMin +":" +arr1.differSec + "\t"  ;
+    if(arr1.differDay == 0){
+     clearInterval(timer)
+    }
+   }, 1000);
+  
+  
+ </script>
+</body>
+</html>

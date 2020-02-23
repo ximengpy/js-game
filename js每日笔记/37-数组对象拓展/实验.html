@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ 
+ <script>
+   
+   let class17 = [
+      {
+        name: "zhangsan",
+        sex: "男",
+        money: 12
+      },
+      {
+        name: "zhangsan2",
+        sex: "男",
+        money: 22
+      },
+      {
+        name: "zhangsan3", // 
+        sex: "女",
+        money: 16
+      },
+      {
+        name: "zhangsan4",
+        sex: "男",
+        money: 32
+      },
+      {
+        name: "zhangsan5", // 
+        sex: "女",
+        money: 44
+      },
+      {
+        name: "zhangsan6", // 
+        sex: "女",
+        money: 50
+      },
+    ]
+    let strList = [
+      "123",
+      "asdfg",
+      "+-*/",
+      "zxcv"
+    ]
+    // let ans = strList.map( str => [...str].reverse().join(""))
+ 
+//  function  cb(item ,index ,arr){
+//    console.log(item)
+//   if(item.sex == "女"){
+//     return true
+//   }
+//   else return false
+//  }
+//  function some(arr,cb){
+//    let j = 0
+//    let temp = arr.length
+//   //  console.log(temp)
+//    for(let i = 0;i<temp;i++){
+//       //  console.log(arr[0])
+//        if(cb(arr[i],i,arr)) {j++} }
+//        if (j== temp) return true
+//        else  return false
+
+//  }
+//   let ans = some (class17 ,cb)
+//   console.log(ans)
+
+//   for(i of ["a","s","d"].entries()){
+//           console.log(i)
+//         }
+     // 作业: 实现 fill方法 find方法 
+    //  let arr = new Array(100)
+    //  function fill(arr,t){
+    //   for(i = 0; i < arr.length;i++){
+    //     arr [i]= t
+    //   }
+    //  }
+    //  fill(arr,1)
+    //  console.log(arr)
+      // 实现一个数组去重的方法 (实现以下)
+  let arr = [1,43,3,5,3,2,5,45,6,3]
+  function repeat(arr){
+    // console.log(arr)
+    let newarr = [arr[0]]
+    let t= 1
+   for(let i = 1;i < arr.length;i++){
+     let pointer = 0
+    for(let j = 0; j< newarr.length;j++){
+      if(arr[i] === newarr[j]){
+       break
+      } 
+      pointer++
+      }
+      if(pointer == newarr.length) newarr[t++] = arr[i]
+   
+  }
+  return newarr
+}
+  let newarr =  repeat(arr)
+
+
+ </script>
+</body>
+</html>

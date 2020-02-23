@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+  .box{
+   width:100px;
+   height:100px;
+   background-color: red;
+  }
+ </style>
+</head>
+<body>
+ <div class="box">
+  
+ </div>
+ <script>
+ 
+  let option1 = {
+    css: {
+      width: 100,
+      height: 100
+    },
+    delay: 1000
+  }
+  let option2 = {
+    css: {
+      width: 300,
+      height: 500
+    },
+    delay: 1000
+  }
+  
+  
+
+  function $(str){
+    function run(todoList ,el){
+     let timer = null
+     timer = setTimeout(() => {
+      let promise = Promise.resolve() 
+     while(todoList.length>0){
+      let item = todoList.shift()
+      promise = promise.then(() =>{
+       return new Promise(next =>{
+        setTimeout(() => {
+         el.style.width = item.css.width+"px"
+         el.style.height = item.css.height+"px"
+
+         next()
+        }, item.delay);
+       })
+      })
+     }
+     }, );
+   
+    }
+    return {
+      
+      el: document.querySelector(str),
+      todoList: [],
+      animation: function (option) {
+        this.todoList.push(option)
+        run(this.todoList,this.el)
+        return this
+      }
+    }
+  }
+ 
+ $(".box")
+    .animation(option1)
+    .animation(option2)
+    .animation(option1)
+    .animation(option2)
+    .animation(option1)
+    .animation(option2)
+
+ </script>
+</body>
+</html>

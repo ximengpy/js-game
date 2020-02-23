@@ -1,0 +1,104 @@
+<script>
+
+  // Q1
+  function fun(n, o) {
+    console.log(o);
+    return {
+      fun: function (m) {
+        return fun(m, n);
+      }
+    }
+  }
+  //var b = fun(0).fun(1).fun(2).fun(3); 
+  // var c = fun(0).fun(1)
+  // undefiend 0
+  /*
+    n = 1
+    {
+      fun: function (m) {
+        return fun(m, n);
+      }
+    }
+  */
+  // c.fun(2); // 1
+  // c.fun(3); // 1
+  
+  /*
+    a = {
+      fun: function (m) {
+        return fun(m, n);
+      }
+    }
+    fun 的执行结果永远是 a
+    return foo()
+      一定是先 foo() 返回 result
+      再return result
+    有难度的题: 慢慢吃透他
+  */
+  var a = fun(0); // undefined
+  a.fun(1); // fun(1, 0)  打印:0
+  a.fun(2); // fun(2, 0)  打印:0
+  a.fun(3); // fun(3, 0)  打印:0
+  var b = fun(0).fun(1).fun(2).fun(3); 
+  // undefined 0 1 2
+  var c = fun(0).fun(1)
+  // undefined 0
+  /*
+    n = 1
+    c = {
+      fun: function(m){
+        return fun(m, n)
+      }
+    }
+  */ 
+  c.fun(2); // 1
+  c.fun(3); // 1
+
+  /*
+    
+  
+  */
+
+
+
+
+
+
+
+  // Q2
+
+  // function F1() {
+  //   var a = 100;
+  //   return function () {
+  //     console.log(a);
+  //   }
+  // }
+  // // f1不管在什么情况下查询的作用域都在F1中
+  // var f1 = F1()
+  // // f1保存作用域没有? 
+
+  // function F2(fn) {
+  //   var foo = fn // 这是一个变量赋值的过程
+  //   var a = 200;
+  //   foo();
+  // }
+
+  // F2(f1) //? 
+
+
+  // function callFunction(cb, arg){
+  //   cb && cb(arg)
+  // }
+
+  // callFunction(alert, 123)
+
+
+  /*
+  
+    面试题: 大脑运行得出结果
+
+
+  */
+
+
+</script>

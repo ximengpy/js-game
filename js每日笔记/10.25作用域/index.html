@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 
+    // var a = 3
+    // {
+    //   console.log(a)
+    // }
+    // 存放一段代码: 代码块包裹
+
+    /*
+      function携带了代码块
+
+      作用域: 
+
+      代码块和声明方式的区别:
+        声明的规范: 
+          先声明后使用
+        let 
+
+        var 
+
+        const: 常量: 值生成之后就不会被改变了 
+          声明的时候: 必须要赋值的
+          声明之后不能修改他的值
+          不能重复声明
+    */ 
+
+    // function foo(){
+    //   console.log(a)
+    // }
+    // 声明操作
+    // console.log(NAME)
+
+    // const NAME = {
+    //   a: 1
+    // }
+    // NAME.b = 3
+
+    // // 这个操作算什么? 
+    // NAME.a = 2
+
+    // delete NAME.a
+    // delete NAME.b
+    
+    // const NAME = "asd"
+
+    // console.log(NAME += "fgh")
+
+    // console.log(NAME)
+
+    // const b = 1
+    // // 
+    // b++
+    /*
+      var 和 let 有啥区别
+      
+      相同点: 声明了一个变量, 可以修改他的值得
+
+      区别: 
+        var声明和不用var声明的区别: 他们都是window对象下面的一条属性
+
+        通过var进行声明的变量是 没有办法删除的
+
+        直接写出来的变量是添加到window下面的属性中的
+
+        let 的特点: 
+          1. 和const类似: 必须要先声明后使用的: 
+
+
+        临时性死区:
+          代码在预编译阶段其实已经识别了变量, 但是这是变量还未生效, 所以在生效之前会被锁定, 
+          生效之前访问都会出错
+      
+        变量提升: 
+          变量声明会提前: 先申请空间再去执行
+
+      
+
+    */
+
+    // 开辟a这个变量空间, 锁定a不可访问的
+    // let a
+
+    // console.log(a)
+
+    // // a 解锁, a 可以正常使用
+    // a = 3
+
+
+
+    // let a 
+    // // 预编译结束
+
+    // console.log(a)
+
+    // /*a 在此刻生效*/
+    // a = 3
+
+
+    
+    // var a = 3
+    
+    // b = 4
+
+    // console.log(a, b)
+
+    // var a = 3
+
+    // function foo(){
+    //   console.log(a)
+    // }
+
+    // foo()
+
+
+    /*
+      JS的执行顺序: 
+        1. 预编译的过程: 
+          先将代码变量需要的内存空间等内容提前申请好, 全部通读一遍
+        2. 执行: 每行每行执行的
+    
+    */
+    // 声明b 锁定b
+    
+
+    // console.log(b)
+    
+    // const b = 3
+
+
+    // c = 2
+
+    // console.log(c)
+    
+    // let c = 3
+
+    /*
+      作用域: 
+        变量的生效范围: 
+        全局变量: 相对于函数块而言
+          写在最外面的变量
+        局部变量
+
+        
+    */
+    // var aaa = 3
+    // function foo(){
+    //   // var aaa = 2
+    //   console.log("函数内",aaa)
+    // }
+    // foo()
+    // console.log("全局", aaa)
+
+    /*
+      var       声明变量会提升到 函数作用域 的顶部
+        函数作用域 的顶部: 
+        function foo(){
+          // 这里
+
+          // code
+        }
+      let/const 声明变量会提升到 块级作用域 的顶部
+      块级作用域 的顶部:
+        {
+          // 这里
+
+          // code
+        }
+
+
+      
+    */
+
+    // {
+    //   let aaa
+    //   aaa = 3
+    //   // aaa 会被销毁
+    // }
+
+
+    // console.log(aaa)
+    // let aaa = 1
+    // {
+    //   var aaa = 2
+    //   console.log(aaa)
+    // }
+    // console.log(aaa)
+
+    // 
+
+    // let num = 2
+
+    // function foo(n){
+    //   // n变成了当时执行之后传入的值
+    //   n = num
+    //   console.log(++n)
+    // }
+    // // foo() // 3
+    // // foo() // 4
+    // // console.log(num) // 4
+    
+    // /*
+    //   函数传参的时候, 会将变量复制进去成为内部变量, 修改的是函数内部的变量
+    // */ 
+    // foo(num)  // 3
+    // foo(num)  // 3
+    // console.log(num) // 2
+
+      // let person = {num: 1}
+
+      // function foo(){
+      //   person.num++
+      //   console.log(person.num)
+      // }
+      // foo() // 2
+      // foo() // 3
+      // console.log(person.num) // 3
+
+
+        // 有一点点超纲了
+      // let person = {num: 1}
+
+      // function foo(person){
+      //   person.num++
+      //   console.log(person.num)
+      // }
+      // foo(person) // 2
+      // foo(person) // 3
+      // console.log(person.num) // 3
+
+
+
+  </script>
+</body>
+</html>

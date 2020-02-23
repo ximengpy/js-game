@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      undefined
+        没有定义的, 未定义
+      如果声明一个变量不给他赋初始值, 就是未定义
+      访问不存在的属性不会报错, 返回一个undefined
+        关键词: JS自带的值
+        let box
+        和
+        let box = undefined
+    
+      补充一个知识: JS => 
+        JS代码执行的返回问题.
+
+        任意一句JS代码执行都有返回值!
+        
+        判断这个语句到底执行完成没有, 有没有返回值进行判断
+    */
+
+    /*
+      null 
+        单独的类型值也是单独的值
+        空指针对象, 空值
+        typeof null => "object"
+        不代表他是对象, 他就是null类型
+      JS世界中: 这个值最特殊
+        来自于上层语言定义的值 
+    */ 
+
+    /*
+      object类型: 
+        一个具有各种属性的物体就叫做对象.
+        书写方式 
+          {}
+        对象都有若干个属性: 
+          属性名: 属性值,
+
+        访问对象的属性: 
+          通过: 
+            对象.属性名  访问
+            对象[属性名] 访问方式
+          区别: 
+            对象.属性名 直接访问的是属性名的字符串
+            对象[变量] 访问对象中变量对应字符串的值
+
+    */
+    let person2 = {
+      name: "阿飞",
+      age: 22,
+      handsome: true
+    }
+
+    // js 是不加的
+    // let person1 = {
+    //   "name": "银时",
+    //   "age": 18,
+    //   "handsome": true,
+    //   "18":"cm"
+    // }
+    
+    // // JSON 数据格式是要加的
+
+    // let key = "name"
+
+    // console.log(person1.key) // 等价于 person1["key"] => person1["key"]
+    // console.log(person1[key])// 等价于 person1[key]   => person1["name"]
+
+    // let key2 = "age"
+    // person1.age
+    // person1["age"]
+    // person1[key2]
+
+    // 赋值: 
+    // 添加
+
+    let person = {
+      "name": "银时",
+      "age": 18,
+      "friend": person2
+    }
+
+    // person.sex = "male"
+    // person["sex"] = "male"
+
+    console.log(person)
+
+    // 修改操作
+
+    // 和添加一样 
+
+
+  </script>
+
+  <div class="ball"></div>
+</body>
+</html>

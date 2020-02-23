@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>懒加载效果</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    .btn{
+      position: fixed;
+      right: 0;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="img-list">
+
+</div>
+<div class="btn">返回顶部</div>
+<script>
+  let btn = document.querySelector(".btn")
+  btn.onclick = function(){
+    // 获取滚动的位置
+    let height = document.documentElement.scrollTop
+    console.log(height)
+
+    // 匀速滚动
+    // let vh = -20
+    // let timer = setInterval(()=>{
+    //   height += vh
+    //   window.scrollTo(0,height)
+    //   if(height <= 0){
+    //     clearTimeout(timer)
+    //   }
+    // },10)
+    // window.scrollTo(0,0)
+
+    // 定时的功能: 1s 10ms一次运动
+    // 匀加速运动s = v0t + 1/2at^2
+    // 三次的话 就是另一回事了
+    let vh = - height / 50
+    let ah = - vh / 100
+    let timer = setInterval(()=>{
+      vh += ah
+      if(vh > -1) vh = -1
+      height += vh
+      window.scrollTo(0,height)
+      if(height <= 0){
+        clearTimeout(timer)
+      }
+    },10)
+    // window.scrollTo(0,0)
+  }
+  // 懒加载实现
+  // dom动态添加113张图片
+  // <div><img src="./images/1 (1).jpg" alt=""></div>
+  // 首先加载图片, 加载的替换图片
+  // 如果资源已经请求过了, 相同的资源他是不会去再去请求的
+  // 非常低的性能消耗品
+
+  // 向后台发起请求: 获取图片的JSON数据 数据里面
+  let imgData = {
+    code: 0,
+    imgName: "小姐姐",
+    length: 113,
+    imgList: [
+      {
+        url: "", // 存图片的地址
+        alt: "", // 图片的alt
+        width: 817, //
+        height: 456
+      }
+    ]
+  }
+
+
+
+  let imgList = document.querySelector(".img-list")
+  let fragment = document.createDocumentFragment()
+  let imgs = []
+  for(let i = 0;i < 113;i++){
+    let div = document.createElement("div")
+    let img = document.createElement("img")
+    // img.width = width
+    // img.height = height
+    imgs.push(img)
+    img.src= `./images/loading.jfif`
+    img.setAttribute("data-src", `./images/1 (${i+1}).jpg`)
+    img.setAttribute("loaded", "false")
+    div.appendChild(img)
+    fragment.appendChild(div)
+  }
+  imgList.appendChild(fragment)
+
+  // 获取滚动的位置
+  // 防抖:
+  // 定时触发 0.2s触发一次 =>
+  window.onscroll = (function () {
+    let timer = null
+    let canLoad = true
+    // 一瞬间触发很多次事件, 暂停下来, 放到滚轮停止了之后执行
+    // 滚动最下面已经到了哪里
+    return function () {
+      if(canLoad) {
+        canLoad = false
+        console.log("修改")
+        setTimeout(()=>{
+          canLoad = true
+        },200)
+        const height = document.documentElement.scrollTop + window.innerHeight
+        // 只要触发一次, 这个地方都会遍历和设置
+        imgs.forEach(img => {
+            // 如果这张图片已经加载过了, 那么久不要加载了
+            if(img.getAttribute("loaded") === "true") return
+            if(img.offsetTop < height ){
+              setTimeout(()=>{
+                img.src = img.dataset.src
+                img.setAttribute("loaded", "true")
+              }, 400)
+            }
+        })
+      }
+    }
+  })()
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+   h1{
+      width:300px;
+      margin: 30px auto;
+   }
+   p{
+      width:300px;
+      margin:30px auto;
+   }
+   .area{
+      margin:auto;
+      background-color:sandybrown;
+      opacity:0.9;
+   }
+   .area>div{
+   float: left;
+   width: 50px;
+   height: 50px;
+   border: 1px solid  #ccc;
+   box-sizing: border-box;
+   text-align: center;
+   font-size: 24px;
+   line-height: 50px;
+ }
+
+</style>
+</head>
+<body>
+   <h1>比较骚的扫雷游戏</h1>
+<p>
+   <!-- <label for="width">地图宽: <input type="number" value="9" id="width"></label> <br> -->
+   <!-- <label for="height">地图高: <input type="number" value="9" id="height"></label> <br> -->
+   <!-- <label for="mine">地雷个数: <input type="number" value="9" id="mine"></label> <br> -->
+   <input type="submit" value="开始">
+</p>
+<div class="area">
+
+</div>
+ <script>
+    let h ,w,mine
+    let submit = document.querySelector("input[type='submit']")
+    let area = document.querySelector(".area")
+    let boxList = null
+    let clickArr = [],mapdata = []
+    function initClickArr() {
+         for (let i = 0; i < w * h; i++) {
+            clickArr[i] = false
+         }
+      }
+    function next1(){
+       h += 5
+       w += 5
+       creatmap()
+       creatmine()
+       register()
+    }
+    function next2(){
+      
+       creatmap()
+       creatmine()
+       register()
+    }
+
+
+    submit.onclick = function(){
+       creatmap()
+       creatmine()
+       register()
+       
+
+    }
+    function creatmap(){
+       h = 9
+       w = 9
+     
+       let str = ``
+   for (let i = 0; i < w*h; i++) {
+          str += `<div></div>`
+       }
+       area.style.width = w*50+"px"
+       area.style.height = h*50+"px"
+       area.innerHTML = str
+       
+    }
+    function creatmine(){
+      mapdata = []
+      mine = 0
+      for(let i = 0;i < w*h;i++){
+         mapdata[i] = 0
+      }
+      // console.log(mapdata)
+      let j = 0
+      while(j<mine){
+         let rdm = Math.floor(Math.random() * w * h)
+         if (mapdata[rdm] === 0) {
+            mapdata[rdm] = "雷"
+            j++
+         }
+      }
+      // console.log(mapdata)
+      calculate()
+    }
+    function  calculate(){
+       for(let i = 0 ;i < mapdata.length;i++){
+          let count = 0
+          if(mapdata[i] == 0){
+             (i%w != 0) && (mapdata[i - w -1] =="雷" && count++);
+             (mapdata[i-w] == "雷" && count++);
+             (i%w != w-1) && (mapdata[i - w + 1] =="雷" && count++);
+             (i%w != 0) && mapdata[i-1] == "雷" && count++;
+             (i%w != w-1) && mapdata[i+1] =="雷" && count++;
+             (i%w != 0) && (mapdata[i + w -1] =="雷" && count++);
+             (mapdata[i+w] == "雷" && count++);
+             (i%w != w-1) && (mapdata[i + w + 1] =="雷" && count++);
+             mapdata[i] = count;
+            }
+       }
+    }
+   
+    function rander(){
+       boxList = document.querySelectorAll(".area div")
+       for(let i = 0;i < boxList.length;i++){
+          boxList[i].innerHTML = mapdata[i]
+       }
+    }
+    function register(){
+      boxList = document.querySelectorAll(".area div")
+      for(let i = 0; i < boxList.length ;i++){
+         boxList[i].onclick = function(){
+           initClickArr()
+            click(i)
+         }
+      }
+    }
+    function click(index){
+      // console.log("点击了")
+      clickArr[index] = true
+      if(mapdata[index] == 0){
+         ((index % w) != 0) && (mapdata[index - 1 - w]!==undefined) && ((!clickArr[index - 1 - w]) )&& click(index - 1 - w);
+         (mapdata[index  - w]!==undefined) && (!clickArr[index  - w]) && click(index  - w);
+         ((index% w) != (w-1)) && (mapdata[index-w+1] !== undefined) && (!(clickArr[index]-w + 1)) && click(index -w +1);
+         ((index % w) != 0) && (mapdata[index-1]!== undefined) && (!(clickArr[index] - 1)) && click(index - 1);
+         ((index% w) != (w-1)) && (mapdata[index+1]!== undefined) && (!(clickArr[index] + 1)) && click(index + 1);
+         ((index % w )!= 0) && (mapdata[index - 1 + w]!==undefined) && (!(clickArr[index - 1 + w])) && click(index - 1 + w);
+         (mapdata[index - w]!==undefined) && (!clickArr[index  - w]) && click(index  - w);
+         ((index% w )!= (w-1))&& (mapdata[index+w+1]!==undefined) && (!clickArr[index]+w + 1) && click(index +w +1);
+
+      }
+      boxList[index].innerHTML = mapdata[index]
+    
+      if (mapdata[index] === "雷") {
+        for(let i = 0 ;i< mapdata.length;i++){
+         boxList[i].innerHTML = mapdata[i]
+         console.log(i)
+        }
+        alert("游戏失败")
+        
+         }   
+    
+         
+      }
+       
+         
+
+ </script>
+ 
+
+</body>
+</html>

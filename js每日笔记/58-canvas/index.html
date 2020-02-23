@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    #canvas{
+      /*width: 500px;*/
+      /*height: 500px;*/
+      background-color: #ccc;
+    }
+
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="1200" height="800"></canvas>
+<script>
+  /**
+   * h5一个标签 canvas
+   *    衍生出很多效果: 各种特效 => canvas制作 动画
+   *    做游戏: 全屏游戏, 2d 3d
+   * 有可能方向发展.
+   *  简单: 面向文档编程 代码的书写规范(实现模式)
+   *  复杂: (api比较的多, 查询记忆很多代码)
+   *  会一个canvas => 会无数个
+   *
+   * canvas 行内元素, 理解成为一张图片: 图片里面所有的内容都是我们自己绘制出来的 img标签
+   *   有自己的默认宽高: 通过样式进行修改的话,图片可能变形
+   *
+   * 如何绘制各种各样的东西
+   *    canvas 标签 只能在dom层级进行操作 => 元素性质控制
+   *    获取canvas绘制上下文 => 生成一个这个canvas的绘制对象, 控制绘制对象画画
+   *    getContext 上下文的格式 "2d" "webGl"
+   * 为什么坐标轴是错误的?
+   *
+   *
+   * context的api:
+   *    线条(直线线段):
+   *       1. 线条的绘制路径(一次性规定无数条绘制)
+   *          开始: ctx.beginPath()
+   *            ctx.moveTo(x, y)
+   *          划线方法: ctx.lineTo
+   *          结束: ctx.closePath()
+   *       2. 告诉浏览器绘制(下达绘制指令)
+   *          ctx.stroke() 划线
+   *          ctx.fill()填充颜色
+   *
+   *    矩形(只需要知道两个关键点就可以画出矩形)
+   *       1. 告诉绘制路径 rect
+   *          参数: 矩形左上角点的位置 矩形的宽高
+   *       2. 绘制
+   *
+   *     圆(圆的原心位置 半径 起始点角度 结束点角度 方向)
+   *      告诉绘制路径 + 绘制
+   *
+   *    图片 ..见下面
+   *
+   *    位图信息 ctx.getImageData
+   *
+   */
+  let canvas = document.querySelector("#canvas")
+  let ctx = canvas.getContext("2d") // 获取2d绘制环境 (平面环境, 直角坐标系)
+
+  // ctx 控制绘制的主体对象各种各样的东西.
+
+  // 把我们绘制笔移动到某个点(怎么样描述一个点)
+  ctx.beginPath() //切断绘制路径的功能
+  ctx.moveTo(150, 100)
+  ctx.lineTo(100, 150)
+  ctx.lineTo(200, 200)
+  ctx.lineTo(150, 100)
+
+  // 线条样式: 线条的颜色 粗细
+  ctx.lineWidth = 3
+  // 全局设置颜色, 你要更改颜色, 必须设置笔的颜色
+  ctx.strokeStyle = "#59ef41"
+  ctx.stroke() // 把点当成线画出来
+  ctx.fill()
+
+
+  // 画一个矩形: rect 规定了矩形的画法
+  ctx.strokeStyle = "rgba(255, 0, 0, 1)"
+  ctx.fillStyle = "#6fc"
+  // 重新开始绘制新的东西
+  ctx.beginPath()
+  ctx.rect(300, 300, 100, 200)
+  ctx.stroke()
+  ctx.fill()
+
+  // ctx.rect(300, 300, 100, 200) ctx.fill() 可以合并 ctx.fillRect(300, 300, 100, 200)
+
+
+  // 画圆: 在页面中绘制一个圆形 画圆弧
+  // arc 绘制圆弧的方法
+  // 规定圆弧的: 圆心 半径 开始坐标角度(默认向右为0) 结束的坐标角度() 顺时针(默认值, false)/逆时针(true)
+  // 角度单位是弧度单位:
+  // 400, 100 位置画一个半径为50的圆弧
+  ctx.beginPath()
+  ctx.arc(400, 100, 50, Math.PI/2, Math.PI)
+  // ctx.stroke()
+  ctx.fill()
+
+
+  // 绘制图片: 将一张网络图片或者是本地图片绘制出来绘制到canvas中
+
+      // 1.有一张图片资源 加载 new Image 用img标签加载图片 没有添加到dom中的
+      // 2. 绘制图片 drawImage
+  /*
+  *  第一种参数格式: 只需要写三个参数: 图片资源 canvas中绘制图片的位置(x, y)
+  *  第二种参数格式: 只要写五个参数: 图片资源 canvas中绘制图片的位置(x, y) 图片绘制大小
+  *  第三种参数格式: 需要写九个参数:
+  *     图片资源
+  *     原始图的裁切开始位置(两个值)
+  *     原始图裁切大小(两个值)
+  *     canvas的绘制位置(两个值)
+  *     canvas的绘制大小(两个值)
+  * */
+
+  let img = new Image()
+  img.src = "http://localhost:63342/58-canvas/1.jpg"
+  // 请求资源的过程
+  // 设置源为通用, 允许跨域
+  // img.crossOrigin = ""
+  img.onload= function(){
+    ctx.drawImage(img, 130, 50, 235, 250, 700, 100, 235, 250)
+
+    // 像素级的控制图片的性质:
+    // canvas中读取图片的一些图片数据, 直接硬算(算饱和度, 做反转, 灰度, 亮度, 滤镜效果), 得出新的值
+
+    // 拿到canvas中的图片信息数据, 做颜色的转换
+
+    // ctx.getImageData() 取一块区域: 的所有颜色信息
+    // 会涉及到跨域的问题
+    let imageData = ctx.getImageData(700, 100, 235, 250)
+    // 以像素为基准将图片每个点的颜色 4个一组的存了下来
+    // 修改imageData
+    // rgba
+    // let data = imageData.data
+    // let mydata = Array.from(data)
+    // for(let i = 0,l = data.length; i < l;i++){
+    //   // if(i % 4 !== 3){
+    //   //   // 将所有的非透明度
+    //   //   data[i] = data[i] * 1.2
+    //   // }
+    //
+    //   // 黑白相片 颜色点: rgba(150, 150, 150, 255) 前三个值相同都是灰色
+    //
+    //   if(i % 4 === 0){
+    //     mydata[i] = (mydata[i] + mydata[i+1] + mydata[i+2]) / 3
+    //   }
+    //   if(i % 4 === 1){
+    //     mydata[i] = (mydata[i-1] + mydata[i] + mydata[i+1]) / 3
+    //   }
+    //   if(i % 4 === 2){
+    //     mydata[i] = (mydata[i-2] + mydata[i-1] + mydata[i]) / 3
+    //   }
+    // }
+    // for(let i = 0,l = data.length; i < l;i++){
+    //   imageData.data[i] = mydata[i]
+    // }
+
+    // 做马赛克 => 一块区域的所有颜色 都去全整体颜色平均值: 渲染出来
+    // 数据的丢失 => 编数据
+
+    // 像素风 做个app, 支持绘画, 自己画像素风的图片
+    // 传入图片, 识别祖安环成为像素风的图片
+
+    // 重新绘制出来
+    ctx.putImageData(imageData, 0, 0)
+    console.log(imageData)
+  }
+
+</script>
+</body>
+</html>

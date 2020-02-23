@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{margin: 0;}
+    html, body{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<script type="module">
+  /**
+   * 面向对象的 移动端的 游戏
+   *    一切抽象的物体(敌机 子弹 飞机 背景 ... )对象 控制对象的方式(思想)实现
+   * 模块化: 对象的构造函数: 抽象 类(class) 分成多个文件 => 需要导入导出(import export)
+   *    按需引入
+   * 不支持file://协议 支持 http://
+   * 前后端分离: (前端 单独 打包自己的项目) 一次性写出相当于打包好的项目
+   * 静态资源: 不需要后台涉及的项目 vue react
+   * 根目录: index.html所在文件夹根目录
+   *    static/ 项目的素材等内容
+   *     \-  src/     source 代码资源
+   *     \-  images/  图片等资源
+   * 对外暴露出的接口 Game 在哪里加载canvas...游戏内容
+   *
+   * import obj from "地址"
+   *
+   * export default obj
+   *
+   * 自己在需要的时候加载代码
+   *
+   * import 代码 全部写在首行 并且不要写别的代码
+   *
+   * 不停的绘制 => 游戏的刷新率 =>
+   */
+  // 导入代码
+  import Game from "./static/src/Game.js"
+  // 在body标签内部, 初始化游戏
+  // 自动化做好所有事情 => 游戏初始化(重启游戏)
+  // type="module" 所有代码的作用域是在script中不会去到全局
+  window.game = new Game(document.querySelector("body"))
+
+
+</script>
+</body>
+</html>

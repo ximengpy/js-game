@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+   
+    textarea{
+      width:500px;
+      height:500px;
+      margin-left:100px;
+    }
+  </style>
+</head>
+<body>
+
+<textarea cols ="20" rows= "20"></textarea>
+<script>
+
+ 
+
+    let  textarea = document.querySelector("textarea")
+    let position = localStorage.getItem("key") //渲染前从localStorage中读取内容
+    textarea.value= position
+    textarea.addEventListener("keyup",function(){
+        localStorage.setItem("key",textarea.value) //将值记录在localStorage中
+      
+    })
+    
+  
+   
+
+  
+
+</script>
+</body>
+</html>

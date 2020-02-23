@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .smallbox{
+      float: left;
+      width: 50px;
+      height: 50px;
+      border:1px black solid;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <script>
+    /*
+      循环: 重复
+        重复的多次做同一件事情
+        循环的结束条件: 
+          是循环必不可少的东西
+        死循环
+      控制循环的次数: 
+      for循环 JS自带的单词
+        写括号
+      和if一样都不是函数
+
+      for(){
+        // 需要被循环的代码
+      }
+      在f括号里面写两个分号
+
+      结束条件写在哪里?
+      在JS中;表示代码语句执行完成
+
+      第二块内容: 
+        循环结束条件
+        是一个表达式, 
+        当表达式的值为false的时候循环结束
+        当表达式的值为true那么他会执行代码块里面的内容,
+        每执行一次代码块都会进行判断
+    
+    单线程代码: 在同一时间只能处理单独一条语句,
+
+    从上往下执行的
+
+      细节: 
+        如果所做规定次数的循环, 请 使用for循环
+        将初始值i设置为0,
+          程序公认: 数数从0开始,下标从0开始
+        将i<循环次数作为结束条件
+
+    数组: 也是一个对象, 他的属性是下标0,1,2,3,4的数值
+
+
+      for循环第一个分号前, 
+        填写初始条件:
+          循环开始之前的一些声明操作
+
+      第三个语句: 
+        在特定时机修改循环结束的判断条件,
+        等到代码块执行完成之后再执行
+      
+        必须修改i
+
+    */
+ 
+    // for(let i = 1; i < 100; i++){
+    //   console.log(i)
+    // }
+
+    //假设执行两次
+    /*
+      for(A;B;C){
+        D
+      }
+      A => ( B => D => C ) => ( B => D => C ) 
+    */
+    
+
+
+
+    // let i = 1
+    // for(;i <= 100;){
+    //   i++
+    //   console.log(`执行了${i}次`)
+    // }
+
+    // console.log("循环之后的代码")
+    // let box = document.querySelector(".box")
+
+    
+    // for(let i = 0; i < 100; i++){
+    //   let smallbox = `<div class="smallbox">${i+1}</div>`
+    //   box.innerHTML += smallbox
+    // }
+
+    // 高斯: 
+
+    // 顺便补充, 形参的默认值: ES6直接在形参后面写=默认值 
+
+      // function gaosiqiuhe(num = 100){
+      //   let sum = 0
+      //   for(let i = 0;i < num; i++){
+      //     sum += i+1
+      //   }
+      //   return sum
+      // }
+
+      // let ans = gaosiqiuhe(10)
+      
+      // console.log(ans)
+
+      // for循环的打断和跳过
+
+      // 跳过 跳过这次循环直接到达第三个语句
+      // continue
+      // %取余
+
+      // 打断循环: 一旦执行到break 循环直接不执行了
+
+        let arr = [1,2,3,1,3,34,2,34,1]
+        // 数组里面获取数组长度,数组里面元素的个数
+        // 用 .length
+        // for(let i=0;i < arr.length;i++){
+        //   if(arr[i]==1){
+        //     continue
+        //   }
+        //   console.log(arr[i])
+        // }
+
+        // for(let i = 0; i < arr.length; i++){
+        //   if(arr[i]==34){
+        //     console.log(`找到了,在第${i}个`)
+        //     break
+        //   }
+        // }
+
+
+    // while 当满足条件的时候, 就执行代码块
+
+    /*
+      任何可以用while可以写出来的代码, 
+      while(判断条件){
+        执行代码块
+      }
+      当中的代码块最少执行多少次? 0次
+      do{}while() 代码块至少执行 1次
+      都可以用for循环书写
+        for循环适用条件:
+          明确直到循环次数
+          
+        while循环适用条件:
+          不定情况的时候适用while
+      遍历: 就是一排东西(指数组),挨个点(进行操作)一遍
+
+
+
+          do{
+
+
+          }while()
+
+
+    */ 
+    do{
+      console.log(666)
+    }while(false)
+
+
+    // while 
+    
+    // do{
+
+    // }while()
+
+
+    
+    /*
+
+
+      1. 做个阶乘函数 f(n = 0) > 阶乘的计算结果
+      如果输入的负数, 请返回alert(必须输入正整数)
+        f(0) = 1 (规定)
+        f(1) = 1
+        f(2) = 2*1 
+        f(3) = 3*2*1
+        f(100) = 100*99*98*...*2*1
+      
+      2. 9*9乘法表
+      JS生成
+        input 你想要的几乘几的乘法表 生成
+        后面显示乘法表的结果
+
+
+
+    */
+      // 研究一下代码是什么意思
+      // for(let i=0;i<10;i++){
+      //   for(let j=0;j<i;j++){
+      //     console.log("执行")
+      //   }
+      // }
+
+
+
+  </script>
+</body>
+</html>

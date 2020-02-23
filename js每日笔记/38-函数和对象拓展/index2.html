@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+<!--  <script src="./index.js" defer></script>-->
+</head>
+<body>
+<script>
+
+</script>
+  <div class="box"></div>
+<script>
+
+  // 函数的拓展
+  // 斐波拉契求和 规定前两项为1, 后续任意一项的值是紧挨着的前两项的和
+  // 1, 1, 2, 3, 5, 8, 13, 21
+  // O(2^N)
+  // function fibonacci(n){
+  //     // 结束条件
+  //     if(n === 1 || n === 2){
+  //         return 1
+  //     }
+  //     return fibonacci(n - 1) + fibonacci(n - 2)
+  // }
+  //
+  // console.log(fibonacci(100))
+  // 首先进行了很多的重复运算,
+  // fibonacci(100)
+  //  = fibonacci(99) + fibonacci(98)
+  //  = fibonacci(98) + fibonacci(97) + fibonacci(98)
+  //  = 2*fibonacci(98) + fibonacci(97) 但是浏览器每执行一次fibonacci(98)都会花大量的时间进行重复
+
+  // 从空间的角度进行思考, 函数的调用栈是多少?
+  // 一个函数的存在 会有作用域函数argument参数等内容
+  // 最外一层在什么时候消失, 执行完成之后消失
+  // 当执行return代码的时候, 其实当前函数的调用栈应该被销毁, 这样可以节省空间
+
+
+  // function GaosiSum(n){
+  //     if(n === 1){
+  //         return 1
+  //     }
+  //     return GaosiSum(n-1) + n
+  // }
+  // // 函数在执行到return的时候作用域会不会消失?
+  // GaosiSum(100)
+
+  // 先计算值, 再返回
+
+
+  // 尾递归 => 本质还是递归, 只是在return的时候不会return表达式, 会return一个执行函数
+  // 只有函数部分, 没有其他部分
+
+  // function GaosiSum(n, result = 0){
+  //     if(n === 0){
+  //         return result
+  //     }
+  //     return GaosiSum(n-1, n + result) // return了一个函数执行
+  // }
+  // 运行逻辑: 浏览器会做优化: 先去删除外部的作用域空间, 让后用return的这个函数替代他进行递归
+
+  // 优先释放掉这个空间, 然后再返回内容
+
+  // 以参数的形式存储结果
+
+  // console.log(GaosiSum(100))
+
+  // fibonacci 如何使用尾递归实现? 课后练习题
+
+  // 提示: 有几个参数, 需要存几个值, 以什么方式抛出出来?
+
+  // function fibonacci(n, result = 1){
+  //     // 结束条件
+  //     // result = 前两项的和
+  //
+  //     return fibonacci(n-1, result)
+  // }
+  //
+  // fibonacci(100)
+
+  // 上楼梯问题?
+  // 我有100层楼梯, 每次上2层或者上3层, 一共有多少种解法?
+
+  // function goUpStairs(n) {
+  //     // 结束条件
+  //
+  //     // return goUpStairs(n-1)
+  // }
+  // goUpStairs(100)
+
+
+
+</script>
+</body>
+</html>

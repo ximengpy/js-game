@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      运算符和隐式类型转换:
+        A&&B
+        A真返回B A为假返回A
+        A||B
+        A真返回A A为假返回B
+      
+      if( A&&B ){
+
+      }
+      if( !A||B ){
+
+      }
+      有优先级: ! > && > || 
+      ! 非运算符: 取反
+      强制类型转换成布尔类型
+
+      !A => true/false
+
+      if(!A){}
+
+
+      算术运算符: 
+        + - * / % 适用情况 数值类型运算
+
+        +: 适用于字符串运算
+          表示字符串拼接 
+        两边类型不相等的情况: 存在多种情况
+
+      ++ -- 自加自减运算: 
+
+      符号在前: 先运算再返回 
+
+      符号在后: 先返回再运算
+
+      比较运算符:
+
+        > 前面的大于后面的
+          数值比较
+
+          字符串比较: 
+            根据字符串从左到右的每个字符: 进行 ASCII 码的比较
+            
+            "0" 48
+
+            "A" 65
+
+            "a" 97
+
+
+            "1a">"10"
+
+          布尔类型进行比较
+
+          true > false
+
+        < 前面的小于后面的
+      
+        >=  <=
+
+        ==  相等: 转换后一致(类型转换)
+          存在类型转换: 类型转换后相等也是可以的
+        != 不相等: 参考上面的 ==
+
+        === 全等: 完全一致(包含类型)
+        !== 不全等
+          值一致并且类型一致
+          推荐大家使用全等: 不会进行类型转换
+
+        = 赋值操作
+          右 传递给 左
+          左边要是变量 存值
+        
+        a = 3
+
+          从内存中查询变量a地址 左查询
+          创建了一个值, 右查询
+
+      
+      隐式类型转换: 
+        JS 语言: 动态类型语言
+        其他语言: 3 + "3"
+          数值 => 字符串
+        不同类型进行运算的时候会转换成同一个类型进行运算
+      
+      1. 转换为 布尔类型: 转换方法: Boolean函数传入变量 返回对应布尔布尔值 
+        1.1 Number  
+          除了 0 NaN 转换成 false 之外 其他都是 true
+        案例: 
+          let a = 10
+          var arr = [0,0,0,0,0,0,0,0,0,0]
+          arr[5] = 3
+          for(...){
+            if(arr[i]!==0){
+              // i ....
+            }
+          }
+          if(a){
+            // 吃完了
+          }
+        1.2 String 字符串
+          "" 空字符串为 false 其余都为true
+        1.3 undefined  false
+        1.4 null null => false
+
+        1.5 object 对象 
+          对象是实际存在的物体: 存在 几乎所有的对象布尔类型就是为 true
+
+          但是对象不能和 布尔类型比较
+        总结: undefined 0 "" NaN null 会转换成false 其他情况是为true的
+      
+      2. 转换成为 字符串类型: 重要
+          简单转换方式: 变量 + "" 强制将变量转换成为字符串类型
+          专业的转换方式: String(变量)
+          复杂类型(对象)转换 调用toString方法
+            简单类型: 数值 字符串 布尔 undefined null
+            复杂类型: 对象
+          => "[object Object]"
+          => 
+            函数 => "function () {}" 转换成为函数的写法
+            数组 => 去掉中括号 引号包裹
+      3. 转换成为数值
+        字符串转换成数值类型: Number()
+          能转换: 看起来像数值的 都可以转换成数值 其余情况 NaN
+          特殊: Number("") => 0
+          "Infinity" => Infinity
+        布尔类型: 
+          false => 0
+          true => 1
+        undefined: 未定义表示未赋值 NaN
+          undefined => NaN 
+        null: 
+          空指针对象: 转换成为 0
+          null => 0
+        对象: 是怎么转换成为数值类型的?
+          内部先调用toString的方法转换成为字符串, 由字符串 => 数值/NaN
+      
+      
+      题目: 
+        求每一行表达式的值:
+          ![]       false  []对象为真
+          +[]       0
+          +![]       0
+          []+[]      ""
+          {}+{}  ?   
+          {}+[] 0
+          []+{} 
+          []+![]      ?
+          ""+{}
+          {}+""   0
+          [][[]]+[]
+          1-{}                     NaN 
+          1-[]                    1
+          []==[]                 flase
+          []!=[]                   true
+          []==![]                  true
+          1>2>3                         false
+          1<2<3                         true
+          null+undefined              NaN
+          null+typeof undefined            "nullundefined"  
+          [1,3]&&NaN&&typeof null            NaN
+
+    */
+  </script>
+</body>
+</html>

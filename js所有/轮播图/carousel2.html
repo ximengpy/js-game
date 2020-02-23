@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;list-style-type: none;}
+        .wrap{
+            width:500px;
+            margin:50px auto;
+            background-color: pink;
+            overflow: hidden;
+        }
+        .list{
+            position: relative;
+            left: 0;
+            width: 4000px;
+            height: 400px;
+            transition: 0.3s;
+    }
+    .list li{
+        float: left;
+        width: 500px;
+      height: 400px;
+    }
+    .btn{
+        float: left;
+        width:100px;
+        height:40px;
+        line-height: 40px;
+        background-color: orange;
+        margin-left:10px;
+        text-align:center;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+            <ul class="list">
+            </ul>
+            <div class="btn">上一张</div>
+            <div class="btn">下一张</div>
+
+    </div>
+    
+    <script>
+    pic = [
+        "images/1.jpg",
+        "images/2.jpg",
+        "images/3.jpg",
+        "images/4.jpg",
+        "images/5.jpg"
+    ]
+    let list = document.querySelector(".list"),
+        btn = document.querySelectorAll(".btn")
+        amount=0,
+        total=pic.length,
+        str = ""
+        for(let i = 0 ;i < total;i++){
+            let li = `<li style="background: url(${pic[i]}) center/cover;"></li>`
+            str += li
+        }
+
+        list.innerHTML = str
+        function changeNum(num){
+            if(num == "prev"){
+               amount--
+            }else amount++
+            if(amount < 0) amount=total-1
+            if(amount > total-1) amount = 0
+        }
+        function changeTo(amount){
+            list.style.left = - amount * 500 + "px"
+        }
+        function change(num){
+           changeNum(num)
+           changeTo(amount)
+        }
+
+        btn[0].onclick = () =>{
+            change("prev")
+        }
+        btn[1].onclick = () =>{
+            change("next")
+        }
+       
+        function aaa(){
+            let i = 0;
+            if(i<= 5){i = 0}
+            list.style.left = - amount * 500 + "px"
+        }
+        let  interval = null;//计时器
+			let  i = 0;
+			function start(){//启动计时器函数
+				if(interval!=null){//判断计时器是否为空
+					clearInterval(interval);
+					interval=null;
+				}
+				interval = setInterval(aaa,1000);//启动计时器，调用overs函数，
+			}
+			
+			
+			
+			function stop(){
+				
+				clearInterval(interval);
+				interval = null;
+			}
+
+
+        
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <style>
+         *{margin: 0;padding: 0;list-style-type: none;}
+
+        .wrap{
+            position: relative;
+            width:600px;
+            height:500px;
+            margin:50px auto;
+            background-color: #ccc;
+            overflow: hidden;
+        }
+        ul li{
+            display: block;
+            position:absolute;
+            top:100px;
+            left:150px;
+            text-align:center;
+            z-index: 0;
+        }
+       
+        ul li img{
+            position:absolute;
+            width:300px;
+            
+        }
+        .wrap .btn{
+            float: left;
+            width:202px;
+            height:40px;
+            line-height:40px;
+            text-align: center;
+            background-color: orange;
+            border:1px solid #ccc;
+            cursor: pointer;
+
+        }
+        .btn-left{
+            margin-left:100px;
+        }
+        .left,.right{
+            display: inline-block;
+            position: absolute;
+            top:50%;
+            width:34px;
+            height:60px;
+            background-color: orange;
+            cursor: pointer;
+        }
+        .right{
+            right:0;
+            margin-right:10px;
+        }
+        .left{
+            left:0;
+            margin-left:10px;
+        }
+        i{
+            display: inline-block;
+            margin-left:7px;
+            text-align: center;
+            line-height: 60px;
+            font-size:25px;
+        }
+        .dot {
+            position: absolute;
+            bottom: 40px;
+            right:40px;
+        }
+        .dot >p{
+            display: inline-block;
+            border:5px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="wrap">
+       <ul class="list">
+
+       </ul>
+        <div class="btn btn-left">循环模式</div>
+        <div class="btn btn-right">单击模式</div>
+        <div class="left"><i class="iconfont icon-goLeft"></i></div>
+        <div class="right"><i class="iconfont icon-arr-right1"></i></div>
+        <div class="dot">
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+    <script>
+        pic = [
+        "images/1.jpg",
+        "images/2.jpg",
+        "images/3.jpg",
+        "images/4.jpg",
+        "images/5.jpg"
+    ]
+    let list = document.querySelector(".list"),
+        btn = document.querySelectorAll(".btn"),
+        left = document.querySelector(".left"),
+        right = document.querySelector(".right"),
+        Op = document.querySelectorAll(".dot p"),
+        total = pic.length,
+        str = "",
+        amount=0,
+        temp=0,
+        temp2
+
+    for(let i = 0;i<total;i++){
+        let li =`<li ><img src='${pic[i]}'></li> `
+        str += li
+    }
+    list.innerHTML = str
+    function changeCount(count){
+        if(count == "next"){
+               amount++
+            }else amount--
+            // console.log(count)
+            // console.log(amount)
+            if(amount < 0&&temp == 0) amount=total-1
+            if(amount > total-1 && temp == 0) amount = 0
+            if (amount < 0&&temp == 1) amount=0
+            if(amount > total-1 && temp == 1) amount = total-1
+            
+            // console.log(amount)
+    }
+    function changeCut(amount){
+        let li = document.querySelectorAll("li")
+        for(let i = 0; i< total ;i++){
+            li[i].style.zIndex = 1
+            // console.log(i)
+        }
+        li[amount].style.zIndex = 2
+        
+    }
+    function change(operate){
+        changeCount(operate)
+        changeCut(amount)
+        
+    }
+    function to(i){
+        changeCut(i)
+            amount = i
+            for(let j = 0;j < Op.length;j++){
+                Op[j].style.borderColor = "black"
+            }
+            Op[i].style.borderColor = "orange"
+    }
+    function changeColor(temp){
+        if(temp == 1){
+            btn[1].style.background = "red"
+            btn[0].style.background = "orange"
+        }
+        else{
+            btn[0].style.background = "red"
+            btn[1].style.background = "orange"
+        }
+    }
+
+
+
+    left.onclick = () =>{
+        change("perv")
+    }
+    right.onclick = () =>{
+        change("next")
+    }
+    btn[0].onclick = () =>{
+        temp =0
+        changeColor(temp)
+    }
+    btn[1].onclick = () =>{
+        temp =1
+        changeColor(temp)
+        
+    }
+   for(let i = 0;i < Op.length;i++){
+        Op[i].onclick = () =>{
+           to(i)
+        }
+   }
+
+    
+    </script>
+</body>
+</html>

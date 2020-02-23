@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 600px;
+      height: 600px;
+      background-color: #ccc;
+    }
+    .box .small{
+      width: 100px;
+      height: 100px;
+      box-shadow: 0 0 10px red inset;
+    }
+
+  </style>
+</head>
+<body>
+<div class="box"></div>
+<div class="btn">add</div>
+<script>
+  // DOM 相关操作: 节点概念 节点树 DOM树
+
+  // 元素的查询: query get 都有获取一组的操作
+  // NodeList 静态的元素数组(结果)
+  // 节点(元素 文本 属性)
+  // HTMLCollection 动态的元素数组(过程)
+  // 元素节点(元素)
+
+
+  // DOM 的相关 增 删 改(增加 删除) 查
+  // 元素节点来的
+  // 增加元素:  innerHTML方法
+  // let box = document.querySelector(".box")
+  // box.onclick = function () {
+  //   console.log("big box 点击")
+  // }
+  // // box.innerHTML += `<div class="small"></div>`
+  // // box.innerHTML += `<div class="small"></div>`
+  // // 方便吗? 非常麻烦
+  // for(let i = 0;i < 3;i++){
+  //   box.innerHTML += `<div class="small">${i}</div>`
+  // }
+  // let boxList = document.getElementsByClassName("small")
+  // // 给每个小盒子绑定了一个点击事件
+  // Array.prototype.forEach.call(boxList,item => item.onclick = function () {
+  //   console.log(this.innerHTML)
+  // })
+  // //
+  // window.firstBox = boxList[0]
+  //
+  // // 点击按钮添加一个盒子
+  // let btn = document.querySelector(".btn")
+  //
+  // btn.onclick = function () {
+  // box.innerHTML += `<div class="small">添加的盒子</div>`
+  // 修改innerHTML的方式 相当于重新生成了新的DOM节点
+  // 所有内容也好都是全新的, 之前的点击事件已经被覆盖了
+  // }
+  // innerHTML 添加方式: 重新渲染html: 代码解析生成节点, 添加进去计算属性...
+  // 1. 消耗性能, 重新渲染
+  // 2. 重新生成元素, 之前的内容已经消失了
+  // DOM innerHTML方法非常的糟糕: 对页面以前的内容覆盖
+
+  // DOM 创建元素 任意你想要的元素, 传入标签名
+  // document.createElement()
+  // 如果要添加 => 请再生成一次
+
+  // let div = document.createElement("div")
+  // div.className = "small"
+  // // 也需要添加元素: 添加到哪 => 添加到哪个盒子里面
+  // let box = document.querySelector(".box")
+  //
+  // // DOM 元素节点对象 添加: appendChild
+  // box.appendChild(div)
+
+  // 添加一张图片
+  // let img = document.createElement("img")
+  // img.src = "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1048747646,994525702&fm=26&gp=0.jpg"
+  // let box = document.querySelector(".box")
+  // box.appendChild(img)
+
+  // 如果添加多个
+  // let box = document.querySelector(".box")
+  // let boxList = []
+  // let fragment = document.createDocumentFragment() // 以内存的形式写入节点
+  // for(let i = 0; i < 10000; i++){
+  //   let div = document.createElement("div")
+  //   boxList.push(div)
+  //   div.className = "small"
+  //   fragment.appendChild(div)
+  // }
+  // box.appendChild(fragment) // 节省了每次渲染消耗的时间
+
+  // 对所有的元素添加一个点击事件怎么操作
+  // boxList.forEach()
+  // document.createDocumentFragment() 生成一个文档片段 可以打包元素
+  // 文档片段也有 appendChild 方法
+
+  //  直接添加盒子和添加 fragment 有啥区别?
+  // DOM  部分 => 页面元素节点树等等
+  // DOM操作非常消耗时间!!! (涉及到渲染, 更新 ..)
+  // 内存 部分: 只是一些电脑内存的数据: 修改内存数据(快速)
+
+  // VUE REACT (抽象了DOM操作: 新建一个虚拟DOM => 用户涉及任何操作都是修改虚拟DOM)
+  // 修改完成 虚拟DOM 对比真实DOM 计算 两者的差异以及解决差异所需要的最小操作(diff算法)
+  // 用最小操作修改dom(dom修改量是最小的)
+
+  // 正确解法
+  let box = document.querySelector(".box")
+  let btn = document.querySelector(".btn")
+  let boxList = []
+  // 创建一个类名为className的盒子
+  function addBox(className, tagName = "div") {
+    let div = document.createElement(tagName)
+    div.className = className
+    return div
+  }
+  let fragment = document.createDocumentFragment()
+  for (let i = 0; i < 3; i++){
+    let div = addBox("small")
+    div.innerText = i
+    boxList.push(div)
+    div.onclick = function(){
+      console.log(this.innerHTML)
+    }
+    fragment.appendChild(div)
+  }
+  box.appendChild(fragment)
+
+  btn.onclick = function () {
+    let div = addBox("small")
+    div.innerText = "新的盒子"
+    boxList.push(div)
+    box.appendChild(div)
+  }
+
+  // 删除 removeChild 父元素删除子元素的操作
+
+  // 一个元素如何做到自己删除自己
+  // parentNode: 一个元素的父亲节点 父级: 父元素
+  // document.documentElement.parentNode === document // true
+  function remove(node){
+    node.parentNode.removeChild(node)
+  }
+  // 一个真实的DOM 一个获取的数组 保持同步
+
+  // 定位父级: 父相子绝 .offsetParent
+
+  // 删除相邻元素 => 找到相邻元素(previous/nextSibling nextElementSibling) => (通过父元素的方式)删除
+
+  // 属性 比如input img a 等等都是有属性的, 属性是怎么获取 怎么设置呢?
+
+
+
+
+
+</script>
+</body>
+</html>

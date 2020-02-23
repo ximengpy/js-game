@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style> 
+  ul,
+				ol {
+					list-style: none;
+				}
+
+				a {
+					text-decoration: none;
+				}
+
+				body,
+				p,
+				ul,
+				ol,
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6,
+				dl,
+				dd {
+					padding: 0;
+					margin: 0;
+				}
+
+				.clearfix:after {
+					content: "";
+					display: block;
+					clear: both;
+				}
+    .wrap{
+     width:1000px;
+     background-color:antiquewhite;
+     margin:auto;
+    }
+    .ascending,.descending{
+     display: inline-block;
+     width:100px;
+     height:30px;
+     margin:20px 50px  0;
+     cursor: pointer;
+    }
+    .list{
+     display: flex;
+     flex-wrap: wrap;
+     margin:50px  auto;
+     text-align:center;
+    }
+    .list >li{
+     width:250px;
+     height:250px;
+     padding-top:10px;
+     box-shadow: 0 0 1px darkkhaki;
+    }
+    .details{
+     margin-top:5px;
+    }
+    .prices{
+     color:brown;
+     margin-right:10px;
+    }
+    .sales{
+     color:darksalmon;
+     margin-left:5px;
+    }
+ </style>
+</head>
+<body>
+ <div class="wrap">
+  <span class = "ascending">升序</span>
+  <span class = "descending">降序</span>
+  <input type="radio" name = "rand" checked class = "price"> 价格
+  <input type="radio" name = "rand"  class = "sales"> 销量
+  <ul class="list">
+
+  </ul>
+
+ </div>
+ <script>
+
+ let item = [
+  {
+   img:"images/2.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:47657,
+   sale:35432
+  },
+  {
+   img:"images/3.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:6546,
+   sale:5646
+  },
+  {
+   img:"images/4.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:3543,
+   sale:23
+  },
+  {
+   img:"images/5.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:5667,
+   sale:3543
+  },
+  {
+   img:"images/6.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:78685,
+   sale:2324
+  },
+  {
+   img:"images/7.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:7654,
+   sale:24323
+  },
+  {
+   img:"images/8.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:4345,
+   sale:34
+  },
+  {
+   img:"images/8.webp",
+   detail:"Redmi K20 6GB+128G",
+   price:5353,
+   sale:34553
+  }
+ ]
+
+ let list = document.querySelector(".list")
+ let prices = document.querySelector(".price")
+ let sales = document.querySelector(".sales")
+ let ascending = document.querySelector(".ascending")
+ let descending = document.querySelector(".descending")
+ let temp1 = 1,temp2 = 0
+ function reader(item){
+  let total = ""
+  for(let i = 0 ;i<item.length;i++){
+     
+    total += `<li>
+    <img src = ${item[i].img}>
+    <p class = "details">${item[i].detail}</p>
+    <p>
+    <span class = "prices">价格:${item[i].price}元</span><span class = sales>销量:${item[i].sale}</span>
+    </p>
+    </li>`
+  }
+  list.innerHTML = total
+  list.style.width = 260*4+`px`
+  list.style.height = 265*(item.length/4)+`px`
+ }
+  packaging()
+  
+  function packaging(){
+   reader(item)
+   way()
+  
+   
+   
+   
+
+   
+  }
+  function way(){
+   
+   reader(item)
+  prices.onclick = function(){
+    temp1 = 1
+    rank(item ,temp1,temp2)
+  }
+  sales.onclick = function(){
+    temp1 = 0
+    rank(item ,temp1,temp2)
+  }
+  ascending.onclick = function(){
+   temp2 = 1
+   rank(item ,temp1,temp2)
+   ascending.style.background = "red"
+   descending.style.background = ""
+  }
+  descending.onclick = function(){
+   temp2 = 0
+   rank(item ,temp1,temp2)
+   ascending.style.background = ""
+   descending.style.background = "red"
+  }
+  }
+   function   rank(item ,temp1,temp2){
+   if(temp1 == 1 && temp2 == 1 ) {
+     sort1(item,"price")
+     reader(item)
+   }
+   if(temp1 == 1 && temp2 == 0 ) {
+     sort2(item,"price")
+     reader(item)
+   }
+   if(temp1 == 0 && temp2 == 1) {
+     sort1(item,"sale")
+     reader(item)
+   }
+   if(temp1 == 0 && temp2 == 0 ) {
+     sort2(item,"sale")
+     reader(item)
+   }
+
+  }
+  
+  
+  
+  function sort1(item,property){
+    item.sort((a, b) => (a[property] - b[property]))
+  }
+  function sort2(item,property){
+    item.sort((a, b) => (b[property] - a[property]))
+  }
+
+ </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 100px;
+      height: 100px;
+      background-color:red;
+      border-radius: 50%;
+      line-height: 100px;
+      text-align: center;
+      font-size: 30px;
+    }
+    body{
+      width: 600px;
+      height: 600px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <!-- <div class="close">关闭定时器</div> -->
+  <script>
+    /*
+      定时器:setTimeout
+        规定了某一个时间之后进行某个操作(一次)
+          回调函数
+          延时长度: 1000ms = 1s
+      返回值: 从1开始的变大的整数: 每次设置定时器都会是唯一的值
+        
+      定时器的解除: clearTimeout
+        在定时器触发之前通过clearTimeout 解除定时器, 定时器就不会执行了
+
+        接受一个参数: 定时器的序号
+
+    */
+
+    // let box = document.querySelector(".box")
+    // // 自动
+
+    // // setTimeout(function(){
+    // //   div.style.display = "none"
+    // // }, 1000)
+
+    // let timer1 = 0
+    // // 手动 点击div
+    // box.onclick = function(){
+    //   // 延时1s之后消失
+    //   timer1 = setTimeout(function(){
+    //     box.style.display = "none"
+    //   }, 1000)
+    //   setTimeout(function(){
+    //     box.style.display = "block"
+    //   }, 2000)
+    // }
+
+    // let close = document.querySelector(".close")
+    // close.onclick = function(){
+    //   clearTimeout(timer1)
+    // }
+
+
+    /*
+      每隔多少时间执行一次: 无数次
+        setInterval 两个参数 
+          时间到了之后执行的代码
+          每隔多少时间的间隔:  数值
+      
+      帮助我们进行动画的渲染: 
+
+      浏览刷新频率: 
+        1秒钟刷新60次 复合标准
+
+        每隔多少毫秒 动画一下呢?
+        1000/60
+
+      setInterval/setTimeout 都是回调函数, 是函数表达式不是函数执行
+
+    */ 
+
+    let box = document.querySelector(".box")
+
+    // 拿一个值存储位置值
+    let x = 0
+    let y = 0
+
+    let fn = function(){
+      // box.style.transform += "translate(1px, 0)"
+      // 修改x的值
+      x++
+      y+=2
+      // // 渲染
+      box.style.transform = `translate(${x}px, ${y}px)`
+
+      if(y >= 500){
+        clearInterval(timer)
+      }
+      console.log("moving")
+    }
+
+    let timer = setInterval(fn, 1000/60)
+
+    
+
+
+    /*
+      用clearInterval 结束我们的定时器
+      接受一个参数 定时器的序号
+
+      在每一次运动之后进行判断:
+
+      做倒计时: 
+        10 - 0
+
+
+    */
+    // let num = 5
+    // box.innerHTML = num
+
+    // let timer = setInterval(function(){
+    //   num--
+
+    //   box.innerHTML = num
+
+    //   if(num === 0){
+    //     box.innerHTML = "BOOM!!"
+    //     clearInterval(timer)
+    //   }
+    // }, 1000)
+
+
+    // requestAnimationFrame 请求 动画 关键帧 
+
+    // 简单的理解成为定时器: 间隔时间是恒定: 
+
+    // 间隔时间不是具体的时间, 他是和页面刷新频率一致的间隔时间
+
+    // 依赖机器的刷新频率和机器的刷新频率一致
+
+
+    // setInterval 定时间隔值特别小: 1s 代码执行了1000次
+
+    // 这1000次都渲染到页面中了吗?
+
+    // 浏览器刷新频率 1s 60次 
+
+    // requestAnimationFrame进行操作 等待页面渲染完成, 然后我提交下一次的数据
+
+
+    // setInterval(function(){
+    //   // 对页面修改渲染1次
+    //   box.innerHTML = "你好"
+    // }, 1)
+
+
+    // 往上兼容性写法: 接受一个参数: 回调函数, 表示在下一次渲染的时候提交数据.
+    // 他只等待下一次, 不会永远等待, 我们需要在运动函数中手动写上递归
+
+    // function foo(){
+    //   console.log(1)
+    //   // requestAnimationFrame写到foo中
+    //   requestAnimationFrame(foo)
+    // }
+
+    // foo()
+    
+    // 
+    // let arr = []
+    // let {forEach} = arr
+    
+    // let fn = arr.forEach;
+    // // forEach.call("asd", item=>{console.log(item)})
+    // [].forEach.call("asd", item=>{console.log(item)})
+
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>

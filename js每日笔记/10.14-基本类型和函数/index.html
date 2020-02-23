@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      number: 数值
+      string: 字符串 引号括起来
+        ''
+        ""
+        `` : 模板字符: 可以换行, 字符串拼接${变量}
+      boolean: 布尔类型 状态(开关)
+        true / false
+      
+      undefined: 未定义
+        1. 声明变量未赋值, 悄悄给他赋值一个undefined
+        2. JS代码语句单据执行完成, 返回undefined或者是其他内容, 用来给JS内部判断语句是否执行完成
+          执行很多很多代码,
+        3. 访问不存在属性为undefined
+      
+      object: 对象(存储信息的工具)
+        创建方式: {}
+        有多条属性的整体.
+        "万物皆对象"
+        属性 => 信息 
+          信息的类型: 信息的值
+          属性的名称: 属性的值
+
+        增删改查: 数据库
+
+        有属性属性初始化,直接在大括号里面书写,以逗号分隔(每一个属性值后面加一个逗号)
+          属性值可以写任意类型的值
+          属性名只能是字符串
+
+        查询: 不是查询这个对象, 是访问这个对象的属性
+          1. 对象
+          2. 属性名
+
+          1. 通过.方式访问
+            obj.name
+          2. 通过中括号访问, 中括号添加这个属性名的字符串
+            obj["name"]
+            let key = "name"
+            加上中间的过程, 有点多此一举
+            obj[key]
+        增加: 后期增加
+          比查询多了一步赋值过程
+          1. 可以通过.方式修改 用 = 
+          2. [字符串,或者表示字符串的变量]
+        修改属性: 
+          和增加一模一样: 
+        删除: 减少一条 属性
+          delete 跟上空格 跟上删除属性的
+
+        属性名的传变量:
+          
+        
+      能力: 
+        完全控制自己对象的能力:
+          小球: 位置 速度
+          var ball = {
+            speed: {
+              vx: 1,
+              vy: 1,
+            },
+            position: {
+              x: 100,
+              y: 100,
+            },
+          }
+      null 类型: 空指针对象: 里面什么东西都没有, 不能添加任何类容
+        由上层语言定义出的一个类型
+        值就是null
+        不能添加任何属性, 独立的类型
+        虽然 typeof null 是 "object"
+        使用场景: 声明一个null的占位赋值, 用来保证类型的统一
+      symbol 
+    规矩: 
+      请避免一个变量出现多种状态.
+    */
+    // 创建了一个对象
+    let obj = {
+      name: "银时",
+      age: 19,
+      sex: true,
+    };
+    // 
+    // 报名操作
+    // 添加属性的操作
+    obj.name= "17期"
+
+    obj["friend1"] = "万章"
+
+    let key = "friend2"
+
+    obj[key] = "阿飞"
+    // 修改一下年龄
+    obj["age"] = 21
+    // 删除
+    delete obj["friend1"]
+
+    let newObj = null; 
+
+    console.log(typeof newObj) // object
+
+    newObj = {}
+
+    console.log(typeof newObj) // object
+
+  </script>
+</body>
+</html>

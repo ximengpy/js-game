@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let pocket = 150
+
+    // 买衣服的操作
+    function buy(money) {
+      // 衣服的价格 砍价完之后 150块钱
+
+      // 假如money >= 150 console.log("购买成功")
+      // 假如money < 150 console.log("购买失败")
+
+      if (money >= 100) {
+        console.log("购买成功")
+      } else {
+        console.log("购买失败")
+      }
+    }
+
+    buy(pocket)
+
+    /*
+
+      流程控制语句: 
+        代码执行会有的执行有的不执行, 执行很多次, 进行(判断)控制
+
+      有一个分支: 让代码 选择性的执行
+        if 假如 提出一个假设(条件)
+          通过表达式进行计算
+          简单的判断表达式
+            >   符号左右两边进行判断 true/false
+            >=  大于或者等于
+            <   小于
+            <=  小于等于
+            ==  等于
+            !== 不等于
+          布尔类型: true/false
+        
+        if (条件判断) {
+          // 你想要的执行的代码
+        } else {
+
+        }
+
+        else 关键词: 否者
+          和if成对出现 写在if代码块之后
+
+
+    */
+
+
+    // if (3 < 2) {
+    //   console.log(1)
+    //   console.log(10086)
+    //   alert("hjell")
+    // }
+
+
+
+    /*
+      问题二: 
+        分数大于等于 80 分的   奖励一个么么哒
+        分数大于等于60小于80的 奖励试卷一份
+        分数小于等于60的,      奖励18期新班(留级)一份
+      
+      写一个函数, 返回奖励
+        checkNumber
+
+      else if 的组合写法
+    */
+    // function checkNumber(pointer){
+    //   if (pointer >= 80) {
+    //     return "么么哒"
+    //   } else if (pointer >= 60) {
+    //     return "试卷一份"
+    //   } else if (pointer >= 30) {
+    //     return "课后补习"
+    //   } else {
+    //     return "下期见"
+    //   }
+    // }
+
+
+    // if (检查网络()) {
+    //   if (检查请求格式()) {
+    //     发送请求()
+    //   } else {
+    //     修改请求格式()
+    //   }
+    // } else {
+    //   if (网管在不在()) {
+    //     找网管()
+    //   } else {
+    //     GG()
+    //   }
+    // }
+    /*
+      开发的思想: 
+        任何复杂的问题 => 多个简单的问题
+
+        简单的问题 => 更简单的问题
+
+        更简单的问题=> 解决了
+      函数的思想. 
+
+
+      要把大象装冰箱, 一共分几步?
+        1. 冰箱门打开
+          1.1 找到把手
+          1.2 伸出手用力拉
+            1.2.3 调用肌肉
+            
+        2. 把大象放进行
+          2.1 头放进
+            ... 
+          2.2 身子
+          2.3 脚
+        3. 冰箱门关上
+
+      
+
+
+      switch case 三目运算
+
+
+
+    */
+
+  </script>
+</body>
+</html>

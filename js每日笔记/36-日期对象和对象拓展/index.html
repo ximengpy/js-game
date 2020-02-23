@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="btn">按钮</div>
+  <script>
+    /*
+      日期对象
+      浏览器内置了时钟, 系统时间是一样 
+      通过浏览器API 获取系统时间, 定时功能, 倒计时功能
+
+      Date 函数 帮助我们 对时间进行操作
+        首字母大写的: 构造函数
+      
+      直接在window下面的一个属性 函数 获取时间
+
+      Date() 直接执行: 返回时间有关的字符串
+      星期几: 取前三个字母作为周几显示
+        Monday
+        Tuesday
+        Wednesday
+        Thursday
+        Friday
+        Saturday
+        Sunday
+      十二个月份: 大家自己去百度
+        一月January —— Jan. 31
+        二月February —— Feb. 28/29
+        三月March —— Mar. 31
+        四月April —— Apr. 30
+        五月May —— May. 31
+        六月June —— Jun. 30
+        七月July  —— Jul. 31
+        八月August—— Aug. 31
+        九月September —— Sept. 30
+        十月October —— Oct. 31
+        十一月November —— Nov. 30
+        十二月December—— Dec. 31
+      月中的号数
+      年
+      时:分(60进制):秒(60进制) (24进制)
+      格林尼治平太阳时间: 世界通用的时间划分方法.
+      中国所在的时区: 东8区
+      问题就来了: 返回的字符串: 对字符串进行操作获取时间
+      正常执行就是返回当前的时间
+      日期对象的API: 提供给我们的一个方法: 
+        通过日期函数 生成一个可以控制的日期对象, 这个: 日期对象
+      new 新的 操作符 对够着函数处理
+        返回一个全新的内容
+    */
+    // typeof new Date() // "object"
+    // let dateObj = new Date()
+    // console.dir(dateObj) // console.log() 非常相似: 但是可以拆开对象
+    // 参数: 数字: 
+    // 0 表示的是系统最开始的初始时间
+    // 1970年1月1日 + 时区
+    // 1.576e13 表示从初始时间到现在经过的毫秒数
+    // valueOf() 返回数值 时间对象到初始时间之间过了多少毫秒
+    // 因为他是绝对按照系统的时间来运算的: 由系统底层控制器控制, 不会被浏览器阻塞
+    // let btn = document.querySelector(".btn")
+    // btn.onclick = () => {console.log("click")}
+    // let time1 = new Date()
+    // while (new Date() - time1 < 3000) { // 不停的跑循环, 干等了三秒钟
+    // }
+    // console.log(new Date() - time1)
+
+    // setTimeout(()=>{
+    //   for(let i = 0;i < 50000000;i++){}
+    //   let time2 = new Date()
+    //   console.log(time2 - time1)
+    // }, 3000) // 延迟的时间是可能会被代码阻塞
+    let date = new Date()
+    // let dateNum = date.valueOf()
+
+    // dateNum += 1000*60*60*24*2
+
+    // let sunday = new Date(dateNum)
+    
+
+    // console.log(date.getDate()) // 返回的是当前的一个月中的第几天(从1开始的)
+
+    // console.log(date.getDay())  // 返回的一周中的第几天(从1开始的)
+    // 周天是0 周一是1 ... 周六是6 
+
+
+    // console.log(date.getMonth()) // 返回一年中的第几个月: 0打头
+    // 一月是0 二月是1 ... 十一月10 十二月11 
+
+    console.log(date.getHours()) // 从0开始的 24进制的时间
+    console.log(date.getMinutes()) // 从0开始 60进制 分
+    console.log(date.getSeconds()) //  从0开始 60进制 秒
+
+    console.log(date.getFullYear()) // 获取年
+    // UTC ... 
+    
+    // set ... 你去将所有的get换成set 再传入值就是设置时间
+
+    // 布置一个作业: 
+
+    // 以前写过时钟没有 ??? => 2019年11月29日21:38:22 这个时间要不停更新
+    // 距离过年还有 xx天:xx时:xx分:xx秒 (春节1.24)
+
+
+  </script>
+</body>
+</html>

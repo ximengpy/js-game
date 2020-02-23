@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Q6.5 投出一个色子，6的概率为50%，1的概率3%，怎么实现？
+    // 下一堂课 1,2,3,4,5,6
+    function roll(){
+      let randomNumber = Math.random() // 0-1
+      if(randomNumber < 3/100){ // 1 3%
+        return 1
+      }
+      if(randomNumber > 3/6){ // 6 50%
+        return 6
+      }
+      // 3% - 50% 4等分 
+      if(randomNumber > 3/100 && randomNumber < 3/100 + 0.47/4){
+        return 2
+      }
+      if(randomNumber > 3/100 + 0.47/4 && randomNumber < 3/100 + 0.47 * 2/4){
+        return 3
+      }
+      if(randomNumber > 3/100 + 0.47 * 2/4 && randomNumber < 3/100 + 0.47 * 3/4){
+        return 4
+      }
+      if(randomNumber > 3/100 + 0.47* 3/4 && randomNumber < 3/100 + 0.47 * 4/4){
+        return 5
+      }
+
+    }
+    // 都出现了0次
+    let result = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+    }
+    let n = 1000000
+    for(let i = 0;i < n;i++){
+      result[roll()]++
+    }
+
+
+
+
+    // Q7 300px * 300px 矩形区域内, 
+    // 每隔 0.1s 发射一个小球(宽高2px 红色 圆形) 击中矩形区域内的任意位置.. 
+    // 中间设置一个靶心... 15*15的矩形区域.. 击中靶心.. 弹个窗什么的.
+
+    // Q8 做一个弹球屏保 => 多个小球怎么办? => 点击盒子, 随机生成一个小球怎么办 
+  </script>
+</body>
+</html>

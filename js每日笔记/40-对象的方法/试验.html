@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ <input type="button" class = "btn" value="按钮">
+ <p></p>
+ <script>
+  let btn = document.querySelector(".btn")
+  let p = document.querySelector("p")
+  btn.onclick = (function(){
+   let timer =0
+   return function(){
+          clearTimeout(timer)
+          timer = setTimeout(()=> {
+              console.log("发起请求")
+          }, 1000)
+   }
+  })()
+ // btn.oninput = (function () {
+ //      let timer = 0
+ //      return function (){
+ //          clearTimeout(timer)
+ //          timer = setTimeout(()=> {
+ //              p.innerHTML = "查询结果: "+event.target.value
+ //          }, 700) // 问你的产品经理或者是问后台
+ //      }
+ //  })()
+ </script>
+</body>
+</html>

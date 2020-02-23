@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  // fibonacci
+  // 0 1 1 2 3 5 8 13 21 ....
+  // function fibonacci1(n){
+  //     if(n === 1 || n === 2) return 1
+  //     return fibonacci1(n-1) + fibonacci1(n-2) // 不是尾递归
+  // }
+
+  // return f() 需要用到参数记录值,用参数来迭代
+  // fibonacci: 求第n项, first表示前一项, second表示当前项
+  // n => 1 second从第一项走向了第n项
+  // 尾递归不需要单独使用变量储存已经计算过的结果
+  // function fibonacci(n, first = 0, second = 1) {
+  //     if(n < 1) return NaN // 表示一个不存在的数
+  //     if(n === 1) {
+  //         return second
+  //     }
+  //     return fibonacci(n-1, second, first + second) // 函数执行结果
+  // }
+
+  // for (let i = 0; i < 10; i++) {
+  //     console.log(fibonacci(i))
+  // }
+  // console.time("fibonacci")
+  // fibonacci(1000)
+  // console.timeEnd("fibonacci")
+
+  // 递归上楼梯, 每次上 2阶 3阶 , 走到n层, 可以的走法有多少种
+  // function goUpStairs1(n){
+  //     if(n === 1) return 0 // 我们能直接走到1楼的可能性是为0的
+  //     if(n === 2 || n === 3) return 1
+  //     return goUpStairs1(n - 2) + goUpStairs1(n - 3)
+  // }
+  //
+  // console.log(goUpStairs1(30));
+
+  // 尾递归的版本
+  // 每一次上楼梯, 是
+  // 1 2 3 4 5 6 7
+  // 0 1 1 1 2 2 3
+
+  // n 表示第n层台阶
+  // step4 表示第(4)层台阶的种数
+
+  // n减小为n-1的时候
+  // step4 表示第(5)层台阶的种数
+  // ...
+  // n减小为4的时候(一共减小了n-4次)
+  // step4 表示第(4 + (n-4))层台阶的种数
+  function goUpStairs(n, step1 = 0, step2 = 1, step3 = 1, step4 = 1){
+      if(n === 4 || n === 3 || n === 2) {
+          return step4
+      }
+      return goUpStairs(n-1, step2, step3, step4, step2 + step3)
+  }
+
+  console.log(goUpStairs(30));
+
+  // 尾递归, 适用于 第n项和n-1,n-2..有限项有关, 就可以递归出来
+
+  // f(1) = 1 f(2) = 1  f(n) = 2*f(n-1) + f(n-2)^2
+  // f(3) = 3 f(4) = 11
+  // 面试...
+  // function f(n, first = 1, second = 1) {
+  //     if(n < 1) return NaN // 表示一个不存在的数
+  //     if(n === 1) return 1
+  //     if(n === 2) {
+  //         return second
+  //     }
+  //     return f(n-1, second, 2*first + second*second) // 函数执行结果
+  // }
+  // console.log(f(4));
+
+
+</script>
+</body>
+</html>

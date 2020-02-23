@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <span class="btn">按钮</span>
+  <p class="content">这是之前的内容</p>
+
+  <!-- 
+    往元素内添加内容
+    
+      需求: 
+      1. 点击 btn按钮
+      2. 执行添加内容(到content中)操作
+
+    
+      元素.innerHTML: 是元素的标签内部
+        添加的时候会解析是否是标签
+      元素.innerText: 是元素的标签内部
+        存文本添加, 不会解析
+
+
+   -->
+
+  <script>
+    // 获取btn按钮
+    let btn = document.querySelector(".btn")
+    // 获取content
+    let content = document.querySelector(".content")
+    btn.onclick = function () {
+      let sth = "<img src='http://img1.imgtn.bdimg.com/it/u=1655283553,215735562&fm=26&gp=0.jpg'>"
+      content.innerHTML = content.innerHTML + sth
+    }
+
+    // 基本类型
+  </script>
+</body>
+</html>

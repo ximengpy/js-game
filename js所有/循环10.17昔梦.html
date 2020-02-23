@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul,ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body,p,ul,ol,h1,h2,h3,h4,h5,h6,dl, dd {
+            padding: 0;
+            margin: 0;
+        }
+
+        .factorial {
+            margin: 50px auto;
+            padding: 20px;
+            background-color: pink;
+        }
+
+        input,
+        button {
+            display: inline-block;
+
+        }
+
+        span {
+            display: inline-block;
+            overflow: hidden;
+            height: 40px;
+            margin: 10px;
+            line-height: 40px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="factorial">
+        <!-- 第一段代码求阶乘 -->
+        <p>请输入n阶乘</p>
+        <input type="text" value="">
+        <button>生成</button>
+        <ul></ul>
+        <!-- 第二段代码打印99乘法表 -->
+        <p>请输入n阶乘法表</p>
+        <input type="text" value="">
+        <button>生成</button>
+        <ul></ul>
+        <!-- 计算器 -->
+        
+
+    </div>
+    <script>
+        let inputtag = document.getElementsByTagName("input"),
+            btn = document.getElementsByTagName("button")
+            ul = document.getElementsByTagName("ul")
+            grid = document.getElementsByTagName("i")
+
+        function fac(num) {
+            sum = 1
+            for (let i = 1; i <= num; i++) {
+                sum *= i
+            }
+            return sum
+        }
+        btn[0].onclick = function () {
+            if (inputtag[0].value > 0) {
+                let result = fac(inputtag[0].value)
+                ul[0].innerHTML = `<li>${inputtag[0].value}${"的阶乘是:"}${result}</li>`
+            }
+            else alert("请输入正确的数")
+        }//求阶乘
+
+
+        function fac1(sum) {
+            let j,
+                temp = ""
+            for (i = 1; i <= sum; i++) {
+                for (j = 1; j <= i; j++) {
+                    temp += `<span>${i} × ${j} = ${i * j}</span>`
+                    ul[1].innerHTML = temp;
+                }
+                temp += `<br>`
+            }
+
+        }
+        btn[1].onclick = function () {
+            if (inputtag[1].value > 0)
+                fac1(inputtag[1].value)
+            else alert("请输入正确的数")
+        }//乘法表
+
+
+         
+
+    </script>
+</body>
+
+</html>

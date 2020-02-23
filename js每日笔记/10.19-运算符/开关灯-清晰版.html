@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      h1{
+        text-align: center;
+      }
+      .game-area{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: 540px;
+        height: 540px;
+        border: 1px black solid;
+        background: url("http://img5.imgtn.bdimg.com/it/u=2144256817,3979517228&fm=26&gp=0.jpg") center/cover;
+      }
+      .game-area>div{
+        width: 60px;
+        height: 60px;
+        box-shadow: 0 0 5px #999 inset;
+        text-align: center;
+        line-height: 60px;
+      }
+    </style>
+</head>
+<body>
+  <h1>开关灯小游戏</h1>
+  <div class="game-area"></div>
+
+  <script>
+    function createMap(n){
+      let str = ""
+      for(let i = 0;i < n*n;i++){
+        let div = `<div></div>`
+        str += div
+      }
+      gameArea.innerHTML = str
+      // 动态设置gameArea的大小
+      gameArea.style.width = n * 60 + "px"
+      gameArea.style.height = n * 60 + "px"
+    }
+    
+    function turn(index){
+      // console.log(boxList[index].style.background)
+      // 我们怎么知道这个盒子的颜色? 
+      if(boxList[index].style.background == "rgb(255, 0, 0)"){
+        boxList[index].style.background = "transparent"
+      }else{
+        boxList[index].style.background = "#f00"
+      }
+    }
+
+    // 对点击的那个位置进行修改
+    function change(index){
+      // 修改自身, 对自身的状态进行判断
+      turn(index)
+      // 修改周围, 周围的情况进行判断
+      // 序号如果大于0才能切换
+      if(index-n >= 0){
+        turn(index-n)
+      }
+      // 对左边进行维护
+      if(index-1 >= 0){
+        // 当前点击的不是最左边那一排
+        if(index % n != 0){
+          turn(index-1)
+        }
+      }
+      // 排除下面添加不存在的情况
+      if(index + n < n*n){
+        turn(index+n)
+      }
+      // 排除右边和右下角的情况
+      if( index+1 < n*n ){
+        if( index % n != n - 1){
+          turn(index+1)
+        }
+      }
+    }
+    
+    // 游戏胜负进行判断
+    function check(){
+      // 判断每一个盒子是否都是红色
+      for(let i = 0; i < boxList.length; i++){
+        if(boxList[i].style.background != "transparent"){
+          return false
+        }
+      }
+      return true
+    }
+
+    function initGame(mm){
+      // 生成棋盘
+      n = mm
+      createMap(n)
+      boxList = document.querySelectorAll(".game-area>div")
+      // 给棋盘绑定点击事件
+      for(let i = 0; i < boxList.length; i++){
+        // 此时boxList[i]就是每一个元素
+        // 初始化 每一个小盒子的颜色
+        boxList[i].style.background = "#f00"
+        // 绑定点击事件
+        boxList[i].onclick = function () {
+          // 修改编号为i的这个盒子,相关的内容
+          change(i)
+          // 游戏胜负进行判断
+          if(check()){
+            // document.querySelector("h1").innerHTML = "666! 恭喜你! 游戏通关"
+            initGame(++n)
+            document.querySelector(".game-area").style.background = "url('http://img2.imgtn.bdimg.com/it/u=4099966500,3197472150&fm=26&gp=0.jpg') center/cover"
+          }
+        }
+      }
+    }
+    let n;
+    let gameArea = document.querySelector(".game-area")
+    let boxList = null
+    // 初始化游戏, 初始化到第几关
+    initGame(3)
+
+
+
+  </script>
+</body>
+</html>

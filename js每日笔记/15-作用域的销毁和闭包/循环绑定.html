@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul class="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+
+  <script>
+    let liList = document.querySelectorAll(".list>li")
+
+    // for(var i = 0;i < liList.length;i++){
+    //   liList[i].onclick = function(){
+    //     console.log(i)
+    //   }
+    // }
+    
+    for(var i = 0;i < liList.length;i++){
+        // (function foo(i) {
+        // return liList[i].onclick = function () {
+        //   console.log(i)
+        // }
+        // })(i)
+      
+     
+        
+      }
+     
+    
+
+    /*
+      有没有办法解决这个问题?
+        JS 功底 => 闭包来解决这个问题
+
+        点击事件赋值给一个function
+
+        那这个function要是能记录状态该多好. 
+
+        作业1: 
+          tips: 1. 闭包 2.立执行 3.传参
+
+        多种写法
+          3 种写法 
+
+        作业2: 
+          请总结一份闭包的解释和垃圾回收机制的解释.
+          牵扯到作用域
+    */
+
+
+
+
+    // var i = 0
+    // function handleClick(){
+    //   console.log(i)
+    // }
+
+    // liList[0].onclick = handleClick
+    
+    // liList[1].onclick = handleClick
+    
+    // liList[2].onclick = handleClick
+    
+    // i = 3
+
+    // i 的最终值是多少? 3
+
+
+    /*
+      循环绑定的作用域的问题
+
+    */
+
+  </script>
+</body>
+</html>

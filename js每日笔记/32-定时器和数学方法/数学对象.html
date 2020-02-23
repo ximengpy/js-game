@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    /*
+      数学对象
+      Math 数学对象 是window对象下面自带的对象
+        有很多方法: 帮助我们解决数学问题
+
+      几个常数: 用到圆周率π
+        3.1415926535897932384626433832795028841971639339
+      Math.PI
+        数学对象下面的PI属性 记录了圆周率
+
+
+      Math.max(若干值) Math.min(若干值)
+  
+    */
+    // 传入半径 返回周长
+    // function getZhouchang(r){
+    //   return Math.PI*2*r
+    // }
+    // function getMianji(r){
+    //   return r*r*Math.PI
+    // }
+
+    // 求绝对值: Math.abs()
+    // 自己封装
+    // function abs(n){
+    //   return n = n<0?-n:n
+    // }
+
+
+    // 假设 p1 = {x: 0, y: 20} p2 = {x: 3, y: 6}
+
+    // 怎么去获取p1 p2 x轴的距离
+
+    // function abs(p1, p2){
+    //   let temp = p1.x - p2.x
+    //   // temp = temp<0?-temp:temp
+    //   return Math.abs(temp)
+    // }
+
+    // 取整数: 
+    /*
+      Math.floor(x) 不超过x的最大整数 正负数都是同理
+        floor: 地板: 
+      Math.ceil(x) 向上取正 : 不小于x的最小整数
+        ceil 天花板 
+      Math.round(x) 舍和入是舍弃(正的小数)
+        对于正数四舍五入
+        对于负数情况相反
+        特殊: Math.round(-3.5) == -3
+      数值取整的问题.
+    */
+    // Math.random() 返回 [0 - 1)之间的任意一个数 随机数
+
+    // 借助Math.random()做任意你想要的随机
+
+    // Q1 生成一个 0 - 100 的任意一个数?
+
+    // Math.random()*100 将这个任意区间扩大为原来的100倍
+
+    // Q2 生成一个 3 - 4 的任意一个数?
+
+    // Math.random() + 3
+
+    // Q3 生成一个 22 - 51 之间的任意一个数? 
+
+    // 生成的区间有多大?? ( 22 - 51 )
+
+    // Math.random()*(51 - 22)  0 ~ 29
+
+    // Math.random()*(51 - 22) + 22  22 ~ 51
+
+    // Q4 写一个函数, 传入 左边界m 右边界n (m < n) 请返回 m ~ n 的随机数
+
+      // function random(m, n){
+      //   return (n - m)*Math.random() + m // 返回从m到n
+      // }
+
+    // Q5 写出一个函数 传入 两个值 m , n (n,m 大小未知), 课后作业
+    // 返回一个m和n之间的整数 
+    function random(n,m){
+      let temp =Math.abs(n-m)
+      let min = Math.min(n,m)
+
+}
+
+    // Q6 反向利用随机数做 概率  做一个函数: 开奖函数 返回
+    // 随机数如何转换到概率中去
+    // 特等奖: 银时老师女装照片  1%
+    // 一等奖: 银时老师么么哒    3%
+    // 二等奖: meco老师照片     6%
+    // 三等奖: 作业一份         90%
+
+    //Q6.5 投出一个色子，6的概率为50%，1的概率3%，怎么实现？
+
+    // Q7 300px * 300px 矩形区域内, 
+    // 每隔 0.1s 发射一个小球(宽高2px 红色 圆形) 击中矩形区域内的任意位置.. 
+    // 中间设置一个靶心... 15*15的矩形区域.. 击中靶心.. 弹个窗什么的.
+
+    // Q8 做一个弹球屏保 => 多个小球怎么办? => 点击盒子, 随机生成一个小球怎么办 
+
+
+  </script>
+</body>
+</html>

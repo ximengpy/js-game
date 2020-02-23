@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  /**
+   * 面向对象:
+   *    实例: 对象,通过构造函数生成的对象(任何对象)
+   *    构造函数: 特殊的函数: 通过new方式执行 返回 构造函数创建的内容
+   *      this
+   *    原型: 对象的特征的继承(基因) __proto__
+   *
+   *    new: 操作符 对构造函数特殊()的执行
+   *      1. 创建对象的时候 {} 但是对这个对象修改原型
+   *      2. 以这个实例对象为主体(普通)执行构造函数 .apply
+   *      3. 返回
+   *
+   *    任何对象他都有一个 不可枚举属性: __proto__
+   *    一般是不能直接访问的: 展示他的性质
+   *
+   *    对象访问属性的流程:
+   *      直接在对象上找属性: 找到 / 找不到去原型上面找
+   *      原型上也重复这个流程 递归思想
+   *      最终都找不到 => undefined
+   *
+   *
+   *    // 那么这个基因这么好用 这个基因又是从哪来的呢? 在构造函数实例对象的时候, 是从哪搞来的??
+   *
+   *    构造函数的this指向实例:
+   *
+   *    每一个构造函数都将自己的基因传递给了自己的实例
+   *
+   *    构造函数Person的基因在哪里:
+   *
+   *
+   *    构造函数身上的两个原型属性:
+   *      prototype: 原型: 只有函数才能有的原型
+   *        属性有哪些:
+   *          constructor: 函数原型的构造者是谁?
+   *
+   *      __proto__: 隐式原型: 构造函数访问属性的访问方向
+   *
+   *    构造函数的prototype属性传递给了实例的 __proto__
+   *
+   *    let obj = new Foo()
+   *
+   *    obj.__proto__ === Foo.prototype // true
+   *
+   *    // 构造函数的原型的创建者 就是函数本身 => 设计理由是什么?
+   *
+   *    任何对象的__proto__就是这个对象的构造函数的原型
+   *        谁可以直接访问得到?
+   *    Person.prototype.constructor === Person // true
+   *
+   *    任何对象访问constructor属性都能访问得到自己的构造函数
+   *
+   *    obj.constructor 指的就是实例对象的构造函数
+   */
+
+  // function Person(){
+  //   //
+  //   this.props = "person"
+  // }
+  //
+  // Person.prototype.abc = "abc"
+
+
+
+
+  // let obj1 = new Person()
+  // let obj2 = new Person()
+  //
+  // console.log(obj1)
+
+
+  // myNew 方法
+  // myNew不完整的myNew 因为少了继承的关系
+  // 研究的时候是可以 __proto__去访问对象继承的原型的
+  // 但是实际开发是不能用 __proto__: 用别的方法...
+  // Object.create 创建一个想要的原型的对象
+  // function myNew(Cf, ...rest){
+  //   let o = Object.create(Cf.prototype)
+  //   // let o = new Object() // 母亲不是Cf而是Object
+  //   // 修改o的原型
+  //   // 在修改之前 o.__proto__指向Object.prototype
+  //   // 修改之后 o.__proto__ 指向 当前构造 函数的原型
+  //   // o.__proto__ = Cf.prototype
+  //   // Object.create
+  //   Cf.apply(o, rest)
+  //   return o
+  // }
+  //
+  // let obj1 = new Person(1, 2)
+  // // console.log(obj1.constructor)
+  // let obj2 = myNew(Person, 1, 2)
+  // Object.prototype.abc = 456
+  // console.log(obj1, obj2)
+
+
+  // Object.create 以传入的参数(只能是对象或者null)为原型创建一个对象
+  // 如果传入null 创建一个没有原型的对象
+
+
+  // 原型链
+  // 访问属性的时候 对象上找属性 对象的__proto__找属性 对象的__proto__.__proto__上寻找....找不到为止
+  // 这样的寻找方向叫原型链
+
+  // 如果你直接 修改原型: Foo.prototype = 这种写法, 请将constructor指回原来我的构造函数
+
+  // 在一般情况下, 一个对象就是Object创建出来的
+
+  // 在一般情况下, 一个函数就是Function创建出来的
+
+  function Foo(){
+    this.a = "这是构造函数的this"
+  }
+  // 在这之前的 Foo.prototype 和在这之后的Foo.prototype是同一个东西吗?
+  // console.log(Foo.prototype)
+  // 方法一: 需要修改回来constructor指向
+  // Foo.prototype = { // 他是覆盖关系, 原型已经被修改了, 和之前的原型不是同一个东西
+  //   a : "这是构造函数的原型prototype的属性",
+  //   constructor: Foo
+  // }
+  // 方法二: 直接添加属性
+  // Foo.prototype.a = "这是构造函数的原型prototype的属性"
+  // 方法三 Object.assign 合并对象: 将我们的新属性添加到原型中
+  // Object.assign(Foo.prototype, {
+  //   a : "这是构造函数的原型prototype的属性"
+  // })
+  // console.log(Foo.prototype)
+  let o = new Foo()
+
+  // o的属性来自: 构造函数的this
+
+  // o.__proto__属性来自哪? 构造函数的prototype =>
+  //      这个prototype又是从哪来的? 这个问题等价于 构造函数的prototype从哪来?
+
+
+  // 提示: 任何对象的__proto__就是这个对象的构造函数的原型
+  // o.__proto__.__proto__是谁? 是不是 o.__proto__的构造函数(Object)的原型 => Object.prototype
+
+
+  // 对象访问属性: 访问构造函数的this => 访问 构造函数的原型 => Object的原型
+
+
+  // Object.prototype 是对象, 这个对象隐式原型没有的null 走原型链的时候 走到头 返回一个 null
+  // 原型链查询结束的位置: null
+
+  // Object.prototype 是对象,这个对象是从哪里来的? 上层语言规定的
+
+  // 函数 是从哪里来的? 函数在讨论出生的时候也是一个对象
+  // 函数都是由Function生成出来的 Function 称母函数
+
+  // 提示: 任何对象的__proto__就是这个对象的构造函数的原型
+  // Function.__proto__.constructor === Function // Function.__proto__是Function自己创建的
+
+  // 换句话说 Function.__proto__ === Function.prototype 都为一个匿名函数
+  // 探寻不下去了
+  // 函数也是上层语言创建的
+
+  // Function.prototype.__proto__ === Object.prototype // true
+  // Function.prototype 是由Object构造函数创建的
+
+  // JS 在这里是特例
+  // Function.prototype.__proto__ ===Object.prototype // true
+  // Function.prototype.constructor === Object // false Function
+
+  // 讲继承 构造函数搭建等等知识
+
+</script>
+</body>
+</html>

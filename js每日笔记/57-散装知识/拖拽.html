@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{margin: 0;}
+    .box{
+      position: absolute;
+      left: 150px;
+      top: 200px;
+      width: 300px;
+      height: 300px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+
+  let store = {
+    getValue: function(name) {
+      return JSON.parse(localStorage.getItem(name)) || {}
+    },
+    setValue: function(name, value) {
+      localStorage.setItem(name, JSON.stringify(value))
+    }
+  }
+
+
+  // 拖拽 3步行为: 按下 移动 抬起
+  // 对盒子操作
+
+  // 需要有一个状态, 拿一个状态在去控制鼠标的是否在拖拽盒子
+  let isDrag = false
+
+  // 移动盒子用的是position移动
+  let box = document.querySelector(".box")
+  let mousePosition = {
+    x: 0,
+    y: 0
+  }
+  let boxPosition = {
+    x: (store.getValue("boxPosition").x===undefined)?box.offsetLeft:store.getValue("boxPosition").x,
+    y: (store.getValue("boxPosition").y===undefined)?box.offsetTop:store.getValue("boxPosition").y,
+  }
+  console.log(boxPosition)
+  box.style.left = boxPosition.x + "px"
+  box.style.top = boxPosition.y + "px"
+
+
+
+  // 按下的时候只是记录盒子开始移动的, 并且储存鼠标当前的位置
+  box.addEventListener("mousedown", function (e) {
+    mousePosition.x = e.clientX
+    mousePosition.y = e.clientY
+    isDrag = true
+  })
+  // 时时刻刻触发的, 是不是会有新的鼠标位置
+  window.addEventListener("mousemove", function (e) {
+    // console.log(e.clientX - mousePosition.x)
+    if(isDrag){
+      // console.log("盒子被拖拽中")
+      // 盒子被拽走了多少 , 实时反映到盒子的位置中
+      // 盒子当前位置 + 盒子的应该的偏移量
+      box.style.left = box.offsetLeft + e.clientX - mousePosition.x + "px"
+      box.style.top = box.offsetTop + e.clientY - mousePosition.y + "px"
+      // 重新找到基准点
+      mousePosition.x = e.clientX
+      mousePosition.y = e.clientY
+    }
+  })
+
+  // 抬起的时候就不会drag了
+  // 如果移动速度过快, 会出现移出盒子鼠标再抬起, 就监听不到了
+  window.addEventListener("mouseup", function (e) {
+    isDrag = false
+    boxPosition = {
+      x: box.offsetLeft,
+      y: box.offsetTop,
+    }
+    localStorage.setItem("boxPosition", JSON.stringify(boxPosition))
+  })
+
+  // 把盒子的状态记录下来
+
+  // 顺便 localStorage 的封装
+  // 设计: 获取localStorage 的时候 一般来说是返回一个对象的, 没有 就返回{}
+
+
+
+
+</script>
+</body>
+</html>

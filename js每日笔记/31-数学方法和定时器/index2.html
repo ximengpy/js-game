@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="btn">拆除按钮</div>
+  <script>
+    /*
+      定时器: 可以在一定的时间之后进行操作
+
+      setTimeout
+        在某个时间之后进行操作(执行一次)
+        接受两个参数
+          第一个是需要执行的代码的函数
+          第二个是在某个时间之后 数值 单位是 ms 1000ms = 1s
+
+        0代表不消耗时间立即执行
+
+          是真的不消耗时间吗?
+
+          点击事件的异步代码, 和定时器的异步代码性质是一致的
+
+          定时器是相互独立的没有任何关联的代码
+
+        0代表同步代码执行完成之后开始计时
+      
+        clearTimeout 专门解除定时器的代码, 传入一个参数: timer 就是定时器设置时候返回的编号
+
+      setInterval 
+        每隔多少时间之后执行操作(执行无数次)
+
+      同步代码
+        永远优先于异步代码执行的
+
+      异步代码
+
+
+
+
+    */
+    // function getTime(){
+    //   return 1000
+    // }
+    // setTimeout(function(){
+    //   // console.log("setTimeout 执行")
+    //   alert(1)
+    // }, getTime())
+
+    // setTimeout(()=>{
+    //   console.log("定时器执行")
+    // }, 0)
+    
+    // for(let i = 0; i < 900000000;i++){}
+    
+    // console.log("正常代码执行")
+
+    // 能不能做到 每隔1秒执行一次代码
+
+    // for(let i = 0; i < 5;i++){
+    //   setTimeout(function(){ // 拿出一个记事本, 记下来忙完之后要做的事情
+    //     console.log(i)
+    //   }, 1000 * (i+1))
+    // }
+
+
+    // setTimeout(function(){ // 拿出一个记事本, 说(在同步代码结束之后)一秒之后执行
+    //   console.log(1)
+    // }, 1000)
+
+    // setTimeout(function(){ // 拿出一个记事本, 说(在同步代码结束之后)一秒之后执行
+    //   console.log(1)
+    // }, 1000)
+
+
+    // 假如定时炸弹在3秒之后爆炸怎么做? 
+    // 如何在3秒之内拆除炸弹? 
+
+    // 如何清除定时器, 
+
+    // 怎么去区分定时器:  定时器在执行的时候是会瞬间返回一个编码, 这个编码就是定时器的编号
+    // 并且这个编号从1开始, 只要写出一个定时器, 返回的编号就会增加1, 
+    // 这个编号就是定时器的编号 => 页面中任意的一个定时器的编号是唯一的 用编号拆除炸弹
+    // clearTimeout
+      
+    // setTimeout(() => {
+    //   console.log("BOOM!")
+    // }, 3000);
+
+    // setTimeout(() => {
+    //   console.log("BOOM!")
+    // }, 3000);
+
+    // let timer = setTimeout(() => {
+    //   console.log("BOOM!")
+    // }, 3000);
+    // console.log("炸弹安装成功")
+    // let timer2 = setTimeout(() => {
+    //   clearTimeout(timer)
+    //   console.log("炸弹拆除成功")
+    // }, 2000);
+
+    // console.log(timer)
+
+    // let btn = document.querySelector(".btn")
+
+    // btn.onclick = function(){
+    //   for(let i = 1; i < 100000;i++){
+    //     clearTimeout(i) // 将这个编号的定时器拆除
+    //   }
+    // }
+   
+    // 有的同学就拿出之前的时钟 或者轮播图, 加上时间(每隔多少秒自动切换到下一张)
+
+    // let timer = setInterval(function(){}, t)
+    // clearInterval
+
+    // date 日期
+    // data 数据
+  </script>
+  
+</body>
+</html>

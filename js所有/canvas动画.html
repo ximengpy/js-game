@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+ #canvas{
+  background-color:burlywood;
+ }
+ </style>
+</head>
+<body>
+ <canvas id = "canvas" width = "500px" height=" 500px"></canvas>
+ <p>点击画布暂停，暂停后点击小球消失</p>
+ <script>
+  let canvas = document.querySelector("canvas")
+   let    ctx = canvas.getContext("2d")
+  class Ball{
+   constructor(option){
+    Object.assign(this,{x:100,y:100,r:15,color:"#"+Math.random().toString(16).slice(2,8),
+    vx:Math.random()*6-3,vy:Math.random()*6-3},option)
+   }
+   draw(){
+    ctx.beginPath()
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2)
+    ctx.fillStyle= this.color
+    ctx.fill()
+   }
+   update(){
+    if(this.x>800 || this.x< 0) this.vx *=-1
+    if(this.y>800 || this.y< 0) this.vy *=-1
+    this.x +=this.vx
+    this.y += this.vy
+   }
+   
+  }
+ let paused= false
+  function render(){
+   
+    requestAnimationFrame(render)  
+   ctx.clearRect(0, 0, canvas.width, canvas.height)
+   ballList.forEach(item =>{
+    item.draw()
+    
+    if(!paused)item.update()
+   })
+  
+ 
+   
+  }
+  let ballList = []
+ 
+  for(let i= 0;i<100;i++){
+   ballList.push(new Ball({x:Math.random()*500,y:Math.random()*500}))
+  }
+   render()
+   canvas.addEventListener("click" ,function(e){
+     paused =true
+     render()
+    ballList.forEach((item,index) =>{
+    let mouseposition = {x:e.offsetX,y:e.offsetY}
+    let distance =Math.pow(item.x-mouseposition.x,2)+Math.pow(item.y-mouseposition.y,2)
+    if(distance<Math.pow( item.r,2)){
+     item.vx =item.vy =0// 点击小球停止运动
+     ballList.splice(index, 1)
+     render()// 点击小球消失
+    }
+   })
+
+   })
+ </script>
+</body>
+</html>

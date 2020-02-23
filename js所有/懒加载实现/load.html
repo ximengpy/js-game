@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+ 
+ </style>
+</head>
+<body>
+ <div class="wrap">
+
+ </div>
+ <script>
+ let wrap = document.querySelector(".wrap")
+ let imgs = []
+
+ function load(){
+  let fragment = document.createDocumentFragment()
+  for(let i = 0;i<113;i++){
+   fragment.appendChild(creat(i,imgs))
+  }
+  wrap.appendChild(fragment)
+ 
+ 
+ }
+ function creat( i,imgs){
+  let p = document.createElement("p")
+  let pic = document.createElement("img")
+  pic.src = "images/loading.gif"
+  pic.setAttribute("img_src",`./images/1 (${i+1}).jpg`)
+  pic.setAttribute("do","false")
+  p.appendChild(pic)
+  imgs.push(pic)
+  return  p
+ }
+ window.onscroll = (function(){
+  let timer = null
+  
+  return function(){
+   timer = setTimeout(() => {
+    const height = window.innerHeight+document.documentElement.scrollTop  
+  imgs.forEach(function(item){
+   if(item.getAttribute("do")==="true")  return
+   console.log(item.offsetTop)
+      if(item.offsetTop<height){
+       item.src = item.getAttribute("img_src")
+       console.log(item.src)
+       item.setAttribute("do","true")
+      }
+  })
+   }, 800);
+   
+  }
+ 
+
+ })()
+ 
+ 
+ load()
+
+ </script>
+</body>
+</html>

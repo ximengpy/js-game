@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html >
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+ <style>
+ canvas{
+  background-color:burlywood;
+ }
+ </style>
+ 
+</head>
+<body>
+ <canvas width="600px" height="600px"></canvas>
+ <script>
+  let canvas = document.querySelector("canvas")
+  let ctx = canvas.getContext("2d")
+  let startPoint = {
+    x: 100,
+    y: 100,
+    r: 5
+  }
+  let controlPoint1 = {
+    x: 100,
+    y: 500,
+    r: 5
+  }
+  let controlPoint2 = {
+    x: 500,
+    y: 500,
+    r: 5
+  }
+  let endPoint = {
+    x: 500,
+    y: 100,
+    r: 5
+  }
+  let poinitList = [ startPoint,controlPoint1,controlPoint2,endPoint]
+  function render(){
+   ctx.clearRect(0,0,canvas.width,canvas.height)
+   ctx.beginPath()
+   ctx.moveTo(startPoint.x,startPoint.y)
+   ctx.bezierCurveTo(controlPoint1.x,controlPoint1.y,controlPoint2.x,controlPoint2.y,endPoint.x,endPoint.y)
+   ctx.lineWidth= 3
+   ctx.strokeStyle = "#454"
+   ctx.stroke()
+   //贝塞尔曲线的四个点
+   ctx.beginPath()
+   ctx.arc(startPoint.x,startPoint.y,startPoint.r,0,2*Math.PI)
+   ctx.fillStyle = `#563`
+   ctx.fill()
+
+   ctx.beginPath()
+   ctx.arc(controlPoint1.x,controlPoint1.y,controlPoint1.r,0,2*Math.PI)
+   ctx.fillStyle = `#754`
+   ctx.fill()
+
+   ctx.beginPath()
+   ctx.arc(controlPoint2.x,controlPoint2.y,controlPoint2.r,0,2*Math.PI)
+   ctx.fillStyle = `#435`
+   ctx.fill()
+
+   ctx.beginPath()
+   ctx.arc(endPoint.x,endPoint.y,endPoint.r,0,2*Math.PI)
+   ctx.fillStyle = `#654`
+   ctx.fill()
+   //连接两个点的两条线
+   ctx.beginPath()
+   ctx.moveTo(startPoint.x,startPoint.y)
+   ctx.lineTo(controlPoint1.x,controlPoint1.y)
+   ctx.strokeStyle= `#345`
+   ctx.stroke()
+   ctx.beginPath()
+   ctx.moveTo(controlPoint2.x,controlPoint2.y)
+   ctx.lineTo(endPoint.x,endPoint.y)
+   ctx.strokeStyle= `#345`
+   ctx.stroke()
+
+  }
+  render()
+  let movepoint=null
+  let cantrag = false
+  canvas.addEventListener("mousedown",(e)=>{
+   let mousepoint = {x:e.offsetX,y:e.offsetY}
+   poinitList.forEach(item =>{
+    distance = Math.pow(item.x-mousepoint.x,2)+ Math.pow(item.y-mousepoint.y,2)
+    if(distance< Math.pow(item.r,2)){   //判断两点的距离是否小于球的半径
+     movepoint = item
+     cantrag = true
+    }
+   })
+  })
+  canvas.addEventListener("mousemove",(e) =>{
+   if(movepoint&&cantrag){
+    movepoint.x = e.offsetX
+    movepoint.y = e.offsetY
+    render()
+   }
+  })
+  canvas.addEventListener("mouseup",()=>{
+   movepoint = null
+   cantrag = false
+  })
+ </script>
+</body>
+</html>

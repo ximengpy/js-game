@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  // Promise 对象 帮助保证代码执行逻辑
+
+  // let data
+  // setTimeout(function () {
+  //   data = 123
+  //   handle(data)
+  // }, 1000)
+  //
+  // function handle(data, cb){
+  //   console.log(data)
+  //   setTimeout()
+  // }
+
+
+
+
+  // let promise = new Promise(function (resolve, reject) {
+  //   // 第一段 代码, 手动约束代码在什么时候达到结束
+  //   setTimeout(function () {
+  //     // 等1s时间获取到了数据 传输到下一个层级, 处理
+  //     resolve(123)
+  //   }, 1000)
+  // })
+  //
+  // promise.then(function (data) {
+  //   //
+  //   console.log(data)
+  // })
+
+  // promise对象 new Promise生成
+  // then 方法是 Promise对象方法
+  // Promise.resolve(data) ===> new Promise(res => res(data))
+  // 链式调用.then
+  // 后续的then都是前面then的返回结果
+  // 可以返回 简单的值, 直接传递给后续的then
+  // 可以返回一个promise对象
+  // catch操作完成之后, 后续promise又会变得生龙活虎
+  // then catch finally 没有谁必须写, 根据你的开发需求来
+
+  // Promise.resolve(123)
+  //   .then(data1 => {
+  //     console.log(data1)
+  //     return new Promise((resolve, reject)=>{
+  //       reject("失败")
+  //     })
+  //   })
+  //   .then(data2 => {
+  //     console.log(data2)
+  //     return new Promise((resolve, reject)=>{
+  //       resolve("成功")
+  //     })
+  //   })
+  //   .then(data3 => {
+  //     console.log("then", data3)
+  //   })
+  //   .catch(err => { // 捕获promise中走向失败的所有情况
+  //     console.log("catch", err)
+  //     // plan B 执行再去获取的逻辑
+  //   })
+  //   .finally(() => {
+  //     console.log("不管怎么样, promise执行结束了")
+  //     // 最终promise结束需要执行的代码
+  //   })
+  //
+  //
+  // // Promise构造函数的方法 =>
+  //
+  // // Promise.all([...promise实例]) 同时判断所有的Promise结果的传递
+  //
+  //
+  // let promiseList = []
+  //
+  // function getPromise() {
+  //   // 返回一个promise对象, 对象在 0-3s内随机返回一个0-1的数, 这个操作then监听的
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(()=>{
+  //       let result = Math.random()
+  //       if(result > 0.5){
+  //         resolve(result)
+  //       }else{
+  //         reject(result)
+  //       }
+  //     }, Math.random()*3000)
+  //   })
+  // }
+  //
+  //
+  // for(let i = 0; i < 10;i++){
+  //   promiseList.push(getPromise())
+  // }
+  // // 同步添加then的方法
+  // // promiseList.map(promise => promise.then(data => {
+  // //
+  // // }))
+  //
+  // // 班长收作业, 一定要等到最后一个作业做完交了,才能交给我
+  // // Promise.all但凡有一个失败就会掉落到catch中
+  // // Promise.all(promiseList)
+  // //   .then(res => { // res 就是所有promise成功之后的结果组成的数组
+  // //     console.log(res)
+  // //   })
+  // //   .catch(err => { // 最好每个promise都要携带catch
+  // //     console.log(err)
+  // //   })
+  //
+  //
+  // // race: 只要有成功就行, 一旦最先返回成功的被接受, then就会触发
+  // // 优先触发 成功的操作
+  // // 只要第一个成功执行, 后续的promise就不会触发了
+  // Promise.race(promiseList)
+  //   .then(res => {
+  //     console.log(res)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
+
+  // 封装一个 lazyMan 提示: 如何控制代码的执行顺序?
+
+
+  // Generator(迭代器)函数特性 => async await中
+  // es6...es7
+  // function 后面添加一个 *
+  // yield(迭代器返回) 和 return(普通函数的返回) 非常相似
+  // 迭代器函数执行生成迭代器对象
+
+  // 迭代器对象.next()执行可以分开执行多次, 每次都会访问迭代器通过yield返回的内容
+
+  // 可以将代码暂停等待结果
+
+  // let fn = function* fn() {
+  //   yield "迭代器返回"
+  // }
+  // let obj = fn()
+  // console.log(obj.next())
+  // console.log(obj.next())
+  // console.log(obj.next())
+
+  let loop = function* () {
+    let index = 0
+    while(true){
+      console.log(index)
+      let data = yield index // 代码暂时停在了这里
+      index += data || 0 // 可以往next传入一个值, 如果不传那就传入0
+    }
+  }
+
+  let loopGenerator = loop()
+  //
+  // loopGenerator.next() // 传入值的:
+
+  // let obj = {
+  //   a: 1,
+  //   b: 2,
+  //   c: 3
+  // }
+
+  // Symbol.iterator 迭代接口
+  // 面向底层接口的开发
+  // Object.prototype[Symbol.iterator] = function* () {
+  //   for (let i in this) {
+  //     yield {
+  //       key: i,
+  //       value: this[i]
+  //     }
+  //   }
+  // }
+  //
+  // // 添加迭代属性之后才可以使用迭代遍历的方法
+  // for(let i of obj){
+  //   console.log(i)
+  // }
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <script>
+    // es6 在低版本浏览器可能不兼容
+
+    // 字符串拓展: 转换成数组
+    // console.log("asd".includes("asd"))
+    // 咱们自己可以封装这个方法吗? 后面的内容在前面找到的
+    // 直接判断结果 
+    // console.log(includes("asd", "ad"))
+    // startWith 以什么开始 传入字符串
+    // endWith   以什么结束 传入字符串 
+    // repeat    重复几次返回
+
+
+
+
+    // 数组拓展: es6 
+    // Array // 数组的构造函数
+    // 可以传类数组, 帮你转换成为数组
+    // Array.from() es6的方法
+    // 类似于 [...arr] 解构方法 es6的操作
+    // 返回类型是统一的 绝对会返回数组
+
+    let boxList = document.getElementsByClassName("box")
+
+    // 可以形如数组格式的对象进行转换
+    // 传入第二个参数, 回调函数, 对数组进行挨个运算, 返回内容 
+
+    let obj = {
+      0: "a",
+      1: "b",
+      asd: 3,
+      length: 3
+    }
+
+    // console.log(Array.from(obj, item => {item+1}))
+
+
+    // Array 正常情况是可以直接运行生成数组的
+
+    // 参数个数不一样的时候, 会进行不同的操作
+    // 只有一个参数的时候, 是数字的时候, 返回 一个长度为那个数字的空数组
+    // 多个参数就是挨个传入生成数组
+
+    // Array.of() 解决了Array直接生成的问题
+    // 传入几个就是数组的几项
+
+
+    // 带回调函数的数组实例(实际的一个数组)方法
+
+    let arrList = [10, 5, 3, -2, 6, -3] // 10, 3, 6 为奇数项
+    // forEach 做了什么事情? 
+    // 对数组里面每一项进行操作 => 遍历
+      // 1. 需要对原始类型修改
+      // 2. 可以不修改
+    // 有返回内容没有? 没有
+    // arrList.forEach(function (item, index, arr){
+
+    // })
+
+
+    // 需求: 判断数组里面每一项是否都大于0
+    // let flag = true
+    // arrList.forEach(item => {
+    //   if(item < 0){
+    //     flag = false
+    //   }
+    // })
+
+    // console.log(flag)
+
+    // every 每一个都
+    // 如果回调函数都返回true, 那every执行完就返回true , 
+    // 只要有返回false, every就返回false
+    // 回调函数也是接受三个参数的
+
+    // let flag = arrList.every(item => item > 0)
+
+    // console.log(flag)
+
+
+    // 如果数组奇数项都大于0 返回 true 否者返回false
+    // 参考 forEach 操作方式
+
+    let flag = arrList.every((item, index) => (index % 2 === 1) || item > 0)
+            console.log(flag)
+    // ... filter map reduce 
+    
+  </script>
+</body>
+</html>
