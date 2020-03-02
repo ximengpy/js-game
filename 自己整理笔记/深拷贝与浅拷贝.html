@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>请右击查看源码</p>
+  <script>
+    // 浅拷贝
+    let obj1 = { a: 3, b: 4, z: { x: 5, t: 6 } }
+    let obj2 = Object.assign({}, obj1)   //assign实现浅拷贝
+    let obj3 = { ...obj1 }//ES6解构赋值实现浅拷贝
+    function copy(obj) {
+      if (obj == null) return
+      let type = obj.toString().slice(8, -1)
+      let result = (type == "Object") ? {} : []
+      for (let i in obj) {
+        result[i] = obj[i]
+      }
+      return result
+    }
+    let obj4 = copy(obj1)
+
+
+    // 深拷贝
+
+
+
+    function truedeep(obj) {
+
+      let type = obj.toString().slice(8, -1)
+      let result = (type == "Object") ? {} : []
+      if (type != "Object" && type != "Array") return obj
+      if (type == "Array") {
+        for (let i = 0; i < obj.length; i++) {
+          result.push(truedeep(obj[i]))
+        }
+      } else {
+        for (i in obj) {
+          result[i] = truedeep(obj[i])
+        }
+      }
+      return result
+    }
+
+
+    let obj5 = truedeep(obj1)
+    let obj6 = JSON.parse(JSON.stringify(obj1))
+
+
+
+
+    obj1.z.x = 45
+  </script>
+</body>
+
+</html>

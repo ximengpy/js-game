@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+<script>
+ let arr = [3,5,[3,6,[3,5]],4,[3,5]]
+ let arr2 = arr.flat()
+
+
+ function flatten(arr) {  
+   return arr.reduce((result,item) => {
+    return result.concat(Array.isArray(item)?flatten(item):item)
+   },[])
+}
+
+
+ function flatten2(arr){
+  return arr.join(',').split(",").map(function(item){
+        return parseInt(item)
+  })
+ }
+
+function flatten3(arr){
+ let result = []
+ arr.map((item) =>{
+ if(Array.isArray(item)){
+  result = result.concat(flatten3(item))
+  
+ }else result.push(item)
+ })
+ return result
+}
+let arr3 = flatten(arr)
+let arr4 = flatten2(arr)
+let arr5 = [].concat(...arr)
+let arr6 = flatten3(arr)
+</script>
+ 
+</body>
+</html>

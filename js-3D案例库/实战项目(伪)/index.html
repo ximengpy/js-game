@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,body{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+    .wall{
+      position: absolute;
+      margin-top: -50px;
+      margin-left: -50px;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      transform-style: preserve-3d;
+      background-color: #ccc;
+      z-index: -100;
+    }
+    .small{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 300px;
+      background: center/cover;
+      transition: 2s;
+    }
+  </style>
+  <script src="./js/data.js"></script>
+</head>
+<body>
+<div class="wall"></div>
+<script>
+  let wall = document.querySelector(".wall")
+  function getState(state){
+    return `transform: translateZ(${state.translateZ}px) rotateX(${state.rotateX}deg) rotateY(${state.rotateY}deg)`
+  }
+  let state = {
+    translateZ: -6000,
+    rotateX: 0,
+    rotateY: 0,
+  }
+  const boxList = []
+  wall.style = getState(state)
+  let fragment = document.createDocumentFragment()
+  for(let i = 0;i < data.length;i++){
+    let box = document.createElement("div")
+    box.className = "small"
+    box.style.backgroundImage = `url( ${data[i].pic} )`
+    box.addEventListener("mousemove", e => {
+      // e.preventDefault()
+    })
+    boxList.push(box)
+    fragment.appendChild(box)
+  }
+  wall.appendChild(fragment)
+  
+  document.body.addEventListener("wheel", e => {
+    state.translateZ -= e.deltaY *100 / Math.abs(e.deltaY)
+    console.log(state)
+    wall.style = getState(state)
+  })
+  const startPoint = {
+    x: 0,
+    y: 0
+  }
+  const last = {
+    x: 0,
+    y: 0
+  }
+  let drag = false
+  document.body.addEventListener("mousedown", e => {
+    startPoint.x = e.pageX
+    startPoint.y = e.pageY
+    drag = true
+  })
+  
+  document.body.addEventListener("mousemove", e => {
+    if( drag ) {
+      let dx = e.pageY - startPoint.y
+      let dy = e.pageX - startPoint.x
+      last.x = -dx
+      last.y = dy
+      
+      wall.style = getState({
+        translateZ: state.translateZ,
+        rotateX: state.rotateX + last.x,
+        rotateY: state.rotateY + last.y,
+      })
+    }
+  })
+  document.body.addEventListener("mouseup", e => {
+    drag = false
+    state.rotateX += last.x
+    state.rotateY += last.y
+    last.x = last.y = 0
+  })
+  
+  // 设置格式
+  // 环形 annulus
+  function annulus() {
+    let start = -2000
+    boxList.forEach((box, index) => {
+      box.style.transform = `rotateY(${index * 20}deg) translate3d(0, ${start + index*32}px, 1000px) rotateZ(8deg)`
+    })
+  }
+  
+  // 球形 sphere
+  
+  function sphere() {
+    // 125
+    boxList.forEach((box, index) => {
+      box.style.transform = `rotateY(${index * 360 * 10 / 125}deg) rotateX(${90 + index * 360 / 125}deg) translate3d(0, 0, 2000px)`
+    })
+  }
+  
+  // 矩阵 cube
+  function cube() {
+    boxList.forEach((box, index) => {
+      box.style.transform = `translate3d(${(Math.floor(index % 25 / 5) - 2) * 500}px, ${(Math.floor(index % 25 % 5) - 2) * 500}px, ${(Math.floor(index / 25) - 2) * 500}px)`
+    })
+  }
+  
+  setTimeout(()=>{
+    cube()
+  },300)
+  setTimeout(()=>{
+    sphere()
+  },3000)
+  setTimeout(()=>{
+    annulus()
+  },6000)
+  
+</script>
+</body>
+</html>

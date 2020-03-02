@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ <script>
+
+// 假设 "上海自来水来自海上"
+  //   "五块五花肉花五块五"
+  //   传入一个字符串, 判断是不是回文
+  //let str = "五块五花肉花五块五"
+  // function check(str){
+  //   return str.split("").reverse().join("") === str
+  // }
+  //升级版： let check = str => str.split("").reverse().join("") === str
+
+  // 上楼梯的故事: 
+  //       小银 上楼梯: 一共100台阶
+  //       每次上2层或者3层
+  //       现在站在0层 刚好走到100层的台阶, 请问有多少种走法?
+  // let ansObj = {
+  //     "1": 0,
+  //     "2": 1,
+  //     "3": 1,
+  //   }
+  //   function fn3(n){
+  //     if(n === 1) return ansObj[n]
+  //     // 从台阶2, 3往上走是只有一种走法
+  //     if(n === 2 || n === 3) return ansObj[n]
+
+  //     // 如果存储器中有答案, 直接抄答案
+  //     if(ansObj[n]) return ansObj[n]
+  //     // 如果没有答案, 咱们先将结果抄到n项中
+  //     ansObj[n] = fn3(n - 2) + fn3(n - 3)
+  //     // 再将答案返回出来
+  //     return ansObj[n]
+  //   }
+ 
+
+/*  方法一: 选择排序
+        从数组中选择(并删除)最小的数出来放到新数组的第一项中
+        重复1000次就ok了
+   
+      function getRandom(n) {
+        // fill 是全部添加0
+        let arr = new Array(n).fill(0)
+        arr.forEach((item, index, arr) => {
+          arr[index] = index + 1
+        })
+        // 排序这个数组, 一会正序一会儿倒序排列, 打乱数组的操作
+        arr.sort(() => Math.random() - .5)
+        return arr
+      }
+      // 生成一个长度为1000的大软之后的数组
+      let n = 50000
+      let arr = getRandom(n)
+
+      // console.log(arr)
+
+      // 
+      function chooseSort(arr) {
+        // 找到数组中最小那个数的下标
+        // 先去给一个初始值, 再遍历数组, 如果遇到比ans小的数,就修改下标i和ans的值
+        let newArr = []
+        // 当我们数组有东西的时候去遍历
+        while (arr.length) {
+          // 从数组中找到最小的数, 删除并添加到新数组中了
+          let i = 0
+          let ans = arr[0]
+          // 遍历arr数组, 一旦找到比之前的数ans大的就替换掉
+          arr.forEach((item, index) => {
+            if (ans > item) {
+              i = index
+              ans = item
+            }
+          })
+          // 从数组中裁切掉 添加到新数组中
+          arr.splice(i, 1)
+          newArr.push(ans)
+        }
+        return newArr
+      }
+  */
+
+
+   /* 冒泡排序
+     
+        就好像气泡一样的对待每一个数,让数和数相邻的比较,交换位置
+
+        5, 2, 1, 4
+
+        2, 5, 1, 4
+
+        2, 1, 5, 4
+
+        2, 1, 4, 5
+     
+
+      function swap(arr, i, j) {
+        // 初级方法
+        let temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+
+        // 
+      }
+
+
+      function bubbleSort(arr) {
+        for (let j = 0; j < arr.length; j++) {
+          // 先将最小的寄到右边
+          for (let i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+              // 交换i和i+1的位置
+              swap(arr, i, i + 1)
+            }
+          }
+        }
+      }
+
+      console.time("bubbleSort") // O(N^2)
+      arr = getRandom(n)
+      bubbleSort(arr)
+      console.timeEnd("bubbleSort")
+      // [12, 333, 1, 534, 5, 3, 3345]
+ */
+
+
+  /* 
+      // Q5 写出一个函数 传入 两个值 m , n (n,m 大小未知), 课后作业
+      // 返回一个m和n之间(包含整数)的整数 
+      getRandomInt(3, 5)
+   
+    function getRandomInt(m, n){
+      // 先找出m,n 谁大谁小
+      // m,n可能存在整数的情况
+      let max = Math.max(m, n)
+      let min = (m > n)?n:m
+      // 大的减小的小于1 这两者之间是没有整数的? 不能通过相减操作的
+      // 对边界进行操作
+      // left 不可取?
+      let left = Math.floor(min)===min?(min - 1):Math.floor(min)
+      // right 不可取?
+      let right = Math.ceil(max)===max?(max + 1):Math.ceil(max)
+      // 可以有几个答案提供选择?  
+      let num = right - left - 1
+      if(num === 0){
+        return NaN
+      }
+      // 生成答案: 0 - (num-1)
+      return Math.floor(Math.random() * num) + left + 1
+    }
+    // getRandomInt(2.1, 3.4)
+   */
+
+
+
+
+ /* 方法一: JSON.parse JSON.stringify
+  // 对象 => 转换成字符串 => 对像(重新创建对象)
+  let a = [
+      {
+          name: "asad1",
+          value: 1232
+      },
+      {
+          name: "asad2",
+          value: 1231
+      },
+      {
+          name: "asad3",
+          value: 1231
+      },
+  ]
+
+  // let b = JSON.parse(JSON.stringify(a)) // 格式化转化成为一个可以转换成为对象的字符串
+  //
+  // a[0].name = "iqoeuioqw"
+  // console.log(a, b)
+
+
+  // 深拷贝 对象属性全部都复制了一次进行拷贝
+  // 递归的方式进行拷贝操作 只能够拷贝可枚举属性:
+  // deepClone 深拷贝的方法, 肯定有返回, 传入参数拷贝完之后的结果
+
+
+
+
+  // 循环引用本来就是深拷贝无解
+  // 记录 递归的每一项
+
+  function deepClone(obj){
+      // 如果obj既不是数组也不是对象, 那就直接return
+      // if(list.some(item => item === obj)){
+      //     throw new Error("循环引用了")
+      // }
+      let list = [] // 不会暴露全局
+      function getType(obj){
+          return {}.toString.call(obj).slice(8, -1)
+      }
+
+      function trueDeepClone(obj){
+          let type = getType(obj)
+          if(type!== "Object" && type !== "Array")
+              return obj
+          // 拿一个载体去进行深拷贝
+          let result  = type === "Object"?{}:[]
+
+          // 需要记录之前拷贝的结果, 判断和之前有没有重复的, 如果有, 直接报错
+
+          if(type === "Array"){
+              // 对数组中的每一项再进行深拷贝
+              for(let i = 0;i < obj.length;i++){
+                  list.push(obj[i])
+                  result.push(trueDeepClone(obj[i]))
+              }
+          } else{
+              // 对对象进行深拷贝
+              for(let i in obj){
+                  list.push(obj[i])
+                  result[i] = trueDeepClone(obj[i])
+              }
+          }
+          console.log(list)
+          return result
+      }
+      return trueDeepClone(obj)
+      //
+      //
+      // return result
+  }
+
+*/
+
+
+
+/*
+function obj2url(obj){
+    let arr = []
+    for(let i in obj){
+      arr.push(`${i}=${obj[i]}`)
+    }
+    return arr.join("&")
+  }
+  // 规定开头不含?
+  function url2obj(str) {
+    // 判断开头是否含有?
+    let arr = str.split("&")
+    // item 格式 a=1中间含有等号
+    return arr.reduce(function (obj, item) {
+      obj[item.match(/.*(?==)/g)[0]] = item.match(/(?<==).*$/g)[0]
+      return obj
+    }, {})
+  }
+
+  let objUrlTools = {
+    obj2url,
+    url2obj
+  }
+
+
+ */  
+ 
+
+ </script>
+</body>
+</html>

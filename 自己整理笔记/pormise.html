@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Document</title>
+</head>
+<body>
+ <script>
+ /* 
+ 以下是个人理解
+   javascript支持同步和异步代码，但是在执行过程中会先把同步代码执行完成，然后再执行异步代码
+ */
+ // setTimeout(() => {
+ //  console.log("1")
+ // }, 1000);
+ // console.log("2")//2  1 先执行同步了，再执行里面的定时器
+ 
+/*在没有promise之前，如果要在在一个异步代码执行完后继续执行另一个异步代码，我们只能这样写*/
+ // setTimeout(() => {
+ //  console.log("起床")
+ //   setTimeout(() => {
+ //    console.log("刷牙")
+ //     setTimeout(() => {
+ //      console.log("吃饭")
+ //      setTimeout(() => {
+ //       console.log("上班")
+ //      }, 1000);
+ //     }, 1000);
+ //   }, 1000);
+ // }, 1000);// 起床 刷牙 吃饭 上班 
+ /*
+ 以上代码看着很冗长，一个出错，就很难察觉出来，如果多个异步代码，就只能一直往下叠加，可读性不高，随之，便出现了promise这个异步构造函数，用来处理异步代码，下面用promise将以上代码改一下：
+ */
+//  let mypromise = new Promise(function(resolve){
+// setTimeout(() => {
+//  console.log("起床")
+//  resolve()
+// }, 1000);
+//  })
+//  mypromise.then(function(){
+//   setTimeout(() => {
+//    console.log("刷牙")
+//   }, 1000);
+//  })          //起床  刷牙
+/*
+从上面我们知道Promise接收一个回调函数，回调函数接收两个参数
+ resolve:解决 => 函数执行成功
+ 当resolve执行的时候Promise就知道此时函数执行完成并且成功了,resolve的方法是异步方法, 绝对是异步执行的,在当前代码块中
+ reject:  拒绝 => 函数执行失败
+ 当reject执行的时候Promise就知道此时函数执行失败了
+ 如果我们要执行多个异步时间，便可以封装一个函数出来
+ then  构造函数实例对象mypromise 的一个方法，解释为promise执行完成之后接下来执行的事情，接收relove里面传入的参数，没有就为空，里面写入一个回调函数
+*/
+// function work(item,time){
+//  return  new Promise(function(resolve,reject){
+//   setTimeout(() => {
+//    console.log(`${item}`)
+//    resolve()
+//   }, time);
+  
+//  })
+// }
+// work("起床",1000).then(function(){
+//  return  work("刷牙",1000)
+// }).then(function(){
+//    return work("吃饭",1000)
+// })                            //起床 刷牙  吃饭 
+ /*
+ 这样一条异步代码链就出现了 下面我们结合resolve 和reject 一起使用
+ */
+ function rand(){
+  return new  Promise((resolve,reject) =>{
+   let result = Math.random()
+   if(result > 0.5)
+   resolve(result)
+   else reject(result)
+  })
+ }
+ rand().then(function(result){
+  console.log("成功")
+ }).catch(function(result){
+  console.log("失败")
+ })
+ </script>
+</body>
+</html>
